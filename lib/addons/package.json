@@ -1,14 +1,11 @@
 {
   "name": "@storybook/addons",
-  "version": "4.0.9",
+  "version": "4.2.0-alpha.8",
   "description": "Storybook addons store",
   "keywords": [
     "storybook"
   ],
   "homepage": "https://github.com/storybooks/storybook/tree/master/lib/addons",
-  "publishConfig": {
-    "access": "public"
-  },
   "bugs": {
     "url": "https://github.com/storybooks/storybook/issues"
   },
@@ -17,15 +14,21 @@
     "url": "https://github.com/storybooks/storybook.git"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "jsnext:main": "src/index.js",
+  "main": "dist/public_api.js",
+  "types": "dist/public_api.d.ts",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "4.0.8",
-    "@storybook/components": "4.0.9",
+    "@storybook/channels": "4.2.0-alpha.8",
+    "@storybook/components": "4.2.0-alpha.8",
     "global": "^4.3.2",
     "util-deprecate": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/util-deprecate": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
