@@ -1,6 +1,6 @@
 {
   "name": "@storybook/components",
-  "version": "4.2.0-alpha.8",
+  "version": "5.1.0-alpha.3",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -11,32 +11,36 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/storybooks/storybook.git"
+    "url": "https://github.com/storybooks/storybook.git",
+    "directory": "lib/components"
   },
   "license": "MIT",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
-    "build-storybook": "build-storybook",
-    "prepare": "node ../../scripts/prepare.js",
-    "storybook": "start-storybook -p 6006"
+    "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@emotion/core": "^0.13.1",
-    "@emotion/provider": "^0.11.2",
-    "@emotion/styled": "^0.10.6",
+    "@storybook/addons": "5.1.0-alpha.3",
+    "@storybook/client-logger": "5.1.0-alpha.3",
+    "@storybook/core-events": "5.1.0-alpha.3",
+    "@storybook/router": "5.1.0-alpha.3",
+    "@storybook/theming": "5.1.0-alpha.3",
+    "core-js": "^2.6.5",
     "global": "^4.3.2",
-    "lodash": "^4.17.11",
-    "prop-types": "^15.6.2",
-    "react-inspector": "^2.3.0",
-    "react-split-pane": "^0.1.84",
-    "react-textarea-autosize": "^7.0.4",
-    "render-fragment": "^0.1.1"
-  },
-  "devDependencies": {
-    "@storybook/addon-actions": "4.2.0-alpha.8",
-    "@storybook/addon-knobs": "4.2.0-alpha.8",
-    "@storybook/react": "4.2.0-alpha.8"
+    "js-beautify": "^1.8.9",
+    "memoizerific": "^1.11.3",
+    "polished": "^3.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.3",
+    "react-focus-lock": "^1.17.7",
+    "react-helmet-async": "^0.2.0",
+    "react-popper-tooltip": "^2.8.0",
+    "react-syntax-highlighter": "^8.0.1",
+    "react-textarea-autosize": "^7.1.0",
+    "recompose": "^0.30.0",
+    "simplebar-react": "^0.1.4"
   },
   "peerDependencies": {
     "react": "*",
