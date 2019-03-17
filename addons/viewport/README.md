@@ -33,7 +33,7 @@ The viewport addon is configured by story parameters with the `viewport` key. To
 ```js
 import { addParameters } from '@storybook/react';
 
-addParameters({ viewport: options });
+addParameters({ viewport: { viewports: newViewports } });
 ```
 
 Options can take a object with the following keys:
@@ -89,7 +89,7 @@ import addStories from '@storybook/react';
 addStories('Stories', module)
   // To set a default viewport for all the stories for this component
   .addParameters({ viewport: { defaultViewport: 'iphone6' }})
-  .add('story', () => </>, { viewport: 'iphonex' });
+  .add('story', () => </>, { viewport: { defaultViewport: 'iphonex' }});
 ```
 
 ## Examples

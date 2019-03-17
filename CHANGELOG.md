@@ -1,3 +1,70 @@
+## 5.1.0-alpha.7 (March 16, 2019)
+
+### Breaking Changes
+
+* Core: Restore v4 webpack extend mode behavior AND deprecate it ([#6104](https://github.com/storybooks/storybook/pull/6104))
+* React native: Use @storybook/core ([#4942](https://github.com/storybooks/storybook/pull/4942))
+
+### Features
+
+* CLI: Add --debug-webpack option ([#6082](https://github.com/storybooks/storybook/pull/6082))
+* UI: open brandUrl in new window ([#6106](https://github.com/storybooks/storybook/pull/6106))
+
+### Bug Fixes
+
+* CLI: Clear build folder in static build ([#6024](https://github.com/storybooks/storybook/pull/6024))
+* Addon-a11y: Fix tab navigation ([#6118](https://github.com/storybooks/storybook/pull/6118))
+* Theming: FIX brandImage when theme created with brandTitle ([#6120](https://github.com/storybooks/storybook/pull/6120))
+* Addon-backgrounds: Set preview to theme color when "transparent" ([#6042](https://github.com/storybooks/storybook/pull/6042))
+
+### Maintenance
+
+* Sort package.json on precommit ([#6101](https://github.com/storybooks/storybook/pull/6101))
+
+### Dependency Upgrades
+
+* Use community AsyncStorage instead of deprecated React Native one ([#6079](https://github.com/storybooks/storybook/pull/6079))
+* Fix expo ([#6121](https://github.com/storybooks/storybook/pull/6121))
+* Bump graphiql from 0.12.0 to 0.13.0 ([#5901](https://github.com/storybooks/storybook/pull/5901))
+* Update expo requirement from ^31.0.4 to ^32.0.6 in /examples-native/crna-kitchen-sink ([#5664](https://github.com/storybooks/storybook/pull/5664))
+* Bump @angular/cli from 7.3.4 to 7.3.6 ([#6103](https://github.com/storybooks/storybook/pull/6103))
+* Bump react-dom from 16.8.3 to 16.8.4 ([#5903](https://github.com/storybooks/storybook/pull/5903))
+
+## 5.1.0-alpha.6 (March 14, 2019)
+
+### Features
+
+* Angular: add autoprefixing like angular-cli ([#5612](https://github.com/storybooks/storybook/pull/5612))
+
+### Bug Fixes
+
+* UI: Fixing search item in menu ([#6027](https://github.com/storybooks/storybook/pull/6027))
+* Addon-a11y: Run only when a11y tab is active ([#6044](https://github.com/storybooks/storybook/pull/6044))
+
+### Maintenance
+
+* UI: Update syntaxhighlighter stories ([#6054](https://github.com/storybooks/storybook/pull/6054))
+
+## 5.1.0-alpha.5 (March 12, 2019)
+
+### Bug Fixes
+
+* Addon-a11y: Remove bg color from reports ([#6026](https://github.com/storybooks/storybook/pull/6026))
+* Addon-knobs: Fix key press debouncing ([#6022](https://github.com/storybooks/storybook/pull/6022))
+* Addon-knobs: Fix error when removing value from number knob ([#6043](https://github.com/storybooks/storybook/pull/6043))
+
+
+### Maintenance
+
+* Theming: Improve typescript typings ([#5988](https://github.com/storybooks/storybook/pull/5988))
+
+### Dependency Upgrades
+
+* build(deps): bump axe-core from 3.2.0 to 3.2.2 ([#6034](https://github.com/storybooks/storybook/pull/6034))
+* build(deps): bump css-loader from 2.1.0 to 2.1.1 ([#6033](https://github.com/storybooks/storybook/pull/6033))
+* build(deps): bump react-focus-lock from 1.17.7 to 1.18.3 ([#6031](https://github.com/storybooks/storybook/pull/6031))
+* Bump react-resize-detector from 3.4.0 to 4.0.2 ([#5899](https://github.com/storybooks/storybook/pull/5899))
+
 ## 5.1.0-alpha.4 (March 11, 2019)
 
 ### Bug Fixes

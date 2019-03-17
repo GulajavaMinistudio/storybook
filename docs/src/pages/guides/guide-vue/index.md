@@ -14,7 +14,7 @@ npx -p @storybook/cli sb init --type vue
 
 ## Manual setup
 
-If you want to set up Storybook manually for your React project, this is the guide for you.
+If you want to set up Storybook manually for your Vue project, this is the guide for you.
 
 ## Step 1: Add dependencies
 
@@ -26,13 +26,13 @@ Add `@storybook/vue` to your project. To do that, run:
 npm install @storybook/vue --save-dev
 ```
 
-### Add vue, vue-dom, @babel/core, and babel-loader
+### Add peer dependencies
 
-Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, and `babel-loader` in your dependencies as well because we list these as a peer dependencies:
+Make sure that you have `vue`, `vue-loader`, `vue-template-compiler`, `@babel/core`, `babel-loader` and `babel-preset-vue` in your dependencies as well, because we list these as a peer dependencies:
 
 ```sh
 npm install vue --save
-npm install babel-loader vue-loader vue-template-compiler @babel/core --save-dev 
+npm install vue-loader vue-template-compiler @babel/core babel-loader babel-preset-vue --save-dev 
 ```
 
 ## Step 2: Add a npm script
@@ -140,7 +140,7 @@ storiesOf('Button', module)
   }));
 ```
 
-Each story is a single state of your component. In the above case, there are two stories for the demo button component:
+Each story is a single state of your component. In the above case, there are three stories for the demo button component:
 
 ```plaintext
 Button
