@@ -1,3 +1,77 @@
+## 5.1.0-alpha.20 (March 29, 2019)
+
+### Features
+
+* Addons: Manage local/session storage access with store2 ([#6310](https://github.com/storybooks/storybook/pull/6310))
+
+### Bug Fixes
+
+* Addon-cssresources: Fix panel layout ([#6263](https://github.com/storybooks/storybook/pull/6263))
+* Addon-info: Fixed contrast of Show Info button for a11y ([#6301](https://github.com/storybooks/storybook/pull/6301))
+
+### Maintenance
+
+* Migrate options and decorators in examples to new api ([#5954](https://github.com/storybooks/storybook/pull/5954))
+
+## 5.1.0-alpha.19 (March 28, 2019)
+
+### Bug Fixes
+
+* React-native: Fix "lib/addons" default export ([#6197](https://github.com/storybooks/storybook/pull/6197))
+* Addon-a11y: Remove element styling after re-running the a11y rules ([#6325](https://github.com/storybooks/storybook/pull/6325))
+* Addon-info: forwardRef elements use displayName if available ([#6222](https://github.com/storybooks/storybook/pull/6222))
+* React-native: Add background color for stories panel ([#6315](https://github.com/storybooks/storybook/pull/6315))
+
+### Dependency Upgrades
+
+* Upgrade babel-plugin-react-docgen ([#6329](https://github.com/storybooks/storybook/pull/6329))
+* Bump babel-plugin-emotion from 10.0.7 to 10.0.9 ([#6227](https://github.com/storybooks/storybook/pull/6227))
+* Bump @types/lodash.isequal from 4.5.3 to 4.5.5 ([#6269](https://github.com/storybooks/storybook/pull/6269))
+* Bump react-scripts from 2.1.5 to 2.1.8 ([#6230](https://github.com/storybooks/storybook/pull/6230))
+* Bump esm from 3.2.10 to 3.2.20 ([#6270](https://github.com/storybooks/storybook/pull/6270))
+
+## 5.1.0-alpha.18 (March 27, 2019)
+
+### Bug Fixes
+
+* Addon-a11y: Fix color-blindness emulation in Firefox ([#6297](https://github.com/storybooks/storybook/pull/6297))
+* UI: Set expanded stories to objects instead of arrays ([#6290](https://github.com/storybooks/storybook/pull/6290))
+
+## 5.1.0-alpha.17 (March 26, 2019)
+
+### Bug Fixes
+
+* Addon-a11y: Move redux to dependencies ([#6286](https://github.com/storybooks/storybook/pull/6286))
+
+## 5.1.0-alpha.16 (March 26, 2019)
+
+### Bug Fixes
+
+* Upgrade `@babel/preset-env` to fix corejs option ([#6281](https://github.com/storybooks/storybook/pull/6281))
+
+## 5.1.0-alpha.15 (March 26, 2019)
+
+### Features
+
+* Addon-a11y: Highlight a11y violations on component ([#6218](https://github.com/storybooks/storybook/pull/6218))
+* HTML: Allow forced renders in @storybook/html   ([#6190](https://github.com/storybooks/storybook/pull/6190))
+
+### Bug Fixes
+
+* Core: Enforces corejs v2 for babel ([#6267](https://github.com/storybooks/storybook/pull/6267))
+* Knobs: Rename ALL panel to Other for ungrouped knobs ([#6232](https://github.com/storybooks/storybook/pull/6232))
+* UI: zoom iframe content instead zoom iframe wrapper ([#6126](https://github.com/storybooks/storybook/pull/6126))
+* Addon-actions: safe render for cyclic obj ([#6240](https://github.com/storybooks/storybook/pull/6240))
+
+### Maintenance
+
+* Addon-knobs: adds an example of a boolean knob ([#6242](https://github.com/storybooks/storybook/pull/6242))
+
+### Dependency Upgrades
+
+* Bump simplebar-react from 0.1.4 to 0.1.5 ([#6226](https://github.com/storybooks/storybook/pull/6226))
+* FIX storybook having a incompatible version of webpack with vue-cli ([#6259](https://github.com/storybooks/storybook/pull/6259))
+
 ## 5.1.0-alpha.14 (March 25, 2019)
 
 ### Features
