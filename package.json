@@ -1,6 +1,8 @@
 {
   "name": "@storybook/root",
-  "version": "5.1.0-rc.0",
+  "version": "5.1.0-rc.5",
+  "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
+  "homepage": "https://storybook.js.org/",
   "private": true,
   "repository": {
     "type": "git",
@@ -10,9 +12,10 @@
     "addons/*",
     "addons/storyshots/*",
     "app/*",
-    "lib/*",
-    "examples/*",
+    "dev-kits/*",
     "examples-native/*",
+    "examples/*",
+    "lib/*",
     "lib/cli/test/run/*"
   ],
   "scripts": {
@@ -245,5 +248,27 @@
         "Other"
       ]
     ]
-  }
+  },
+  "keywords": [
+    "ui",
+    "user interface",
+    "components",
+    "storybook",
+    "storybookjs",
+    "react",
+    "reactjs",
+    "angular",
+    "angularjs",
+    "vue",
+    "vuejs",
+    "babel",
+    "eslint",
+    "frontend",
+    "jamstack",
+    "documentation",
+    "tool",
+    "templated",
+    "reuseable",
+    "markup"
+  ]
 }
