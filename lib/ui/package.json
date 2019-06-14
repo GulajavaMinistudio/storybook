@@ -24,6 +24,7 @@
   "dependencies": {
     "@storybook/addons": "5.2.0-alpha.23",
     "@storybook/api": "5.2.0-alpha.23",
+    "@storybook/channels": "5.2.0-alpha.23",
     "@storybook/client-logger": "5.2.0-alpha.23",
     "@storybook/components": "5.2.0-alpha.23",
     "@storybook/core-events": "5.2.0-alpha.23",
@@ -55,7 +56,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "corejs-upgrade-webpack-plugin": "^1.0.1",
+    "corejs-upgrade-webpack-plugin": "^2.0.0",
     "flush-promises": "^1.0.2",
     "terser-webpack-plugin": "^1.2.4",
     "webpack": "^4.33.0"
