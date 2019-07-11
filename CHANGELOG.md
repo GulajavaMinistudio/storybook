@@ -1,3 +1,52 @@
+## 5.2.0-alpha.41 (July 11, 2019)
+
+### Features
+
+* API: Preview hooks ([#6916](https://github.com/storybookjs/storybook/pull/6916))
+* Core: Custom webpack option for standalone storybook ([#6886](https://github.com/storybookjs/storybook/pull/6886))
+
+### Bug Fixes
+
+* Addon-knobs: Fix TypeError on KnobManager channel ([#7341](https://github.com/storybookjs/storybook/pull/7341))
+* React-native: Explicitly depend on emotion core and theming ([#7362](https://github.com/storybookjs/storybook/pull/7362))
+
+### Dependency Upgrades
+
+* Bump @babel/preset-env from 7.5.0 to 7.5.4 ([#7364](https://github.com/storybookjs/storybook/pull/7364))
+* Update react-test-renderer requirement from 16.5.1 to 16.8.6 in /examples-native/crna-kitchen-sink ([#6372](https://github.com/storybookjs/storybook/pull/6372))
+* Bump rax-text from 0.6.5 to 1.0.0 ([#7346](https://github.com/storybookjs/storybook/pull/7346))
+
+## 5.2.0-alpha.40 (July 10, 2019)
+
+### Bug Fixes
+
+* Addon-knobs: Revert entrypoint deletion ([#7369](https://github.com/storybookjs/storybook/pull/7369))
+* Typescript: Fix types in api package ([#7072](https://github.com/storybookjs/storybook/pull/7072))
+* UI: Fix settings page route (about, shortcuts) ([#7241](https://github.com/storybookjs/storybook/pull/7241))
+
+### Maintenance
+
+* Linting: ADD an ignore for an eslint error about a missing dependency (puppeteer) ([#7239](https://github.com/storybookjs/storybook/pull/7239))
+* CI: ADD travis ([#7252](https://github.com/storybookjs/storybook/pull/7252))
+* Typescript: Migrate @storybook/angular ([#6570](https://github.com/storybookjs/storybook/pull/6570))
+
+### Dependency Upgrades
+
+* Bump express-graphql from 0.7.1 to 0.8.0 ([#7345](https://github.com/storybookjs/storybook/pull/7345))
+* Bump react-native-modal-datetime-picker from 6.1.0 to 7.4.2 ([#6844](https://github.com/storybookjs/storybook/pull/6844))
+
+## 5.2.0-alpha.39 (July 10, 2019)
+
+### Bug Fixes
+
+* UI: Fix Sidebar input refresh on 'Enter' ([#7342](https://github.com/storybookjs/storybook/pull/7342))
+* Addon-knobs: Fix select options types to allow string[] and null ([#7356](https://github.com/storybookjs/storybook/pull/7356))
+
+### Maintenance
+
+* Typescript: Migrate @storybook/react ([#7054](https://github.com/storybookjs/storybook/pull/7054))
+* Build: delete tests & snapshots from dist ([#7358](https://github.com/storybookjs/storybook/pull/7358))
+
 ## 5.2.0-alpha.38 (July 9, 2019)
 
 ### Bug Fixes
