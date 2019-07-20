@@ -1,3 +1,62 @@
+## 5.2.0-beta.4 (July 20, 2019)
+
+### Breaking Changes
+
+* Core: Module format story decorators ([#7490](https://github.com/storybookjs/storybook/pull/7490))
+
+### Features
+
+* Addon-jest: UI Redesign ([#7424](https://github.com/storybookjs/storybook/pull/7424))
+* Marko: support rerendering ([#7460](https://github.com/storybookjs/storybook/pull/7460))
+
+### Bug Fixes
+
+* Addon-docs: Fix MDX source string escaping ([#7497](https://github.com/storybookjs/storybook/pull/7497))
+
+### Dependency Upgrades
+
+* Marko: Upgrade loader & config ([#7459](https://github.com/storybookjs/storybook/pull/7459))
+* Update core-js in addon-ondevice-actions package.json ([#7491](https://github.com/storybookjs/storybook/pull/7491))
+
+## 5.2.0-beta.3 (July 19, 2019)
+
+### Features
+
+* React-native: Add storyId as testID ([#7482](https://github.com/storybookjs/storybook/pull/7482))
+
+### Bug Fixes
+
+* React-native: On-device knobs input fixes ([#7475](https://github.com/storybookjs/storybook/pull/7475))
+* React-native: Fix crna-kitchen-sink ([#7200](https://github.com/storybookjs/storybook/pull/7200))
+
+## 5.2.0-beta.2 (July 18, 2019)
+
+### Features
+
+* CLI: convert mdx to module format ([#7419](https://github.com/storybookjs/storybook/pull/7419))
+* CLI: sb migrate npm & typescript support ([#7463](https://github.com/storybookjs/storybook/pull/7463))
+* Addon-Docs: HTML support & example ([#7454](https://github.com/storybookjs/storybook/pull/7454))
+
+### Bug Fixes
+
+* Convert-storiesof-to-module: user exports, collisions, reserved keywords ([#7471](https://github.com/storybookjs/storybook/pull/7471))
+* React-native: On-device knobs fixes ([#7470](https://github.com/storybookjs/storybook/pull/7470))
+
+### Dependency Upgrades
+
+* Addon-docs: Upgrade MDX to 1.1 ([#7476](https://github.com/storybookjs/storybook/pull/7476))
+
+## 5.2.0-beta.1 (July 18, 2019)
+
+### Features
+
+* React native: Emit event when story is rendered ([#7449](https://github.com/storybookjs/storybook/pull/7449))
+
+### Bug Fixes
+
+* Addon-knobs: improve types via generics and readonlyarray ([#7411](https://github.com/storybookjs/storybook/pull/7411))
+* Ondevice-backgrounds: use same param key as addon-backgrounds ([#7437](https://github.com/storybookjs/storybook/pull/7437))
+
 ## 5.2.0-beta.0 (July 15, 2019)
 
 ### Features
