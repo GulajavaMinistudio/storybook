@@ -1,3 +1,19 @@
+## 5.2.0-beta.38 (August 21, 2019)
+
+### Bug Fixes
+
+* FIX issue where the block of build info (including url) wouldn't show if passed --ci #7821 ([#7822](https://github.com/storybookjs/storybook/pull/7822))
+
+### Maintenance
+
+* CLI: Remove babel-register in favor of esm ([#7823](https://github.com/storybookjs/storybook/pull/7823))
+
+## 5.2.0-beta.37 (August 20, 2019)
+
+### Breaking Changes
+
+* Addon-docs: Add docsContainer parameter ([#7814](https://github.com/storybookjs/storybook/pull/7814))
+
 ## 5.2.0-beta.36 (August 20, 2019)
 
 ### Features
