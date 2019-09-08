@@ -1,3 +1,20 @@
+## 5.2.0-rc.9 (September 7, 2019)
+
+### Bug Fixes
+
+* Addon-knobs: allow array values in select and options knobs ([#8027](https://github.com/storybookjs/storybook/pull/8027))
+
+## 5.2.0-rc.8 (September 6, 2019)
+
+### Bug Fixes
+
+* Addon-docs: Scroll story into view ([#7994](https://github.com/storybookjs/storybook/pull/7994))
+* Addon-docs: Fix LI styling for dark color theme ([#8015](https://github.com/storybookjs/storybook/pull/8015))
+
+## 5.2.0-rc.7 (September 6, 2019)
+
+Publish failed
+
 ## 5.2.0-rc.6 (September 5, 2019)
 
 ### Bug Fixes
