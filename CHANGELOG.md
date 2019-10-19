@@ -1,3 +1,47 @@
+## 5.3.0-alpha.23 (October 19, 2019)
+
+### Features
+
+* Webpack: Enabled error details ([#8391](https://github.com/storybookjs/storybook/pull/8391))
+
+### Bug Fixes
+
+* Addon-docs: Fix React.forwardedRef/memo props ([#8445](https://github.com/storybookjs/storybook/pull/8445))
+* MDX: Handle `<Story>` name starting with number ([#8469](https://github.com/storybookjs/storybook/pull/8469))
+
+### Maintenance
+
+* ADD a step in circleci to upload storybook for angular ([#8477](https://github.com/storybookjs/storybook/pull/8477))
+* Core: Check module type in configure ([#8412](https://github.com/storybookjs/storybook/pull/8412))
+* Angular: Convert angular-cli stories to CSF ([#7668](https://github.com/storybookjs/storybook/pull/7668))
+* Typescript: Migrate @storybook/mithril ([#8320](https://github.com/storybookjs/storybook/pull/8320))
+
+## 5.3.0-alpha.22 (October 18, 2019)
+
+### Features
+
+* CLI: Add component meta to framework templates ([#8462](https://github.com/storybookjs/storybook/pull/8462))
+
+### Maintenance
+
+* Build: Add cypress to Storybook CI ([#8397](https://github.com/storybookjs/storybook/pull/8397))
+* Incorrect minimal required node version ([#8427](https://github.com/storybookjs/storybook/pull/8427))
+
+## 5.3.0-alpha.21 (October 17, 2019)
+
+### Features
+
+* CLI: React-scripts TS template & test ([#8451](https://github.com/storybookjs/storybook/pull/8451))
+* Addon-storysource: Add preset ([#8437](https://github.com/storybookjs/storybook/pull/8437))
+
+### Bug Fixes
+
+* UI: Fix React15 support ([#8454](https://github.com/storybookjs/storybook/pull/8454))
+* Addon-centered: Fix zoom issues for non-Firefox browsers ([#8442](https://github.com/storybookjs/storybook/pull/8442))
+* CLI: Add CRA preset to MDX template ([#8452](https://github.com/storybookjs/storybook/pull/8452))
+* CLI: Add preset-create-react-app to CRA presets template ([#8449](https://github.com/storybookjs/storybook/pull/8449))
+* CLI: Fix CRA-ts fixture package name ([#8457](https://github.com/storybookjs/storybook/pull/8457))
+
 ## 5.3.0-alpha.20 (October 15, 2019)
 
 ### Features
