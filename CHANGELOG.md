@@ -1,3 +1,79 @@
+## 5.3.0-alpha.32 (October 28, 2019)
+
+### Features
+
+* Addon-docs: Props / Description for web-components ([#8585](https://github.com/storybookjs/storybook/pull/8585))
+* Core: Global addDecorator/addParameters ([#8573](https://github.com/storybookjs/storybook/pull/8573))
+* Addon-docs: Generalize Description doc block ([#8590](https://github.com/storybookjs/storybook/pull/8590))
+
+### Bug Fixes
+
+* React-native-server: Changed default port to number in CLI options ([#8584](https://github.com/storybookjs/storybook/pull/8584))
+
+### Maintenance
+
+* Typescript: Use native package types now available ([#8588](https://github.com/storybookjs/storybook/pull/8588))
+* Build: Fix now deploy maybe ([#8589](https://github.com/storybookjs/storybook/pull/8589))
+
+## 5.3.0-alpha.31 (October 27, 2019)
+
+### Dependency Upgrades
+
+* Upgrade babel-plugin-react-docgen to 4.0.0-beta.1 ([#8581](https://github.com/storybookjs/storybook/pull/8581))
+
+## 5.3.0-alpha.30 (October 27, 2019)
+
+### Features
+
+* Addon-docs: Modify Typeset doc block to accept units ([#8574](https://github.com/storybookjs/storybook/pull/8574))
+
+### Bug Fixes
+
+* Web-components: Use framework id 'web-components' ([#8579](https://github.com/storybookjs/storybook/pull/8579))
+
+### Maintenance
+
+* WC-kitchen-sink: Add babel-loader dependency ([#8578](https://github.com/storybookjs/storybook/pull/8578))
+
+### Dependency Upgrades
+
+* Upgrade babel-plugin-react-docgen to 3.2.0 ([#8580](https://github.com/storybookjs/storybook/pull/8580))
+
+## 5.3.0-alpha.29 (October 25, 2019)
+
+### Features
+
+* Addon-docs: Add props loader to vue preset ([#8567](https://github.com/storybookjs/storybook/pull/8567))
+
+### Dependency Upgrades
+
+* Angular: bump zone.js version in peer dependencies ([#8558](https://github.com/storybookjs/storybook/pull/8558))
+
+## 5.3.0-alpha.28 (October 25, 2019)
+
+### Features
+
+* Addon-docs: Publish web-components preset ([#8563](https://github.com/storybookjs/storybook/pull/8563))
+* Addon-docs: Vue slots/events props table + generalization ([#8489](https://github.com/storybookjs/storybook/pull/8489))
+
+## 5.3.0-alpha.27 (October 24, 2019)
+
+### Features
+
+* Core: Allow linking to kind/component ID ([#7648](https://github.com/storybookjs/storybook/pull/7648))
+* Addon-docs: Jest MDX transform for storyshots ([#8189](https://github.com/storybookjs/storybook/pull/8189))
+* CLI: Add flag to disable version checks ([#8488](https://github.com/storybookjs/storybook/pull/8488))
+* Typescript: add types for react demo ([#8517](https://github.com/storybookjs/storybook/pull/8517))
+
+### Bug Fixes
+
+* UI: Increase TooltipLinkList max-height to accommodate more links ([#8545](https://github.com/storybookjs/storybook/pull/8545))
+* UI: Prevent form submission as search is done while typing ([#8546](https://github.com/storybookjs/storybook/pull/8546))
+
+### Dependency Upgrades
+
+* Remove outdated and unused `jsx-to-string` library ([#8549](https://github.com/storybookjs/storybook/pull/8549))
+
 ## 5.3.0-alpha.26 (October 23, 2019)
 
 Fix web-components storybook dependencies
