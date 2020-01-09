@@ -1,3 +1,29 @@
+## 5.3.0-rc.12 (January 8, 2020)
+
+### Bug Fixes
+
+* Nav UI: Nodes are components only if they contain ALL leaf nodes ([#9356](https://github.com/storybookjs/storybook/pull/9356))
+* Core: Fix HMR for global decorators in main.js config ([#9354](https://github.com/storybookjs/storybook/pull/9354))
+* Presets: Fix register.js addons entry ([#9347](https://github.com/storybookjs/storybook/pull/9347))
+* React: Check CRA is installed before showing warning ([#9346](https://github.com/storybookjs/storybook/pull/9346))
+
+## 5.3.0-rc.11 (January 7, 2020)
+
+### Bug Fixes
+
+* Addon-Docs: Handle leaf/non-leaf mixture in docs-mode navigation ([#9321](https://github.com/storybookjs/storybook/pull/9321))
+
+### Dependency Upgrades
+
+* Axe storyshots: move to original @wordpress/jest-puppeteer-axe package ([#9337](https://github.com/storybookjs/storybook/pull/9337))
+
+## 5.3.0-rc.10 (January 6, 2020)
+
+### Bug Fixes
+
+* Revert "Source-loader: Disable no-implicit-any linting" ([#9333](https://github.com/storybookjs/storybook/pull/9333))
+* Addon-docs: Fix scroll behavior on page navigation ([#9331](https://github.com/storybookjs/storybook/pull/9331))
+
 ## 5.3.0-rc.9 (January 4, 2020)
 
 ### Features
