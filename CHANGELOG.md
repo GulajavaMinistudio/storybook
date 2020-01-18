@@ -1,3 +1,18 @@
+## 5.3.5 (January 17, 2020)
+
+### Bug Fixes
+
+* Core: Fix typo for loading addon-notes/register-panel ([#9497](https://github.com/storybookjs/storybook/pull/9497))
+* Source-loader: Add imports to top of file ([#9492](https://github.com/storybookjs/storybook/pull/9492))
+
+## 5.3.4 (January 16, 2020)
+
+### Bug Fixes
+
+* Core: Fix presets register panel ([#9486](https://github.com/storybookjs/storybook/pull/9486))
+* Core: Fix addon/preset detection for local addons ([#9485](https://github.com/storybookjs/storybook/pull/9485))
+* Core: Fix default story sort ([#9482](https://github.com/storybookjs/storybook/pull/9482))
+
 ## 5.3.3 (January 14, 2020)
 
 ### Bug Fixes
