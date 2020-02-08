@@ -1,3 +1,60 @@
+## 6.0.0-alpha.8 (February 8, 2020)
+
+### Maintenance
+
+* Replace lodash named imports with specific imports ([#9787](https://github.com/storybookjs/storybook/pull/9787))
+
+## 6.0.0-alpha.7 (February 7, 2020)
+
+### Bug Fixes
+
+* Core: Support custom addons using JSX ([#9648](https://github.com/storybookjs/storybook/pull/9648))
+* Components: Change react-syntax-highlighter from esm to cjs ([#9780](https://github.com/storybookjs/storybook/pull/9780))
+* Core: Fix manager assets to be routed in express ([#9646](https://github.com/storybookjs/storybook/pull/9646))
+
+### Maintenance
+
+* Examples: Remove addon-notes remnants ([#9782](https://github.com/storybookjs/storybook/pull/9782))
+* Build: Fix DLL generation race condition ([#9770](https://github.com/storybookjs/storybook/pull/9770))
+
+## 6.0.0-alpha.6 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+* CLI: Fix file path for the Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+
+## 5.3.12 (February 5, 2020)
+
+### Bug Fixes
+
+* Core: Fix dev server error - back out bad change ([#9753](https://github.com/storybookjs/storybook/pull/9753))
+
+## 5.3.11 (February 4, 2020)
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+* CLI: Fix file path for Button story ([#9325](https://github.com/storybookjs/storybook/pull/9325))
+* Angular: Emit decorator metadata by default ([#9701](https://github.com/storybookjs/storybook/pull/9701))
+* Storyshots: Fix config via main.ts ([#9577](https://github.com/storybookjs/storybook/pull/9577))
+
+## 6.0.0-alpha.5 (February 4, 2020)
+
+### Features
+
+* Core: Add Yarn 2 compatibility ([#9667](https://github.com/storybookjs/storybook/pull/9667))
+* Addon-a11y: Add preset ([#9697](https://github.com/storybookjs/storybook/pull/9697))
+* Server: Initial support for @storybook/server ([#9722](https://github.com/storybookjs/storybook/pull/9722))
+
+### Bug Fixes
+
+* Svelte: Fix Svelte 3 slots for decorators ([#9724](https://github.com/storybookjs/storybook/pull/9724))
+
+### Maintenance
+
+* Cra-ts-kitchen-sink: Fix stories glob pattern ([#9706](https://github.com/storybookjs/storybook/pull/9706))
+
 ## 6.0.0-alpha.4 (February 3, 2020)
 
 ### Bug Fixes
