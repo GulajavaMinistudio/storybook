@@ -24,6 +24,8 @@ export type ViewMode = 'story' | 'docs';
 export interface Parameters {
   fileName?: string;
   options?: OptionsParameter;
+  layout?: 'centered' | 'fullscreen' | 'padded';
+  docsOnly?: boolean;
   [key: string]: any;
 }
 
@@ -31,6 +33,17 @@ export interface Parameters {
 // We cannot import from @storybook/api here because it will lead to manager code (i.e. emotion) imported in the preview
 export interface Args {
   [key: string]: any;
+}
+
+export interface ArgType {
+  name?: string;
+  description?: string;
+  defaultValue?: any;
+  [key: string]: any;
+}
+
+export interface ArgTypes {
+  [key: string]: ArgType;
 }
 
 export interface StoryIdentifier {

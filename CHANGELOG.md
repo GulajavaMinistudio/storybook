@@ -1,3 +1,60 @@
+## 5.3.17 (March 14, 2020)
+
+### Bug Fixes
+
+- Components: Change react-syntax-highlighter from esm to cjs ([#9780](https://github.com/storybookjs/storybook/pull/9780))
+
+## 5.3.16 (March 14, 2020)
+
+Failed NPM publish
+
+## 5.3.15 (March 14, 2020)
+
+### Bug Fixes
+
+- Core: Disables html-webpack-plugin's option to remove script tag types ([#10042](https://github.com/storybookjs/storybook/pull/10042))
+- Addon-actions: Style ActionLogger to preserve whitespace ([#10046](https://github.com/storybookjs/storybook/pull/10046))
+
+### Maintenance
+
+- CI: Fix GitHub unit test workflow ([#9971](https://github.com/storybookjs/storybook/pull/9971))
+
+### Dependency Upgrades
+
+- Security: Remove usage of a vulnerable version of serialize-javascript ([#10071](https://github.com/storybookjs/storybook/pull/10071))
+
+## 6.0.0-alpha.27 (March 13, 2020)
+
+### Features
+
+- Addon-toolbars: Global args support in the toolbar ([#10028](https://github.com/storybookjs/storybook/pull/10028))
+- Addon-actions: Add Storybook Args support ([#10029](https://github.com/storybookjs/storybook/pull/10029))
+- Core: Add globalArgs/globalArgTypes `preview.js` exports ([#10123](https://github.com/storybookjs/storybook/pull/10123))
+
+## 6.0.0-alpha.26 (March 12, 2020)
+
+### Breaking Changes
+
+- Remove deprecated decorators and loaders ([#9951](https://github.com/storybookjs/storybook/pull/9951))
+
+### Features
+
+- Core: Improve support for main.ts/preview.ts files ([#10099](https://github.com/storybookjs/storybook/pull/10099))
+- Addon-docs: Theme with `docs.theme` parameter ([#10114](https://github.com/storybookjs/storybook/pull/10114))
+- Addon-docs: Svelte example ([#7673](https://github.com/storybookjs/storybook/pull/7673))
+
+### Maintenance
+
+- CSF: Promote args/argTypes to first-class metadata ([#10117](https://github.com/storybookjs/storybook/pull/10117))
+
+## 6.0.0-alpha.25 (March 11, 2020)
+
+NOTE: `6.0.0-alpha.24` broken due to bad merge. Sorry!
+
+### Bug Fixes
+
+- Core: Fix initialization of global args ([#10106](https://github.com/storybookjs/storybook/pull/10106))
+
 ## 6.0.0-alpha.24 (March 11, 2020)
 
 ### Features
