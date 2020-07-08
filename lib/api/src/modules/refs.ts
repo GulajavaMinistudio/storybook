@@ -24,6 +24,7 @@ export type SetRefData = Partial<
 export interface SubAPI {
   findRef: (source: string) => ComposedRef;
   setRef: (id: string, data: SetRefData, ready?: boolean) => void;
+  updateRef: (id: string, ref: ComposedRefUpdate) => void;
   getRefs: () => Refs;
   checkRef: (ref: SetRefData) => Promise<void>;
   changeRefVersion: (id: string, url: string) => void;
@@ -37,6 +38,15 @@ export interface ComposedRef {
   url: string;
   type?: 'auto-inject' | 'unknown' | 'lazy';
   stories: StoriesHash;
+  versions?: Versions;
+  loginUrl?: string;
+  ready?: boolean;
+  error?: any;
+}
+export interface ComposedRefUpdate {
+  title?: string;
+  type?: 'auto-inject' | 'unknown' | 'lazy';
+  stories?: StoriesHash;
   versions?: Versions;
   loginUrl?: string;
   ready?: boolean;
@@ -60,7 +70,7 @@ const allSettled = (promises: Promise<Response>[]): Promise<(Response | false)[]
     )
   );
 
-export const getSourceType = (source: string) => {
+export const getSourceType = (source: string, refId: string) => {
   const { origin: localOrigin, pathname: localPathname } = location;
   const { origin: sourceOrigin, pathname: sourcePathname } = new URL(source);
 
@@ -70,7 +80,7 @@ export const getSourceType = (source: string) => {
   if (localFull === sourceFull) {
     return ['local', sourceFull];
   }
-  if (source) {
+  if (refId || source) {
     return ['external', sourceFull];
   }
   return [null, null];
@@ -208,17 +218,20 @@ export const init: ModuleFn = ({ store, provider, fullAPI }, { runCheck = true }
       const ref = api.getRefs()[id];
       const after = stories
         ? addRefIds(
-            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), {}, { provider }),
+            transformStoriesRawToStoriesHash(map(stories, ref, { storyMapper }), { provider }),
             ref
           )
         : undefined;
 
-      const result = { ...ref, stories: after, ...rest, ready };
+      api.updateRef(id, { stories: after, ...rest, ready });
+    },
 
+    updateRef: (id, data) => {
+      const { [id]: ref, ...refs } = api.getRefs();
       store.setState({
         refs: {
-          ...api.getRefs(),
-          [id]: result,
+          ...refs,
+          [id]: { ...ref, ...data },
         },
       });
     },
