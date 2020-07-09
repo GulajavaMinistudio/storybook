@@ -1,3 +1,50 @@
+## 6.0.0-rc.1 (July 9, 2020)
+
+### Bug Fixes
+
+- Addon-toolbars: Show name if there is no icon ([#11475](https://github.com/storybookjs/storybook/pull/11475))
+
+### Maintenance
+
+- CI: Fix iframe test flake ([#11473](https://github.com/storybookjs/storybook/pull/11473))
+- CI: Deploy the `next` branch of frontpage too ([#11462](https://github.com/storybookjs/storybook/pull/11462))
+
+### Dependency Upgrades
+
+- Bump vue-property-decorator from 8.4.2 to 9.0.0 ([#11241](https://github.com/storybookjs/storybook/pull/11241))
+- Bump @types/react-dom from 16.9.7 to 16.9.8 ([#11191](https://github.com/storybookjs/storybook/pull/11191))
+- Bump jest-image-snapshot from 3.1.0 to 4.0.2 ([#11267](https://github.com/storybookjs/storybook/pull/11267))
+- Bump autoprefixer from 9.8.0 to 9.8.4 ([#11288](https://github.com/storybookjs/storybook/pull/11288))
+- [Security] Bump npm-registry-fetch from 4.0.4 to 4.0.5 ([#11453](https://github.com/storybookjs/storybook/pull/11453))
+
+## 6.0.0-rc.0 (July 8, 2020)
+
+[Storybook 6.0](https://github.com/storybookjs/storybook/issues/9311) is stabilizing! It brings loads of component dev and documentation improvements to your favorite workshop:
+
+- [Args](https://docs.google.com/document/d/1Mhp1UFRCKCsN8pjlfPdz8ZdisgjNXeMXpXvGoALjxYM/edit#heading=h.6mdg0tp8crgj) - next-gen dynamic component examples
+  - ([controls](https://github.com/storybookjs/storybook/pull/10834) / [runtime](https://github.com/storybookjs/storybook/pull/10014) / [actions](https://github.com/storybookjs/storybook/pull/10029) / [toolbars](https://github.com/storybookjs/storybook/pull/10028) / [docs controls](https://github.com/storybookjs/storybook/pull/10354))
+- [Composition](https://github.com/storybookjs/storybook/pull/9210) - compose multiple storybooks into one
+- [Zero-config Typescript](https://github.com/storybookjs/storybook/pull/10813) - pre-configured for all frameworks, easy customization
+- [Yarn 2 support](https://github.com/storybookjs/storybook/issues/9527) - next generation package management
+
+## 6.0.0-beta.46 (July 8, 2020)
+
+### Breaking Changes
+
+- Addon-backgrounds: Zero config defaults ([#11460](https://github.com/storybookjs/storybook/pull/11460))
+
+### Features
+
+- Composition: Add version query to composed ref ([#11447](https://github.com/storybookjs/storybook/pull/11447))
+- UI: Add version release notes ([#11360](https://github.com/storybookjs/storybook/pull/11360))
+
+### Maintenance
+
+- Addon-controls: Add addon-docs check on startup ([#11458](https://github.com/storybookjs/storybook/pull/11458))
+- Addon-docs: Remove deprecated addParameters calls ([#11455](https://github.com/storybookjs/storybook/pull/11455))
+- Composition: Change event source to ref ([#11392](https://github.com/storybookjs/storybook/pull/11392))
+- Fix Yarn 2 compatibility in CLI and Essentials ([#11444](https://github.com/storybookjs/storybook/pull/11444))
+
 ## 6.0.0-beta.45 (July 7, 2020)
 
 ### Bug Fixes
