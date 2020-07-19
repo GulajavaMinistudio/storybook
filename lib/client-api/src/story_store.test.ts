@@ -155,6 +155,22 @@ describe('preview.story_store', () => {
       });
     });
 
+    it('automatically infers argTypes based on args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0, {
+        args: {
+          arg1: 3,
+          arg2: 'foo',
+          arg3: false,
+        },
+      });
+      expect(store.getRawStory('a', '1').argTypes).toEqual({
+        arg1: { name: 'arg1', type: { name: 'number' } },
+        arg2: { name: 'arg2', type: { name: 'string' } },
+        arg3: { name: 'arg3', type: { name: 'boolean' } },
+      });
+    });
+
     it('updateStoryArgs changes the args of a story, per-key', () => {
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -242,6 +258,62 @@ describe('preview.story_store', () => {
           parameters: expect.objectContaining({}),
         })
       );
+    });
+
+    it('resetStoryArgs resets a single arg', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1', ['foo']);
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+    });
+
+    it('resetStoryArgs resets all args', () => {
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', () => 0);
+      expect(store.getRawStory('a', '1').args).toEqual({});
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+      expect(store.getRawStory('a', '1').args).toEqual({ foo: 'bar', bar: 'baz' });
+
+      store.resetStoryArgs('a--1');
+      expect(store.getRawStory('a', '1').args).toEqual({});
+    });
+
+    it('resetStoryArgs emits STORY_ARGS_UPDATED', () => {
+      const onArgsChangedChannel = jest.fn();
+      const testChannel = mockChannel();
+      testChannel.on(Events.STORY_ARGS_UPDATED, onArgsChangedChannel);
+
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar' });
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({ storyId: 'a--1', args: { foo: 'bar' } });
+
+      store.resetStoryArgs('a--1');
+      expect(onArgsChangedChannel).toHaveBeenCalledWith({
+        storyId: 'a--1',
+        args: {},
+      });
+    });
+
+    it('should reset if the RESET_STORY_ARGS event is received', () => {
+      const testChannel = mockChannel();
+      const store = new StoryStore({ channel: testChannel });
+      addStoryToStore(store, 'a', '1', () => 0);
+
+      store.updateStoryArgs('a--1', { foo: 'bar', bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1', argNames: ['foo'] });
+      expect(store.getRawStory('a', '1').args).toEqual({ bar: 'baz' });
+
+      testChannel.emit(Events.RESET_STORY_ARGS, { storyId: 'a--1' });
+      expect(store.getRawStory('a', '1').args).toEqual({});
     });
   });
 
@@ -505,6 +577,20 @@ describe('preview.story_store', () => {
   });
 
   describe('argTypesEnhancer', () => {
+    it('records when the given story processes args', () => {
+      const store = new StoryStore({ channel });
+
+      const enhancer = jest.fn((context) => ({ ...context.parameters.argTypes, c: 'd' }));
+      store.addArgTypesEnhancer(enhancer);
+
+      addStoryToStore(store, 'a', '1', (args: any) => 0, { argTypes: { a: 'b' } });
+
+      expect(enhancer).toHaveBeenCalledWith(
+        expect.objectContaining({ parameters: { __isArgsStory: true, argTypes: { a: 'b' } } })
+      );
+      expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd' });
+    });
+
     it('allows you to alter argTypes when stories are added', () => {
       const store = new StoryStore({ channel });
 
@@ -514,7 +600,7 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd' });
     });
@@ -530,10 +616,12 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(firstEnhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(secondEnhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b', c: 'd' } } })
+        expect.objectContaining({
+          parameters: { __isArgsStory: false, argTypes: { a: 'b', c: 'd' } },
+        })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ a: 'b', c: 'd', e: 'f' });
     });
@@ -547,7 +635,7 @@ describe('preview.story_store', () => {
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { a: 'b' } });
 
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { a: 'b' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { a: 'b' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ c: 'd' });
     });
@@ -566,7 +654,7 @@ describe('preview.story_store', () => {
 
       addStoryToStore(store, 'a', '1', () => 0, { argTypes: { e: 'f' } });
       expect(enhancer).toHaveBeenCalledWith(
-        expect.objectContaining({ parameters: { argTypes: { e: 'f' } } })
+        expect.objectContaining({ parameters: { __isArgsStory: false, argTypes: { e: 'f' } } })
       );
       expect(store.getRawStory('a', '1').parameters.argTypes).toEqual({ e: 'f', c: 'd' });
     });
@@ -865,6 +953,39 @@ describe('preview.story_store', () => {
         'a-b--1',
         'c--1',
       ]);
+    });
+
+    it('denormalizes parameters before passing to sort', () => {
+      const store = new StoryStore({ channel });
+      const storySort = jest.fn();
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort,
+          },
+          global: 'global',
+        },
+      });
+      store.addKindMetadata('a', { parameters: { kind: 'kind' }, decorators: [] });
+      addStoryToStore(store, 'a', '1', () => 0, { story: '1' });
+      addStoryToStore(store, 'a', '2', () => 0, { story: '2' });
+      const extracted = store.extract();
+
+      expect(storySort).toHaveBeenCalledWith(
+        [
+          'a--1',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '1' }),
+          }),
+        ],
+        [
+          'a--2',
+          expect.objectContaining({
+            parameters: expect.objectContaining({ global: 'global', kind: 'kind', story: '2' }),
+          }),
+        ]
+      );
     });
   });
 
