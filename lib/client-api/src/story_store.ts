@@ -220,7 +220,9 @@ export default class StoryStore {
         // '*' means select the first story. If there is none, we have no selection.
         [foundStory] = stories;
       } else if (typeof storySpecifier === 'string') {
-        foundStory = Object.values(stories).find((s) => s.id.startsWith(storySpecifier));
+        // Find the story with the shortest id that matches the specifier (see #11571)
+        const foundStories = Object.values(stories).filter((s) => s.id.startsWith(storySpecifier));
+        [foundStory] = foundStories.sort((a, b) => a.id.length - b.id.length);
       } else {
         // Try and find a story matching the name/kind, setting no selection if they don't exist.
         const { name, kind } = storySpecifier;
@@ -253,7 +255,13 @@ export default class StoryStore {
 
     this._globalMetadata.parameters = combineParameters(globalParameters, parameters);
 
-    this._globalMetadata.decorators.push(...decorators);
+    decorators.forEach((decorator) => {
+      if (this._globalMetadata.decorators.includes(decorator)) {
+        logger.warn('You tried to add a duplicate decorator, this is not expected', decorator);
+      } else {
+        this._globalMetadata.decorators.push(decorator);
+      }
+    });
   }
 
   clearGlobalDecorators() {
