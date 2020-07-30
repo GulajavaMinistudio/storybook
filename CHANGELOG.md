@@ -1,3 +1,29 @@
+## 6.0.0-rc.19 (July 31, 2020)
+
+### Bug Fixes
+
+- Core: Speed up combineParameters ([#11736](https://github.com/storybookjs/storybook/pull/11736))
+- Addon-docs: Support absolute anchors when deployed at non-root ([#11403](https://github.com/storybookjs/storybook/pull/11403))
+
+### Maintenance
+
+- Args: Add optional scalar test cases for typescript ([#11149](https://github.com/storybookjs/storybook/pull/11149))
+
+## 6.0.0-rc.18 (July 30, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix update logic for argTypes with custom names ([#11704](https://github.com/storybookjs/storybook/pull/11704))
+- Core: Fix HMR ([#11709](https://github.com/storybookjs/storybook/pull/11709))
+- Server: Serialize Object controls as JSON over the wire ([#11703](https://github.com/storybookjs/storybook/pull/11703))
+- Revert #11502: Remove z-index on ActionBar ([#11708](https://github.com/storybookjs/storybook/pull/11708))
+- Revert #11066: Add skip to content on panel and story iframe ([#11718](https://github.com/storybookjs/storybook/pull/11718))
+- UI: Improve treestate performance ([#11725](https://github.com/storybookjs/storybook/pull/11725))
+
+## 6.0.0-rc.17 (July 30, 2020)
+
+Failed NPM publish
+
 ## 6.0.0-rc.16 (July 28, 2020)
 
 ### Features
