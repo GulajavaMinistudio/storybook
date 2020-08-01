@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.0.0-rc.19",
+  "version": "6.0.0-rc.21",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -42,7 +42,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "42f3ea27e0c82d6f6ea2cb964317252ffde27a71",
+  "gitHead": "aa7ad3c00f46366cb28205e8fd82689afc4dfbc6",
   "typesVersions": {
     "<=3.5": {
       "*": [

@@ -1,3 +1,23 @@
+## 6.0.0-rc.21 (August 1, 2020)
+
+### Features
+
+- Addon-docs: Add Story.story for CSF stories with MDX docs ([#11752](https://github.com/storybookjs/storybook/pull/11752))
+
+### Maintenance
+
+- Addon-docs: Rename Preview/Props to Canvas/ArgsTable ([#11744](https://github.com/storybookjs/storybook/pull/11744))
+
+## 6.0.0-rc.20 (July 31, 2020)
+
+### Breaking Changes
+
+- Core: Pass normalized parameters to the story sort function ([#11743](https://github.com/storybookjs/storybook/pull/11743))
+
+### Bug Fixes
+
+- Core: Dedupe argTypes serialization ([#11740](https://github.com/storybookjs/storybook/pull/11740))
+
 ## 6.0.0-rc.19 (July 31, 2020)
 
 ### Bug Fixes

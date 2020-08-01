@@ -8,6 +8,7 @@
   - [Args passed as first argument to story](#args-passed-as-first-argument-to-story)
   - [6.0 Docs breaking changes](#60-docs-breaking-changes)
     - [Remove framework-specific docs presets](#remove-framework-specific-docs-presets)
+    - [Preview/Props renamed](#previewprops-renamed)
     - [Docs theme separated](#docs-theme-separated)
     - [DocsPage slots removed](#docspage-slots-removed)
     - [React prop tables with Typescript](#react-prop-tables-with-typescript)
@@ -18,6 +19,7 @@
   - [New setStories event](#new-setstories-event)
   - [Removed renderCurrentStory event](#removed-rendercurrentstory-event)
   - [Removed hierarchy separators](#removed-hierarchy-separators)
+  - [No longer pass denormalized parameters to storySort](#no-longer-pass-denormalized-parameters-to-storysort)
   - [Client API changes](#client-api-changes)
     - [Removed Legacy Story APIs](#removed-legacy-story-apis)
     - [Can no longer add decorators/parameters after stories](#can-no-longer-add-decoratorsparameters-after-stories)
@@ -226,6 +228,12 @@ export const parameters = {
 
 In SB 5.2, each framework had its own preset, e.g. `@storybook/addon-docs/react/preset`. In 5.3 we [unified this into a single preset](#unified-docs-preset): `@storybook/addon-docs/preset`. In 6.0 we've removed the deprecated preset.
 
+#### Preview/Props renamed
+
+In 6.0 we renamed `Preview` to `Canvas`, `Props` to `ArgsTable`.
+
+In addition to the rename, `<Props />` shows the current component, whereas `<ArgsTable />` shows the primary story for the current component. If you want the old behavior, pass `<ArgsTable of='.' />`.
+
 #### Docs theme separated
 
 In 6.0, you should theme Storybook Docs with the `docs.theme` parameter.
@@ -398,6 +406,12 @@ addons.setConfig({
   showRoots: false,
 });
 ```
+
+### No longer pass denormalized parameters to storySort
+
+The `storySort` function (set via the `parameters.options.storySort` parameter) previously compared two entries `[storyId, storeItem]`, where `storeItem` included the full "denormalized" set of parameters of the story (i.e. the global, kind and story parameters that applied to that story).
+
+For performance reasons, we now store the parameters uncombined, and so pass the format: `[storyId, storeItem, kindParameters, globalParameters]`.
 
 ### Client API changes
 
@@ -760,8 +774,8 @@ module.exports = {
     '@storybook/preset-create-react-app',
     {
       name: '@storybook/addon-docs',
-      options: { configureJSX: true }
-    }
+      options: { configureJSX: true },
+    },
   ],
 };
 ```
