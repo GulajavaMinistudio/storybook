@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-toolbars",
-  "version": "6.0.0-rc.24",
+  "version": "6.0.0-rc.26",
   "description": "Storybook toolbars addon",
   "keywords": [
     "addon",
@@ -30,10 +30,10 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-rc.24",
-    "@storybook/api": "6.0.0-rc.24",
-    "@storybook/client-api": "6.0.0-rc.24",
-    "@storybook/components": "6.0.0-rc.24",
+    "@storybook/addons": "6.0.0-rc.26",
+    "@storybook/api": "6.0.0-rc.26",
+    "@storybook/client-api": "6.0.0-rc.26",
+    "@storybook/components": "6.0.0-rc.26",
     "core-js": "^3.0.1"
   },
   "peerDependencies": {
@@ -43,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "76e1bf2df32ec75a3909a7f5f2b382b2e553120b"
+  "gitHead": "fcef77bedfdb9ffb77cfbbd843c05cae67f1a749"
 }
