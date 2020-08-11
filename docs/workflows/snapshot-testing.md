@@ -11,37 +11,36 @@ Storyshots is an [official addon](https://github.com/storybookjs/storybook/tree/
 Install the addon. **Make sure** the version of Storyshots and your project’s Storybook version are identical.
 
 ```shell
-yarn add --dev @storybook/addon-storyshots
+npm i -D @storybook/addon-storyshots
 ```
 
 Configure Storyshots by adding the following test file to your project:
 
-```js
-// storybook.test.js
+<!-- prettier-ignore-start -->
 
-import initStoryshots from '@storybook/addon-storyshots';
-initStoryshots();
-```
+<CodeSnippets
+  paths={[
+    'common/storybook-storyshots-config.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 <div class="aside">
 
-You can name the file whatever you like as long as it's picked up by Jest.
+You can name the file whatever you like as long as it's picked up by Jest (note that you'll need Jest to be setup already in your project).
 
 </div>
 
 Run your first test. Storyshot will recognize all your CSF files (based on [`.storybook/main.js`](../configure/overview.md#configure-story-rendering)) and produces snapshots.
 
 ```shell
-yarn test storybook.test.js
+npx test storybook.test.js
 ```
-
-<div style="background-color:#F8FAFC">
-TODO: ask for clarification on this note below. What extra steps?
-</div>
 
 <div class="aside">
 
-If you are loading stories via `.storybook/main.js`, you will need to follow some more steps to ensure Jest finds them.
+If you are loading stories via `.storybook/preview.js` and `require.context()`, you will need to follow some extra steps to ensure Jest finds them. Read more in the [addon documentation](../../addons/storyshots-core/README.md#configure-your-app-for-jest).
 
 </div>
 
@@ -59,6 +58,8 @@ Storyshots has many options for advanced use cases; read more in the [addon’s 
 
 <div class="aside">
 
-Snapshot vs visual tests. [Visual tests](./visual-testing.md) take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
+**Snapshot vs visual tests**
+
+[Visual tests](./visual-testing.md) take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
 
 </div>
