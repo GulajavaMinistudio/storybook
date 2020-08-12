@@ -134,7 +134,7 @@ It's also possible that your Storybook is misconfigured. If you think this might
 
 ### How can I disable controls for certain fields on a particular story?
 
-The `argTypes` annotation annotation can be used to hide controls for a particular row, or even hide rows.
+The `argTypes` annotation can be used to hide controls for a particular row, or even hide rows.
 
 Suppose you have a `Button` component with `borderWidth` and `label` properties (auto-generated or otherwise) and you want to hide the `borderWidth` row completely and disable controls for the `label` row on a specific story. Here's how you'd do that:
 
@@ -153,7 +153,7 @@ CustomControls.argTypes = {
 };
 ```
 
-Like [story parameters](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/basics/writing-stories/index.md#parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.
+Like [story parameters](https://storybook.js.org/docs/react/writing-stories/parameters), `args` and `argTypes` annotations are hierarchically merged, so story-level annotations overwrite component-level annotations.
 
 ### How do controls work with MDX?
 

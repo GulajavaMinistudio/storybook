@@ -32,7 +32,7 @@ The command above will make the following changes to your local environment:
 Check that everything worked by running:
 
 ```shell
-npx storybook
+npm run storybook
 ```
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
@@ -81,6 +81,6 @@ For instance you can use:
 
 <!-- prettier-ignore-end -->
 
-If all else fails, try asking for [help](https://storybook.js.org/support/)
+If all else fails, try asking for [help](https://storybook.js.org/support)
 
 </details>

@@ -1,3 +1,34 @@
+## 6.0.3 (August 12, 2020)
+
+### Bug Fixes
+
+- Essentials: Fix missing toolbars addon ([#11910](https://github.com/storybookjs/storybook/pull/11910))
+
+## 6.0.2 (August 11, 2020)
+
+### Bug Fixes
+
+- CLI: Fix csf-hoist-story-annotations codemod for variable default exports ([#11895](https://github.com/storybookjs/storybook/pull/11895))
+
+## 6.0.1 (August 11, 2020)
+
+### Bug Fixes
+
+- Core: Fix support for main.ts/preview.ts files ([#11885](https://github.com/storybookjs/storybook/pull/11885))
+- Addon-docs: Fix ArgsTable regression ([#11889](https://github.com/storybookjs/storybook/pull/11889))
+
+## 6.0.0 (August 10, 2020)
+
+Storybook 6.0 is here!
+
+- 💎 [Essentials: Zero-configuration setup](https://medium.com/storybookjs/zero-config-storybook-66e7c4798e5d)
+- 🧬 [Args: Next-generation, dynamic story format](https://medium.com/storybookjs/introducing-storybook-args-2dadcdb777cc)
+- 🎛 [Controls: Live edit component examples](https://medium.com/storybookjs/storybook-controls-ce82af93e430)
+- 🌐 [Composition: Combine multiple Storybooks](https://medium.com/storybookjs/storybook-composition-af0da9084fba)
+- 📚 [Documentation: Complete project overhaul](https://storybook.js.org/docs/react/get-started/introduction)
+
+  6.0 contains hundreds more fixes, features, and tweaks. Browse the changelogs matching `6.0.0-alpha.*`, `6.0.0-beta.*`, and `6.0.0-rc.*` for the full list of changes. See [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) to upgrade from `5.3` or earlier.
+
 ## 6.0.0-rc.30 (August 10, 2020)
 
 ### Bug Fixes
