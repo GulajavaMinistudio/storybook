@@ -41,6 +41,11 @@ module.exports = {
           type: 'bullet-link',
           description: 'Take your Storybook skills to the next level',
         },
+        {
+          title: '📚 Examples',
+          pathSegment: 'examples',
+          type: 'link',
+        },
       ],
     },
     {
@@ -189,6 +194,11 @@ module.exports = {
         {
           pathSegment: 'story-rendering',
           title: 'Story rendering',
+          type: 'link',
+        },
+        {
+          pathSegment: 'story-layout',
+          title: 'Story Layout',
           type: 'link',
         },
         {

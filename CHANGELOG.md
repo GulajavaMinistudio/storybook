@@ -1,3 +1,23 @@
+## 6.0.6 (August 14, 2020)
+
+### Bug Fixes
+
+- CLI: Fix upgrade to warn when no packages found ([#11993](https://github.com/storybookjs/storybook/pull/11993))
+- Addon-docs: Fix blocks type export ([#11987](https://github.com/storybookjs/storybook/pull/11987))
+- CLI: Fix RN link ([#11973](https://github.com/storybookjs/storybook/pull/11973))
+
+## 6.0.5 (August 13, 2020)
+
+### Bug Fixes
+
+- CLI: Fix welcome links on Introduction MDX ([#11949](https://github.com/storybookjs/storybook/pull/11949))
+
+## 6.0.4 (August 12, 2020)
+
+### Bug Fixes
+
+- Source-loader: Fix `.add` detection ([#11920](https://github.com/storybookjs/storybook/pull/11920))
+
 ## 6.0.3 (August 12, 2020)
 
 ### Bug Fixes

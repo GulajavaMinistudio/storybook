@@ -11,7 +11,7 @@
 Controls is part of [essentials](https://storybook.js.org/docs/react/essentials/introduction) and so is installed in all new Storybooks by default. If you need to add it to your Storybook, you can run:
 
 ```sh
-npm i -D @storybook/addon-toolbars
+npm i -D @storybook/addon-controls
 ```
 
 Then, add following content to [`.storybook/main.js`](https://storybook.js.org/docs/react/configure/overview#configure-your-storybook-project):
@@ -26,13 +26,13 @@ module.exports = {
 
 The usage is documented in the [documentation](https://storybook.js.org/docs/react/essentials/controls).
 
-- [FAQs](#faqs)
-  - [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
-  - [How do I migrate from addon-knobs?](#how-do-i-migrate-from-addon-knobs)
-  - [My controls aren't being auto-generated. What should I do?](#my-controls-arent-being-auto-generated-what-should-i-do)
-  - [How can I disable controls for certain fields on a particular story?](#how-can-i-disable-controls-for-certain-fields-on-a-particular-story)
-
 ## FAQs
+
+- [How will this replace addon-knobs?](#how-will-this-replace-addon-knobs)
+- [How do I migrate from addon-knobs?](#how-do-i-migrate-from-addon-knobs)
+- [My controls aren't being auto-generated. What should I do?](#my-controls-arent-being-auto-generated-what-should-i-do)
+- [How can I disable controls for certain fields on a particular story?](#how-can-i-disable-controls-for-certain-fields-on-a-particular-story)
+- [How do controls work with MDX?](#how-do-controls-work-with-mdx)
 
 ### How will this replace addon-knobs?
 
@@ -89,7 +89,7 @@ export const Reflow = () => {
 };
 ```
 
-And again, as above, this can be rewritten using [fully custom args](#fully-custom-args):
+And again, as above, this can be rewritten using [fully custom args](https://storybook.js.org/docs/react/essentials/controls#fully-custom-args):
 
 ```jsx
 export const Reflow = ({ count, label, ...args }) => (
@@ -105,7 +105,7 @@ Reflow.argTypes = {
 
 There are a few known cases where controls can't be auto-generated:
 
-- You're using a framework for which automatic generation [isn't supported](#framework-support)
+- You're using a framework for which automatic generation [isn't supported](https://storybook.js.org/docs/react/api/frameworks-feature-support)
 - You're trying to generate controls for a component defined in an external library
 
 With a little manual work you can still use controls in such cases. Consider the following example:
@@ -123,12 +123,12 @@ export default {
 
 export const Basic = (args) => <Button {...args} />;
 Basic.args = {
-  label: 'hello';
-  borderWidth: 1;
+  label: 'hello',
+  borderWidth: 1,
 };
 ```
 
-The `argTypes` annotation (which can also be applied to individual stories if needed), gives Storybook the hints it needs to generate controls in these unsupported cases. See [control annotations](#control-annotations) for a full list of control types.
+The `argTypes` annotation (which can also be applied to individual stories if needed), gives Storybook the hints it needs to generate controls in these unsupported cases. See [control annotations](https://storybook.js.org/docs/react/essentials/controls#annotation) for a full list of control types.
 
 It's also possible that your Storybook is misconfigured. If you think this might be the case, please search through Storybook's [Github issues](https://github.com/storybookjs/storybook/issues), and file a new issue if you don't find one that matches your use case.
 
