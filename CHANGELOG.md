@@ -1,3 +1,38 @@
+## 6.0.10 (August 15, 2020)
+
+### Bug Fixes
+
+- Addon-controls: Fix argType inference priority ([#12048](https://github.com/storybookjs/storybook/pull/12048))
+
+## 6.0.9 (August 15, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix CSF names importing in MDX ([#12044](https://github.com/storybookjs/storybook/pull/12044))
+
+### Maintenance
+
+- ArgsTable: Error when subcomponents is an array ([#12033](https://github.com/storybookjs/storybook/pull/12033))
+
+## 6.0.8 (August 15, 2020)
+
+Unpublished
+
+## 6.0.7 (August 14, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix extractArgTypes for unknown component ([#12012](https://github.com/storybookjs/storybook/pull/12012))
+
+### Maintenance
+
+- UI:pdate upgrade command in about section ([#11934](https://github.com/storybookjs/storybook/pull/11934))
+- Build: Remove documentation scripts and fix README ([#12015](https://github.com/storybookjs/storybook/pull/12015))
+
+### Dependency Upgrades
+
+- Bump jest-specific-snapshot to v4 ([#11939](https://github.com/storybookjs/storybook/pull/11939))
+
 ## 6.0.6 (August 14, 2020)
 
 ### Bug Fixes
