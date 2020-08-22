@@ -1,3 +1,41 @@
+## 6.0.16 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix Vue ArgsTable sanitizing of item.type.elements to item.type.value ([#12165](https://github.com/storybookjs/storybook/pull/12165))
+
+## 6.0.15 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable union type handling in Vue/TS ([#12158](https://github.com/storybookjs/storybook/pull/12158))
+- Addon-docs: Fix inline rendering for DOM nodes in HTML ([#12164](https://github.com/storybookjs/storybook/pull/12164))
+
+### Maintenance
+
+- React: Simplify component type for CSF typing ([#12110](https://github.com/storybookjs/storybook/pull/12110))
+
+## 6.0.14 (August 20, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Fix MDX IDs from CSF imports ([#12154](https://github.com/storybookjs/storybook/pull/12154))
+- Addon-viewport: Add preset to fix windows import ([#12148](https://github.com/storybookjs/storybook/pull/12148))
+- Composition: Verify refs in node ([#12085](https://github.com/storybookjs/storybook/pull/12085))
+
+### Maintenance
+
+- Build: Update and optimize circleCI Config ([#12118](https://github.com/storybookjs/storybook/pull/12118))
+
+## 6.0.13 (August 19, 2020)
+
+### Bug Fixes
+
+- Source-loader: Fix default exports of type TSAsExpression ([#12099](https://github.com/storybookjs/storybook/pull/12099))
+- Addon-docs: Fix source code for Template.bind({}) in MDX ([#12107](https://github.com/storybookjs/storybook/pull/12107))
+- Addon-A11y: Fix manual run & timeline ([#12003](https://github.com/storybookjs/storybook/pull/12003))
+- Core: Add frameworkPath to options to support custom frameworks ([#12087](https://github.com/storybookjs/storybook/pull/12087))
+
 ## 6.0.12 (August 17, 2020)
 
 ### Bug Fixes
