@@ -1,3 +1,28 @@
+## 6.0.19 (August 27, 2020)
+
+### Bug Fixes
+
+* UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))
+
+## 5.3.20 (August 27, 2020)
+
+### Bug Fixes
+
+- React-native server: Fix addon tabs ([#10468](https://github.com/storybookjs/storybook/pull/10468))
+- Addon-docs: Fix babel JSX handling in MDX ([#11448](https://github.com/storybookjs/storybook/pull/11448))
+- Revert "Fix: Search stories" ([#10916](https://github.com/storybookjs/storybook/pull/10916))
+
+## 6.0.18 (August 26, 2020)
+
+### Bug Fixes
+
+- UI: Fix `disable` parameter to hide addon panel ([#12171](https://github.com/storybookjs/storybook/pull/12171))
+- Addon-controls: Fix controls from args ([#12230](https://github.com/storybookjs/storybook/pull/12230))
+
+### Dependency Upgrades
+
+- Mithril: Add Mithril v2.0.0 to peer dependencies ([#12229](https://github.com/storybookjs/storybook/pull/12229))
+
 ## 6.0.17 (August 25, 2020)
 
 ### Bug Fixes

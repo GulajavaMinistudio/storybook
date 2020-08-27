@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.0.17",
+  "version": "6.0.19",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -39,8 +39,8 @@
   "dependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",
-    "@storybook/codemod": "6.0.17",
-    "@storybook/node-logger": "6.0.17",
+    "@storybook/codemod": "6.0.19",
+    "@storybook/node-logger": "6.0.19",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.0.0",
     "commander": "^5.0.0",
@@ -62,7 +62,7 @@
     "update-notifier": "^4.0.0"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.0.17",
+    "@storybook/client-api": "6.0.19",
     "@types/cross-spawn": "^6.0.1",
     "@types/inquirer": "^6.5.0",
     "@types/puppeteer-core": "^2.0.0",
@@ -76,5 +76,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cfe34ef01268e3b1607c34da04efd3ed290f381c"
+  "gitHead": "8cedc0f8a369ecf1f4af9d0a675dba934d685870"
 }
