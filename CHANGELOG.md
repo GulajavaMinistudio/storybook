@@ -1,8 +1,21 @@
+## 6.0.20 (August 28, 2020)
+
+### Bug Fixes
+
+- ArgsTable: Fix union type splitting ([#11868](https://github.com/storybookjs/storybook/pull/11868))
+- CLI: Fix import of Button in react mdx template ([#12252](https://github.com/storybookjs/storybook/pull/12252))
+
+## 5.3.21 (August 28, 2020)
+
+### Bug Fixes
+
+- Core: Add skip dispose option to ClientApi ([#9868](https://github.com/storybookjs/storybook/pull/9868))
+
 ## 6.0.19 (August 27, 2020)
 
 ### Bug Fixes
 
-* UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))
+- UI: Fix eject and copy URLs for composition ([#12233](https://github.com/storybookjs/storybook/pull/12233))
 
 ## 5.3.20 (August 27, 2020)
 
