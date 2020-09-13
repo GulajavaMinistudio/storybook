@@ -1,6 +1,6 @@
 {
   "name": "@storybook/root",
-  "version": "6.1.0-alpha.7",
+  "version": "6.1.0-alpha.9",
   "private": true,
   "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
   "keywords": [
@@ -82,25 +82,7 @@
     }
   },
   "lint-staged": {
-    "*.html": [
-      "yarn lint:js --fix"
-    ],
-    "*.js": [
-      "yarn lint:js --fix"
-    ],
-    "*.json": [
-      "yarn lint:js --fix"
-    ],
-    "*.jsx": [
-      "yarn lint:js --fix"
-    ],
-    "*.mjs": [
-      "yarn lint:js --fix"
-    ],
-    "*.ts": [
-      "yarn lint:js --fix"
-    ],
-    "*.tsx": [
+    "*.{html,js,json,jsx,mjs,ts,tsx}": [
       "yarn lint:js --fix"
     ],
     "package.json": [
