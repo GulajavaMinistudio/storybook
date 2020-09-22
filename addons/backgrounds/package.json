@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-backgrounds",
-  "version": "6.1.0-alpha.12",
+  "version": "6.1.0-alpha.14",
   "description": "A storybook addon to show different backgrounds for your preview",
   "keywords": [
     "addon",
@@ -32,12 +32,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-alpha.12",
-    "@storybook/api": "6.1.0-alpha.12",
-    "@storybook/client-logger": "6.1.0-alpha.12",
-    "@storybook/components": "6.1.0-alpha.12",
-    "@storybook/core-events": "6.1.0-alpha.12",
-    "@storybook/theming": "6.1.0-alpha.12",
+    "@storybook/addons": "6.1.0-alpha.14",
+    "@storybook/api": "6.1.0-alpha.14",
+    "@storybook/client-logger": "6.1.0-alpha.14",
+    "@storybook/components": "6.1.0-alpha.14",
+    "@storybook/core-events": "6.1.0-alpha.14",
+    "@storybook/theming": "6.1.0-alpha.14",
     "core-js": "^3.0.1",
     "memoizerific": "^1.11.3",
     "react": "^16.8.3",
@@ -50,7 +50,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "76ebd96c33a5c55a51e26273c4e78368e86f4e82",
+  "gitHead": "4571582a90b646e361cb37df525f62312486307a",
   "typesVersions": {
     "<3.8": {
       "*": [
