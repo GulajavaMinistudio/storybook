@@ -1,3 +1,27 @@
+## 6.1.0-alpha.16 (September 25, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Add docs support and extend grid configuration ([#12368](https://github.com/storybookjs/storybook/pull/12368))
+- Addon-docs: Fix story description to only show when expanded ([#12563](https://github.com/storybookjs/storybook/pull/12563))
+
+### Dependency Upgrades
+
+- Upgrade react-docgen-typescript-plugin to 0.6.0 ([#12577](https://github.com/storybookjs/storybook/pull/12577))
+
+## 6.1.0-alpha.15 (September 24, 2020)
+
+### Features
+
+- Core: Add viewMode to StoryContext ([#12566](https://github.com/storybookjs/storybook/pull/12566))
+- Addon-docs: Add converters between Flow types and storybook types ([#12550](https://github.com/storybookjs/storybook/pull/12550))
+
+### Bug Fixes
+
+- Addon-actions: Fix log flushing when story re-renders ([#12500](https://github.com/storybookjs/storybook/pull/12500))
+- Angular: Unsubscribe prop subscriptions ([#12514](https://github.com/storybookjs/storybook/pull/12514))
+- Addon-docs: Remove leading pipe if using raw value for Flow union ([#12549](https://github.com/storybookjs/storybook/pull/12549))
+
 ## 6.1.0-alpha.14 (September 22, 2020)
 
 ### Features
