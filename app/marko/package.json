@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marko",
-  "version": "6.1.0-alpha.23",
+  "version": "6.1.0-alpha.25",
   "description": "Storybook for Marko: Develop Marko Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,8 +34,8 @@
   },
   "dependencies": {
     "@marko/webpack": "^6.2.8",
-    "@storybook/client-logger": "6.1.0-alpha.23",
-    "@storybook/core": "6.1.0-alpha.23",
+    "@storybook/client-logger": "6.1.0-alpha.25",
+    "@storybook/core": "6.1.0-alpha.25",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.3",
@@ -52,7 +52,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "1ec9d957eefc851a8353ff46d16612ed98261abf",
+  "gitHead": "da8ff0573a5923d1aa9f861309d0969973cd92b9",
   "typesVersions": {
     "<3.8": {
       "*": [
