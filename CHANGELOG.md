@@ -1,3 +1,45 @@
+## 6.1.1 (November 20, 2020)
+
+### Bug Fixes
+
+- Addon-backgrounds: Fix grid disable ([#13175](https://github.com/storybookjs/storybook/pull/13175))
+
+## 6.1.0 (November 19, 2020)
+
+6.1 is the first in a series of performance-oriented Storybook releases. It includes:
+
+- [Fast search and navigation](https://storybook.js.org/blog/new-component-finder-and-sidebar/)
+- Manager caching for faster startup [#12707](https://github.com/storybookjs/storybook/pull/12707)
+- Asynchronous loaders [#12699](https://github.com/storybookjs/storybook/pull/12699)
+- React improvements
+
+  - React 17 support [#12972](https://github.com/storybookjs/storybook/pull/12972) [#12975](https://github.com/storybookjs/storybook/pull/12975)
+  - Fast refresh [#12470](https://github.com/storybookjs/storybook/pull/12470) [#12535](https://github.com/storybookjs/storybook/pull/12535)
+  - Strict mode [#12781](https://github.com/storybookjs/storybook/pull/12781)
+
+    6.1 contains hundreds more fixes, features, and tweaks. Browse the [changelogs](https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md) matching `6.1.0-alpha.*`, `6.1.0-beta.*`, and `6.1.0-rc.*` for the full list of changes. See [Storybook 6 migration guide](https://medium.com/storybookjs/storybook-6-migration-guide-200346241bb5) to upgrade from `5.3` or earlier.
+
+## 6.1.0-rc.6 (November 19, 2020)
+
+### Bug Fixes
+
+- Core: Fix using cached manager on the 2nd run ([#13165](https://github.com/storybookjs/storybook/pull/13165))
+- Addon-docs: Fix Preview scaling with transform instead of zoom ([#12845](https://github.com/storybookjs/storybook/pull/12845))
+
+## 6.1.0-rc.5 (November 19, 2020)
+
+### Features
+
+- UI: CSS escape hatches for sidebar styling ([#13155](https://github.com/storybookjs/storybook/pull/13155))
+
+### Bug Fixes
+
+- UI: Fix CSS for IE11 ([#13159](https://github.com/storybookjs/storybook/pull/13159))
+
+### Maintenance
+
+- Build: Update example and app to Angular 11 ([#13141](https://github.com/storybookjs/storybook/pull/13141))
+
 ## 6.1.0-rc.4 (November 17, 2020)
 
 ### Maintenance
