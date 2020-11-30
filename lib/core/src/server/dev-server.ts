@@ -174,7 +174,7 @@ const useProgressReporting = async (
     const progress = { value, message: message.charAt(0).toUpperCase() + message.slice(1) };
     if (message === 'building') {
       // arg3 undefined in webpack5
-      const counts = arg3 && arg3.match(/(\d+)\/(\d+)/) || [];
+      const counts = (arg3 && arg3.match(/(\d+)\/(\d+)/)) || [];
       const complete = parseInt(counts[1], 10);
       const total = parseInt(counts[2], 10);
       if (!Number.isNaN(complete) && !Number.isNaN(total)) {
@@ -240,7 +240,7 @@ const startManager = async ({
       logConfig('Manager webpack config', managerConfig);
     }
 
-    if (options.cache) {
+    if (options.cache && !options.smokeTest) {
       if (options.managerCache) {
         const [useCache, hasOutput] = await Promise.all([
           // must run even if outputDir doesn't exist, otherwise the 2nd run won't use cache
@@ -258,7 +258,7 @@ const startManager = async ({
   }
 
   if (!managerConfig) {
-    return { managerStats: {}, managerTotalTime: [0, 0] } as ManagerResult;
+    return {};
   }
 
   const compiler = webpack(managerConfig);
@@ -281,10 +281,11 @@ const startManager = async ({
     next();
   });
 
-  router.post('/runtime-error', (request, response) => {
+  // Used to report back any client-side (runtime) errors
+  router.post('/runtime-error', express.json(), (request, response) => {
     if (request.body?.error) {
       logger.error('Runtime error! Check your browser console.');
-      logger.error(request.body.error.stack || request.body.message);
+      logger.error(request.body.error.stack || request.body.message || request.body);
       if (request.body.origin === 'manager') clearManagerCache(options.cache);
     }
     response.sendStatus(200);
@@ -311,7 +312,7 @@ const startPreview = async ({
   outputDir,
 }: any): Promise<PreviewResult> => {
   if (options.ignorePreview) {
-    return { previewStats: {}, previewTotalTime: [0, 0] } as PreviewResult;
+    return {};
   }
 
   const previewConfig = await loadConfig({
@@ -372,9 +373,6 @@ export async function storybookDevServer(options: any) {
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);
   }
-
-  // Used to report back any client-side (runtime) errors
-  app.use(express.json());
 
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
