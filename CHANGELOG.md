@@ -1,3 +1,19 @@
+## 6.2.0-alpha.5 (December 8, 2020)
+
+### Bug Fixes
+
+- Core: Fix `--static-dir` with absolute path on Windows ([#13344](https://github.com/storybookjs/storybook/pull/13344))
+
+## 6.2.0-alpha.4 (December 6, 2020)
+
+### Bug Fixes
+
+- Addon-docs: Handle svelte docgen failures gracefully ([#13386](https://github.com/storybookjs/storybook/pull/13386))
+
+### Dependency Upgrades
+
+- Bump @ember/test-helpers from 1.7.1 to 2.1.0 ([#13143](https://github.com/storybookjs/storybook/pull/13143))
+
 ## 6.2.0-alpha.3 (December 4, 2020)
 
 ### Bug Fixes
