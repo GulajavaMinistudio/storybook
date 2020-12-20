@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-design-assets",
-  "version": "6.2.0-alpha.8",
+  "version": "6.2.0-alpha.9",
   "description": "Design asset preview for storybook",
   "keywords": [
     "addon",
@@ -41,12 +41,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.8",
-    "@storybook/api": "6.2.0-alpha.8",
-    "@storybook/client-logger": "6.2.0-alpha.8",
-    "@storybook/components": "6.2.0-alpha.8",
-    "@storybook/core-events": "6.2.0-alpha.8",
-    "@storybook/theming": "6.2.0-alpha.8",
+    "@storybook/addons": "6.2.0-alpha.9",
+    "@storybook/api": "6.2.0-alpha.9",
+    "@storybook/client-logger": "6.2.0-alpha.9",
+    "@storybook/components": "6.2.0-alpha.9",
+    "@storybook/core-events": "6.2.0-alpha.9",
+    "@storybook/theming": "6.2.0-alpha.9",
     "core-js": "^3.0.1",
     "global": "^4.3.2",
     "regenerator-runtime": "^0.13.7",
@@ -68,5 +68,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "c04cdab92d3832a904485f0f885a7faac7ebbf93"
+  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
 }
