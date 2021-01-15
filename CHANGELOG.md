@@ -1,3 +1,32 @@
+## 6.2.0-alpha.15 (January 15, 2021)
+
+### Features
+
+- Addon-actions: Normalize args ([#13624](https://github.com/storybookjs/storybook/pull/13624))
+- Addon-viewport: Add viewports of the latest iPhones ([#13176](https://github.com/storybookjs/storybook/pull/13176))
+
+### Maintenance
+
+- Maintenance: Configure Renovate ([#13641](https://github.com/storybookjs/storybook/pull/13641))
+
+### Dependency Upgrades
+
+- Dependencies: 6.2 non-breaking package upgrades ([#13631](https://github.com/storybookjs/storybook/pull/13631))
+- Dependencies: Update postcss-loader to ^4.1.0 ([#13640](https://github.com/storybookjs/storybook/pull/13640))
+
+## 6.2.0-alpha.14 (January 14, 2021)
+
+### Bug Fixes
+
+- CLI: Fix sb init prompt when framework type is undetected ([#13520](https://github.com/storybookjs/storybook/pull/13520))
+
+### Maintenance
+
+- Rax: Migrate to TS ([#13450](https://github.com/storybookjs/storybook/pull/13450))
+- Riot: Migrate to TS ([#13447](https://github.com/storybookjs/storybook/pull/13447))
+- Marionette: Migrate to TS ([#13448](https://github.com/storybookjs/storybook/pull/13448))
+- Marko: Migrate to TS ([#13449](https://github.com/storybookjs/storybook/pull/13449))
+
 ## 6.2.0-alpha.13 (January 13, 2021)
 
 ### Features

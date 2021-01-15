@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channels",
-  "version": "6.2.0-alpha.13",
+  "version": "6.2.0-alpha.15",
   "description": "",
   "keywords": [
     "storybook"
@@ -36,12 +36,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "core-js": "^3.0.1",
+    "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b362282965d10d670ac1efe10bb3391fbeb0755b"
+  "gitHead": "9819dbdf5791d8283f90be6ab73057d10d35ef25"
 }
