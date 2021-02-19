@@ -7,6 +7,9 @@ import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
 import { resolvePathInStorybookCache } from './utils/resolve-path-in-sb-cache';
 import reactOptions from '../../../../app/react/src/server/options';
+import vue3Options from '../../../../app/vue3/src/server/options';
+import htmlOptions from '../../../../app/html/src/server/options';
+import webComponentsOptions from '../../../../app/web-components/src/server/options';
 
 const TIMEOUT = 10000;
 
@@ -47,14 +50,12 @@ const cache = Cache({
 });
 
 const managerOnly = false;
-const options = {
-  ...reactOptions,
+const baseOptions = {
   ignorePreview: managerOnly,
   // FIXME: this should just be ignorePreview everywhere
   managerOnly, // production
   docsMode: false,
   cache,
-  configDir: path.resolve(`${__dirname}/../../../../examples/react-ts`),
   outputDir: `${__dirname}/storybook-static`, // production
   ci: true,
   managerCache: false,
@@ -81,67 +82,82 @@ const cleanRoots = (obj): any => {
 const prepareSnap = (fn: any, name): Pick<Configuration, 'module' | 'entry' | 'plugins'> => {
   const call = fn.mock.calls.find((c) => c[0].name === name);
   if (!call) return null;
+
+  const keys = Object.keys(call[0]);
   const { module, entry, plugins } = call[0];
 
-  return cleanRoots({ module, entry, plugins: plugins.map((p) => p.constructor.name) });
+  return cleanRoots({ keys, module, entry, plugins: plugins.map((p) => p.constructor.name) });
 };
 
 const snap = (name: string) => `__snapshots__/${name}`;
 
-describe('manager', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    cache.clear();
+describe.each([
+  ['cra-ts-essentials', reactOptions],
+  ['vue-3-cli', vue3Options],
+  ['web-components-kitchen-sink', webComponentsOptions],
+  ['html-kitchen-sink', htmlOptions],
+])('%s', (example, frameworkOptions) => {
+  const options = {
+    ...frameworkOptions,
+    ...baseOptions,
+    configDir: path.resolve(`${__dirname}/../../../../examples/${example}/.storybook`),
+  };
+
+  describe('manager', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      cache.clear();
+    });
+    it(
+      'dev mode',
+      async () => {
+        const result = await buildDevStandalone(options);
+        expect(webpack).toHaveBeenCalled();
+
+        const managerConfig = prepareSnap(webpack, 'manager');
+        expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-dev`));
+      },
+      TIMEOUT
+    );
+    it(
+      'production mode',
+      async () => {
+        const result = await buildStaticStandalone(options);
+        expect(webpack).toHaveBeenCalled();
+
+        const managerConfig = prepareSnap(webpack, 'manager');
+        expect(managerConfig).toMatchSpecificSnapshot(snap(`${example}_manager-prod`));
+      },
+      TIMEOUT
+    );
   });
-  it(
-    'dev mode',
-    async () => {
-      const result = await buildDevStandalone(options);
-      expect(webpack).toHaveBeenCalled();
 
-      const managerConfig = prepareSnap(webpack, 'manager');
-      expect(managerConfig).toMatchSpecificSnapshot(snap('manager-dev'));
-    },
-    TIMEOUT
-  );
-  it(
-    'production mode',
-    async () => {
-      const result = await buildStaticStandalone(options);
-      expect(webpack).toHaveBeenCalled();
+  describe('preview', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      cache.clear();
+    });
+    it(
+      'dev mode',
+      async () => {
+        const result = await buildDevStandalone(options);
+        expect(webpack).toHaveBeenCalled();
 
-      const managerConfig = prepareSnap(webpack, 'manager');
-      expect(managerConfig).toMatchSpecificSnapshot(snap('manager-prod'));
-    },
-    TIMEOUT
-  );
-});
+        const previewConfig = prepareSnap(webpack, 'preview');
+        expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-dev`));
+      },
+      TIMEOUT
+    );
+    it(
+      'production mode',
+      async () => {
+        const result = await buildStaticStandalone(options);
+        expect(webpack).toHaveBeenCalled();
 
-describe('preview', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    cache.clear();
+        const previewConfig = prepareSnap(webpack, 'preview');
+        expect(previewConfig).toMatchSpecificSnapshot(snap(`${example}_preview-prod`));
+      },
+      TIMEOUT
+    );
   });
-  it(
-    'dev mode',
-    async () => {
-      const result = await buildDevStandalone(options);
-      expect(webpack).toHaveBeenCalled();
-
-      const previewConfig = prepareSnap(webpack, 'preview');
-      expect(previewConfig).toMatchSpecificSnapshot(snap('preview-dev'));
-    },
-    TIMEOUT
-  );
-  it(
-    'production mode',
-    async () => {
-      const result = await buildStaticStandalone(options);
-      expect(webpack).toHaveBeenCalled();
-
-      const previewConfig = prepareSnap(webpack, 'preview');
-      expect(previewConfig).toMatchSpecificSnapshot(snap('preview-prod'));
-    },
-    TIMEOUT
-  );
 });
