@@ -1,3 +1,32 @@
+## 6.2.0-alpha.33 (February 22, 2021)
+
+### Features
+
+* Addon-docs: Support story.mdx, stories.mdx ([#13996](https://github.com/storybookjs/storybook/pull/13996))
+
+### Bug Fixes
+
+* Webpack5: Remove outdated html-webpack-plugin types ([#13986](https://github.com/storybookjs/storybook/pull/13986))
+
+### Dependency Upgrades
+
+* Move to a fork of react-sizeme with updated React peer dependency ([#13733](https://github.com/storybookjs/storybook/pull/13733))
+* Webpack4: Upgrade html-webpack-plugin and remove external types ([#13993](https://github.com/storybookjs/storybook/pull/13993))
+
+## 6.2.0-alpha.32 (February 21, 2021)
+
+### Breaking prerelease
+
+**NOTE:** this is a breaking change for users of `@storybook/vue3` which is currently in alpha prerelease:
+
+- Vue 3: Map args with setup hook & remove automatic props mapping ([#13981](https://github.com/storybookjs/storybook/pull/13981))
+
+### Bug Fixes
+
+- Webpack5: Fix compilation error display ([#13983](https://github.com/storybookjs/storybook/pull/13983))
+- Webpack5: Add semver to builder-webpack5 dependencies ([#13982](https://github.com/storybookjs/storybook/pull/13982))
+- CLI: Don't allow empty string as outputDir option ([#13969](https://github.com/storybookjs/storybook/pull/13969))
+
 ## 6.2.0-alpha.31 (February 20, 2021)
 
 ### Features
