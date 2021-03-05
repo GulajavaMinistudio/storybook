@@ -12,6 +12,10 @@ Create React App does not allow providing options to Jest in your `package.json`
 npm test -- --coverage --collectCoverageFrom='["src/**/*.{js,jsx}","!src/**/stories/*"]'
 ```
 
+<div class="aside">
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
+</div>
+
 ### I see `ReferenceError: React is not defined` when using storybooks with Next.js
 
 Next automatically defines `React` for all of your files via a babel plugin. You must define `React` for JSX to work. You can solve this either by:
@@ -242,3 +246,8 @@ If you don't want to run the command above frequently. Add <code>http-server</co
 ### Can I use Storybook with Vue 3
 
 Yes, Storybook support for Vue 3 is currently being finalized and will be released in version 6.2. See the [install page](../get-started/install.md) for instructions.
+
+
+### Why are my MDX stories not working in IE11?
+
+Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](../writing-docs/docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
