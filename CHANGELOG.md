@@ -1,3 +1,24 @@
+## 6.2.0-beta.14 (March 11, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue: Fix string docgen ([#14200](https://github.com/storybookjs/storybook/pull/14200))
+- Controls: Fix width of Select control ([#14154](https://github.com/storybookjs/storybook/pull/14154))
+- Source-loader: Revert sourcemaps ([#14199](https://github.com/storybookjs/storybook/pull/14199))
+- Core: Fix webpack stats ([#14198](https://github.com/storybookjs/storybook/pull/14198))
+
+## 6.2.0-beta.13 (March 11, 2021)
+
+### Features
+
+- CLI: Add a `--webpack-stats-json` flag ([#14186](https://github.com/storybookjs/storybook/pull/14186))
+
+### Bug Fixes
+
+- Core: Fix standalone and add tests ([#14196](https://github.com/storybookjs/storybook/pull/14196))
+- Core: Fix dotenv file loading and add `env` to main.js ([#14191](https://github.com/storybookjs/storybook/pull/14191))
+- Core: Fix main.ts/preview.ts ([#14184](https://github.com/storybookjs/storybook/pull/14184))
+
 ## 6.2.0-beta.12 (March 10, 2021)
 
 ### Features
