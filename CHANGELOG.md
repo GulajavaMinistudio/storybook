@@ -1,3 +1,28 @@
+## 6.3.0-alpha.4 (April 10, 2021)
+
+### Features
+
+- Core: Expose Server instance through the pluggable Builder API ([#14468](https://github.com/storybookjs/storybook/pull/14468))
+
+### Maintenance
+
+- Core: Don't shadow the window global variable ([#14472](https://github.com/storybookjs/storybook/pull/14472))
+
+## 6.3.0-alpha.3 (April 10, 2021)
+
+### Features
+
+- UI: Support `*` wildcard option in storySort order array ([#14531](https://github.com/storybookjs/storybook/pull/14531))
+
+### Bug Fixes
+
+- UI: Add show toolbar T in menu ([#14437](https://github.com/storybookjs/storybook/pull/14437))
+
+### Maintenance
+
+- Refactor: Replace `lodash/range` with `Array.from` ([#14323](https://github.com/storybookjs/storybook/pull/14323))
+- Maintenance: Add TypeScript plugin for Yarn ([#14534](https://github.com/storybookjs/storybook/pull/14534))
+
 ## 6.2.7 (April 9, 2021)
 
 ### Bug Fixes
