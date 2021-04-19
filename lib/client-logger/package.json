@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-logger",
-  "version": "6.3.0-alpha.10",
+  "version": "6.3.0-alpha.12",
   "description": "",
   "keywords": [
     "storybook"
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/client-logger"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -42,5 +46,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "080babf6d75b17cd3fa95923858408cafa1eb374"
+  "gitHead": "d559d96fc502634e605654d777bf92924692f154"
 }
