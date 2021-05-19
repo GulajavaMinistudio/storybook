@@ -1,3 +1,58 @@
+## 6.3.0-alpha.34 (May 19, 2021)
+
+### Features
+
+- Core: Single story option in iframe view ([#14875](https://github.com/storybookjs/storybook/pull/14875))
+- Lit: Add typings for @storybook/lit ([#14962](https://github.com/storybookjs/storybook/pull/14962))
+
+### Dependency Upgrades
+
+- Bump telejson to 5.3.2 to use the ESM version ([#14983](https://github.com/storybookjs/storybook/pull/14983))
+- CSF: Add undeclared dependency `regenerator-runtime` ([#14979](https://github.com/storybookjs/storybook/pull/14979))
+
+## 6.3.0-alpha.33 (May 18, 2021)
+
+### Bug Fixes
+
+- Controls: Fix controls without options and add warning ([#14976](https://github.com/storybookjs/storybook/pull/14976))
+- Core: Add remaining sbmodern exports ([#14977](https://github.com/storybookjs/storybook/pull/14977))
+
+## 6.3.0-alpha.32 (May 18, 2021)
+
+Failed NPM publish
+
+## 6.3.0-alpha.31 (May 18, 2021)
+
+### Features
+
+- Angular: Pass bootstrapOptions to angular ([#14852](https://github.com/storybookjs/storybook/pull/14852))
+- Controls: Update all controls to have explicit handling for `undefined` ([#14899](https://github.com/storybookjs/storybook/pull/14899))
+- Core: Add args enhancers + use in addon-actions ([#14901](https://github.com/storybookjs/storybook/pull/14901))
+- Addon-docs: Remove all defaultValue eval-ing ([#14900](https://github.com/storybookjs/storybook/pull/14900))
+
+## 6.3.0-alpha.30 (May 18, 2021)
+
+### Features
+
+- Core: Built-in static `stories.json` support ([#14945](https://github.com/storybookjs/storybook/pull/14945))
+
+### Maintenance
+
+- Core: Add modern build target to apps aka frameworks ([#14967](https://github.com/storybookjs/storybook/pull/14967))
+- Build: Increase CI `build` step to XL ([#14970](https://github.com/storybookjs/storybook/pull/14970))
+
+## 6.3.0-alpha.29 (May 17, 2021)
+
+### Features
+
+- UI: Provide option to hide default toolbar tools ([#14897](https://github.com/storybookjs/storybook/pull/14897))
+- Core: Support modern browser target ([#14954](https://github.com/storybookjs/storybook/pull/14954))
+
+### Maintenance
+
+- Core: Remove updateGlobals warning message ([#14949](https://github.com/storybookjs/storybook/pull/14949))
+- Controls: Tighten color control inference heuristic and test ([#14684](https://github.com/storybookjs/storybook/pull/14684))
+
 ## 6.3.0-alpha.28 (May 15, 2021)
 
 ### Bug Fixes
