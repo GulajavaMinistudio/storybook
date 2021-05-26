@@ -1,3 +1,70 @@
+## 6.3.0-beta.1 (May 26, 2021)
+
+### Bug Fixes
+
+- Core: Fix prebuilt manager ([#15050](https://github.com/storybookjs/storybook/pull/15050))
+- Core: Fix storySort `order` with whitespace in story paths ([#15038](https://github.com/storybookjs/storybook/pull/15038))
+
+### Maintenance
+
+- Do not try to named import from global ([#15043](https://github.com/storybookjs/storybook/pull/15043))
+- Remove storybook/lit from monorepo ([#15048](https://github.com/storybookjs/storybook/pull/15048))
+
+## 6.3.0-beta.0 (May 26, 2021)
+
+Storybook 6.3 is in beta!! 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Angular** - Overhauled Angular support.
+- **Web-components** - Lit2 support.
+- **Webpack 5** - Official support.
+- **Vite builder** - Community support.
+- **Modern ESM** - Modern package distribution.
+- **API** - Keyboard shortcuts for addons.
+
+Track the release in the Github: [Storybook 6.3 Release 🛠](https://github.com/storybookjs/storybook/issues/14397)
+
+## 6.3.0-alpha.45 (May 26, 2021)
+
+### Features
+
+- CLI: Add option to force-build iframe despite custom preview URL ([#15030](https://github.com/storybookjs/storybook/pull/15030))
+
+### Bug Fixes
+
+- Addon-docs: Fix source block tree shaking ([#15035](https://github.com/storybookjs/storybook/pull/15035))
+- Addon-a11y: Highlight all elements correctly ([#14935](https://github.com/storybookjs/storybook/pull/14935))
+
+## 6.3.0-alpha.44 (May 25, 2021)
+
+### Features
+
+- Presets: Expand `webpackInstance` to include entire namespace ([#15016](https://github.com/storybookjs/storybook/pull/15016))
+- Angular: Add `angularBrowserTarget` option in server ([#14955](https://github.com/storybookjs/storybook/pull/14955))
+
+### Bug Fixes
+
+- Core: Ignore manager cache on config file changes and Storybook upgrade ([#14993](https://github.com/storybookjs/storybook/pull/14993))
+
+## 6.3.0-alpha.43 (May 25, 2021)
+
+### Features
+
+- Web-components: Support lit 2 with back-compat ([#14898](https://github.com/storybookjs/storybook/pull/14898))
+
+### Bug Fixes
+
+- Angular: Use NormalizeOptimization from angular-cli ([#15022](https://github.com/storybookjs/storybook/pull/15022))
+
+### Maintenance
+
+- Build: Fix selectors used in Cypress tests and E2E exit code ([#15021](https://github.com/storybookjs/storybook/pull/15021))
+
+### Dependency Upgrades
+
+- Bump react-docgen-typescript-plugin to 0.7.2-canary.375d65e.0 ([#15024](https://github.com/storybookjs/storybook/pull/15024))
+
 ## 6.3.0-alpha.42 (May 24, 2021)
 
 ### Dependency Upgrades
