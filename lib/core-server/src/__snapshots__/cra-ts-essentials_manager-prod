@@ -5,12 +5,10 @@ Object {
   "entry": Array [
     "ROOT/lib/core-client/dist/esm/globals/polyfills.js",
     "ROOT/lib/core-client/dist/esm/manager/index.js",
-    "ROOT/addons/links/dist/esm/register.js",
     "ROOT/addons/docs/dist/esm/register.js",
     "ROOT/addons/controls/dist/esm/register.js",
     "ROOT/addons/actions/dist/esm/register.js",
     "ROOT/addons/backgrounds/dist/esm/register.js",
-    "ROOT/addons/viewport/dist/esm/register.js",
     "ROOT/addons/toolbars/dist/esm/register.js",
     "ROOT/examples/cra-ts-essentials/.storybook/generated-refs.js",
   ],
@@ -98,6 +96,7 @@ Object {
                 Array [
                   "NODE_MODULES/@babel/preset-env/lib/index.js",
                   Object {
+                    "loose": true,
                     "shippedProposals": true,
                   },
                 ],
@@ -168,6 +167,7 @@ Object {
                 Array [
                   "NODE_MODULES/@babel/preset-env/lib/index.js",
                   Object {
+                    "loose": true,
                     "modules": false,
                     "shippedProposals": true,
                     "targets": "defaults",
