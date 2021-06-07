@@ -1,1 +1,1 @@
-{"version":"6.3.0-beta.13","info":{"plain":"### Maintenance\n\n- CsfFile: Index Meta/Story annotations ([#15152](https://github.com/storybookjs/storybook/pull/15152))\n- CLI: Update project template for web-components ([#15149](https://github.com/storybookjs/storybook/pull/15149))\n- Build: Fix WC example and e2e tests ([#15146](https://github.com/storybookjs/storybook/pull/15146))"}}
+{"version":"6.3.0-beta.16","info":{"plain":"### Features\n\n- Angular: Add compodoc to ng builder ([#15165](https://github.com/storybookjs/storybook/pull/15165))"}}

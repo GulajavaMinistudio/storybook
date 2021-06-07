@@ -1,3 +1,25 @@
+## 6.3.0-beta.16 (June 8, 2021)
+
+### Features
+
+- Angular: Add compodoc to ng builder ([#15165](https://github.com/storybookjs/storybook/pull/15165))
+
+## 6.3.0-beta.15 (June 7, 2021)
+
+### Bug Fixes
+
+- Angular: Clear root / docs-root when navigating from one tab to the other ([#15160](https://github.com/storybookjs/storybook/pull/15160))
+
+## 6.3.0-beta.14 (June 6, 2021)
+
+### Features
+
+- Controls: Style `undefined` range slider different to filled one ([#14973](https://github.com/storybookjs/storybook/pull/14973))
+
+### Dependency Upgrades
+
+- Upgrade to react-docgen-typescript-plugin 1.0.0 ([#15154](https://github.com/storybookjs/storybook/pull/15154))
+
 ## 6.3.0-beta.13 (June 6, 2021)
 
 ### Maintenance
