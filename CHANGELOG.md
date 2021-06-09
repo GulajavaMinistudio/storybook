@@ -1,3 +1,35 @@
+## 6.3.0-rc.0 (June 9, 2021)
+
+Storybook 6.3 is in RC!! 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Angular** - Angular12, Ivy, overhauled docs support.
+- **Web-components** - Lit2 support.
+- **Essentials** - New measure/outline addons for CSS debugging.
+- **Addon API** - Keyboard shortcuts for addons. Initial support in viewports, toolbars.
+- **Webpack 5** - Official support.
+- **Vite builder** - Community support.
+- **Modern ESM** - Modern package distribution.
+
+Track the release in the Github: [Storybook 6.3 Release 🛠](https://github.com/storybookjs/storybook/issues/14397)
+
+## 6.3.0-beta.18 (June 9, 2021)
+
+### Features
+
+- Toolbars: Add customizable keyboard navigation shortcuts ([#15169](https://github.com/storybookjs/storybook/pull/15169))
+
+### Bug Fixes
+
+- Controls: Initialize color control on reset ([#15059](https://github.com/storybookjs/storybook/pull/15059))
+
+## 6.3.0-beta.17 (June 8, 2021)
+
+### Bug Fixes
+
+- Measure: Update version to fix hooks issue ([#15167](https://github.com/storybookjs/storybook/pull/15167))
+
 ## 6.3.0-beta.16 (June 8, 2021)
 
 ### Features
