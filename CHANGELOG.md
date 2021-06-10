@@ -1,3 +1,19 @@
+## 6.3.0-rc.2 (June 10, 2021)
+
+### Features
+
+- Core: Add `shortcuts` URL param to disable keyboard shortcuts ([#15192](https://github.com/storybookjs/storybook/pull/15192))
+
+### Bug Fixes
+
+- Angular: Fix builder runaway process ([#15189](https://github.com/storybookjs/storybook/pull/15189))
+
+## 6.3.0-rc.1 (June 10, 2021)
+
+### Maintenance
+
+- Core: Use named import for @storybook/addons, fixes vite builder ([#15187](https://github.com/storybookjs/storybook/pull/15187))
+
 ## 6.3.0-rc.0 (June 9, 2021)
 
 Storybook 6.3 is in RC!! 🎉🎉🎉
