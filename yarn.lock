@@ -6052,6 +6052,7 @@ __metadata:
     "@storybook/components": 6.3.0-rc.11
     "@storybook/theming": 6.3.0-rc.11
     core-js: ^3.8.2
+    regenerator-runtime: ^0.13.7
   peerDependencies:
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
@@ -7383,18 +7384,41 @@ __metadata:
     webpack-dev-middleware: ^3.7.3
     window-size: ^1.1.1
   dependenciesMeta:
+    "@compodoc/compodoc":
+      built: false
     "@cypress/webpack-preprocessor":
       optional: true
+    core-js:
+      built: false
+    core-js-pure:
+      built: false
     cypress:
       optional: true
+    ejs:
+      built: false
+    level:
+      built: false
+    node-uuid:
+      built: false
+      unplugged: false
+    nodemon:
+      built: false
+    parcel:
+      built: false
+    preact:
+      built: false
     puppeteer:
       optional: true
+    styled-components:
+      built: false
     ts-loader:
       optional: true
     verdaccio:
       optional: true
     verdaccio-auth-memory:
       optional: true
+    yorkie:
+      built: false
   languageName: unknown
   linkType: soft
 
