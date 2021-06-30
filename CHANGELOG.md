@@ -1,3 +1,45 @@
+## 6.3.2 (June 30, 2021)
+
+### Bug Fixes
+
+- Essentials: Update measure and outline. Fix alt+tab issues on windows. ([#15402](https://github.com/storybookjs/storybook/pull/15402))
+- Core: Fix decorator context update ([#15408](https://github.com/storybookjs/storybook/pull/15408))
+- Revert "Vue3: Update args without re-mounting component" ([#15409](https://github.com/storybookjs/storybook/pull/15409))
+- Upgrade bad release of `react-docgen-typescript-plugin` ([#15432](https://github.com/storybookjs/storybook/pull/15432))
+
+## 6.4.0-alpha.9 (June 30, 2021)
+
+### Dependency Upgrades
+
+- Upgrade bad release of `react-docgen-typescript-plugin` ([#15432](https://github.com/storybookjs/storybook/pull/15432))
+
+## 6.4.0-alpha.8 (June 30, 2021)
+
+### Features
+
+- Web-components: Custom Elements Manifest v1 support ([#15138](https://github.com/storybookjs/storybook/pull/15138))
+
+### Bug Fixes
+
+- CSF: Fix auto-title generation for standard config dir ([#15430](https://github.com/storybookjs/storybook/pull/15430))
+
+### Dependency Upgrades
+
+- Upgrade `react-docgen-typescript-plugin` for refresh perf regression ([#15431](https://github.com/storybookjs/storybook/pull/15431))
+
+## 6.4.0-alpha.7 (June 29, 2021)
+
+### Features
+
+- CSF: Generate default titles based on file path ([#15376](https://github.com/storybookjs/storybook/pull/15376))
+
+## 6.4.0-alpha.6 (June 29, 2021)
+
+### Bug Fixes
+
+- Core: Fix decorator context update ([#15408](https://github.com/storybookjs/storybook/pull/15408))
+- Revert "Vue3: Update args without re-mounting component" ([#15409](https://github.com/storybookjs/storybook/pull/15409))
+
 ## 6.4.0-alpha.5 (June 29, 2021)
 
 ### Features
