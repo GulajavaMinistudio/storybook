@@ -1,3 +1,29 @@
+## 6.4.0-alpha.11 (July 3, 2021)
+
+### Bug Fixes
+
+- UI: Fix sidebar toggle in fullscreen mode ([#15459](https://github.com/storybookjs/storybook/pull/15459))
+- Angular: Fix circular reference not being handled in moduleMetadata ([#15410](https://github.com/storybookjs/storybook/pull/15410))
+
+### Maintenance
+
+- Addon-a11y: Reverse help and description labels in accordion ([#15466](https://github.com/storybookjs/storybook/pull/15466))
+
+## 6.4.0-alpha.10 (July 2, 2021)
+
+### Features
+
+- UI: Display menu icon on the toolbar when the sidebar is collapsed ([#15369](https://github.com/storybookjs/storybook/pull/15369))
+
+### Bug Fixes
+
+- Core: Fix double rebuilds by removing aggregateTimeout ([#15372](https://github.com/storybookjs/storybook/pull/15372))
+- CLI: Fix NPM typo ([#15461](https://github.com/storybookjs/storybook/pull/15461))
+
+### Maintenance
+
+- Addon-docs: Cache DocsContext on window to prevent duplication ([#15428](https://github.com/storybookjs/storybook/pull/15428))
+
 ## 6.3.2 (June 30, 2021)
 
 ### Bug Fixes
