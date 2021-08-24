@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.4.0-alpha.31",
+  "version": "6.4.0-alpha.32",
   "description": "",
   "keywords": [
     "storybook"
@@ -40,9 +40,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.4.0-alpha.31",
-    "@storybook/client-logger": "6.4.0-alpha.31",
-    "@storybook/core-events": "6.4.0-alpha.31",
+    "@storybook/channels": "6.4.0-alpha.32",
+    "@storybook/client-logger": "6.4.0-alpha.32",
+    "@storybook/core-events": "6.4.0-alpha.32",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "qs": "^6.10.0",
@@ -51,6 +51,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "5582ee2f669286ae640067f27354516c941cd5f2",
+  "gitHead": "ee3198a84adf021e9214b929da9f59c525d8adc6",
   "sbmodern": "dist/modern/index.js"
 }
