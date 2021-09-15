@@ -1,3 +1,21 @@
+## 6.4.0-alpha.36 (September 15, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Ensure we don't clobber multiple source container state updates ([#16039](https://github.com/storybookjs/storybook/pull/16039))
+- Core: Restore deprecation warning for configure ([#16041](https://github.com/storybookjs/storybook/pull/16041))
+- Core: Be careful in `FEATURES` check ([#16044](https://github.com/storybookjs/storybook/pull/16044))
+
+## 6.4.0-alpha.35 (September 14, 2021)
+
+### Features
+
+- Core: On demand store ([#15871](https://github.com/storybookjs/storybook/pull/15871))
+
+### Bug Fixes
+
+- UI: Fix ActionButton out of position in Safari ([#15981](https://github.com/storybookjs/storybook/pull/15981))
+
 ## 6.4.0-alpha.34 (September 7, 2021)
 
 ### Features
