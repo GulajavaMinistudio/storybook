@@ -1,6 +1,6 @@
 {
   "name": "@storybook/csf-tools",
-  "version": "6.4.0-alpha.40",
+  "version": "6.4.0-beta.0",
   "description": "",
   "keywords": [
     "storybook"
@@ -55,16 +55,16 @@
     "js-string-escape": "^1.0.1",
     "lodash": "^4.17.20",
     "prettier": "^2.2.1",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.6",
-    "js-yaml": "^3.14.1",
-    "ts-dedent": "^2.0.0"
+    "js-yaml": "^3.14.1"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6b767d7c8f81b45cccd89a224223963fa751ad91",
+  "gitHead": "44a855043cb0f43a03025df37cb105f4ce07d46f",
   "sbmodern": "dist/modern/index.js"
 }
