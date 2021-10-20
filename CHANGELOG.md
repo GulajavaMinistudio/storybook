@@ -1,3 +1,35 @@
+## 6.4.0-beta.16 (October 20, 2021)
+
+### Bug Fixes
+
+- Core: Consolidate framework presets ([#16417](https://github.com/storybookjs/storybook/pull/16417))
+- Addon-a11y: Fix to use `loadStory` over deprecated `fromId` ([#16398](https://github.com/storybookjs/storybook/pull/16398))
+- Core: Restore `queryparams` exports in `client-api` ([#16414](https://github.com/storybookjs/storybook/pull/16414))
+
+### Maintenance
+
+- Core: Minor cleanup of `PreviewWeb` ([#16418](https://github.com/storybookjs/storybook/pull/16418))
+
+### Dependency Upgrades
+
+- Update `react-element-to-jsx-string` package ([#16407](https://github.com/storybookjs/storybook/pull/16407))
+
+## 6.4.0-beta.15 (October 19, 2021)
+
+### Features
+
+- Core: Add `framework` field support to main.js ([#16393](https://github.com/storybookjs/storybook/pull/16393))
+
+### Bug Fixes
+
+- Addon-docs: Spread all the old docs context fields ([#16399](https://github.com/storybookjs/storybook/pull/16399))
+- Core: Reverse checking of promise so it's OK if we get it wrong ([#16396](https://github.com/storybookjs/storybook/pull/16396))
+
+### Maintenance
+
+- Addon-interactions: Update interaction hover icon ([#16388](https://github.com/storybookjs/storybook/pull/16388))
+- Core: Refactor story store to be simpler when getting the index ([#16397](https://github.com/storybookjs/storybook/pull/16397))
+
 ## 6.4.0-beta.14 (October 19, 2021)
 
 ### Bug Fixes
