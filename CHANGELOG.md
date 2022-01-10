@@ -1,3 +1,55 @@
+## 6.5.0-alpha.13 (January 11, 2022)
+
+### Features
+
+- UI: Set the current story name in the title ([#17177](https://github.com/storybookjs/storybook/pull/17177))
+
+### Bug Fixes
+
+- Core: Retain iframe.html query parameters ([#17136](https://github.com/storybookjs/storybook/pull/17136))
+- CSF3: Remove `path` from autoTitle browser code ([#17185](https://github.com/storybookjs/storybook/pull/17185))
+
+### Maintenance
+
+- Build: Fix package.json warnings in JetBrains IDEs ([#17184](https://github.com/storybookjs/storybook/pull/17184))
+- Fix github workflow syntax to run unit-tests on push ([#17148](https://github.com/storybookjs/storybook/pull/17148))
+
+## 5.3.22 (January 10, 2022)
+
+### Dependency Upgrades
+
+- Bump cli-table3 to fix colors.js bug in 5.3 ([#17182](https://github.com/storybookjs/storybook/pull/17182))
+
+## 6.3.13 (January 10, 2022)
+
+### Dependency Upgrades
+
+- Bump cli-table3 to fix colors bug ([#17180](https://github.com/storybookjs/storybook/pull/17180))
+
+## 6.4.10 (January 10, 2022)
+
+### Bug Fixes
+
+- Core: Fix process.env assignment ([#17174](https://github.com/storybookjs/storybook/pull/17174))
+- Angular: Fix angular 13.1 JIT error and HMR reload ([#17131](https://github.com/storybookjs/storybook/pull/17131))
+- Router: Fix navigating to hash links ([#17134](https://github.com/storybookjs/storybook/pull/17134))
+- Source-loader: Fix node.declaration edge case ([#17027](https://github.com/storybookjs/storybook/pull/17027))
+- Core: Fix debug output on webpack failures ([#16988](https://github.com/storybookjs/storybook/pull/16988))
+
+### Dependency Upgrades
+
+- Bump cli-table3 to fix colors bug ([#17180](https://github.com/storybookjs/storybook/pull/17180))
+
+## 6.5.0-alpha.12 (January 10, 2022)
+
+### Bug Fixes
+
+- Core: Fix process.env assignment ([#17174](https://github.com/storybookjs/storybook/pull/17174))
+
+### Dependency Upgrades
+
+- Bump cli-table3 to fix colors bug ([#17180](https://github.com/storybookjs/storybook/pull/17180))
+
 ## 6.5.0-alpha.11 (January 7, 2022)
 
 ### Bug Fixes
