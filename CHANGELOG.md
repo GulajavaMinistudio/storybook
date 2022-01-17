@@ -1,3 +1,26 @@
+## 6.5.0-alpha.19 (January 17, 2022)
+
+### Features
+
+- Core: Add IS_STORYBOOK global variable ([#16676](https://github.com/storybookjs/storybook/pull/16676))
+
+### Bug Fixes
+
+- Addon-docs: Fix `docs.disable` parameter on DocsPage ([#17256](https://github.com/storybookjs/storybook/pull/17256))
+- Controls: Fix number control update when using useArgs hook ([#17247](https://github.com/storybookjs/storybook/pull/17247))
+- Core: Fix issue with recursive glob with prior special chars ([#17252](https://github.com/storybookjs/storybook/pull/17252))
+
+## 6.5.0-alpha.18 (January 16, 2022)
+
+### Bug Fixes
+
+- Webpack: Fix for `process` fallback using `require.resolve` ([#17249](https://github.com/storybookjs/storybook/pull/17249))
+
+### Maintenance
+
+- Official-storybook: Fix ForwardRefButtonInnerPropTypes warning ([#12733](https://github.com/storybookjs/storybook/pull/12733))
+- Fix prettier 2.3 formatting across the codebase ([#17242](https://github.com/storybookjs/storybook/pull/17242))
+
 ## 6.4.13 (January 15, 2022)
 
 ### Bug Fixes
