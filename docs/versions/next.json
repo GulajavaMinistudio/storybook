@@ -1,1 +1,1 @@
-{"version":"6.5.0-alpha.28","info":{"plain":"### Bug Fixes\n\n* Svelte: Fix missing templates dir in package.json publish files ([#17367](https://github.com/storybookjs/storybook/pull/17367))"}}
+{"version":"6.5.0-alpha.30","info":{"plain":"### Maintenance\n\n* Build: Enforce stricter types ([#17368](https://github.com/storybookjs/storybook/pull/17368))"}}
