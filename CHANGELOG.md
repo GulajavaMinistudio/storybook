@@ -1,3 +1,20 @@
+## 6.5.0-alpha.44 (February 28, 2022)
+
+### Dependency Upgrades
+
+* Fix mdx-csf dependencies to canary dist-tag ([#17592](https://github.com/storybookjs/storybook/pull/17592))
+
+## 6.5.0-alpha.43 (February 28, 2022)
+
+### Features
+
+- Addon-docs: MDX2 support ([#17515](https://github.com/storybookjs/storybook/pull/17515))
+
+### Bug Fixes
+
+- Core: Fix global render fn ([#17577](https://github.com/storybookjs/storybook/pull/17577))
+- Addon-interactions: Mock window in browser environments ([#17535](https://github.com/storybookjs/storybook/pull/17535))
+
 ## 6.5.0-alpha.42 (February 25, 2022)
 
 ### Bug Fixes

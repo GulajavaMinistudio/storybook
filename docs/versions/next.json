@@ -1,1 +1,1 @@
-{"version":"6.5.0-alpha.42","info":{"plain":"### Bug Fixes\n\n- Controls/Essentials/Interactions: Add support for main.cjs/mjs/tsx files ([#17524](https://github.com/storybookjs/storybook/pull/17524))\n- Addon-docs: Fix preset handling for builder with options ([#17544](https://github.com/storybookjs/storybook/pull/17544))"}}
+{"version":"6.5.0-alpha.44","info":{"plain":"### Dependency Upgrades\n\n* Fix mdx-csf dependencies to canary dist-tag ([#17592](https://github.com/storybookjs/storybook/pull/17592))"}}
