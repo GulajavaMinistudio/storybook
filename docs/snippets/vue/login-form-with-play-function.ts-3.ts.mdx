@@ -1,5 +1,5 @@
 ```js
-// LoginForm.stories.js
+// LoginForm.stories.ts
 
 import { userEvent, within } from '@storybook/testing-library';
 
@@ -7,19 +7,23 @@ import { expect } from '@storybook/jest';
 
 import LoginForm from './LoginForm.vue';
 
+import { Meta, StoryFn } from '@storybook/vue3';
+
 export default {
   /* 👇 The title prop is optional.
-  * See https://storybook.js.org/docs/vue/configure/overview#configure-story-loading
-  * to learn how to generate automatic titles
-  */
+   * See https://storybook.js.org/docs/vue/configure/overview#configure-story-loading
+   * to learn how to generate automatic titles
+   */
   title: 'Form',
   component: LoginForm,
-};
+} as Meta<typeof LoginForm>;
 
-const Template = (args, { argTypes }) => ({
+const Template: StoryFn<typeof LoginForm> = (args) => ({
   components: { LoginForm },
-  props: Object.keys(argTypes),
-  template: `<LoginForm v-bind="$props" v-on="$props" />`,
+  setup() {
+    return args;
+  },
+  template: '<LoginForm @onSubmit="onSubmit" v-bind="args" />',
 });
 
 export const EmptyForm = Template.bind({});
