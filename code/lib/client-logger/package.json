@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-logger",
-  "version": "7.0.0-alpha.30",
+  "version": "7.0.0-alpha.31",
   "description": "",
   "keywords": [
     "storybook"
@@ -39,7 +39,7 @@
   ],
   "scripts": {
     "check": "tsc --noEmit",
-    "prepare": "../../../scripts/prepare/bundle.ts"
+    "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
     "global": "^4.4.0"

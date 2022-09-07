@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-websocket",
-  "version": "7.0.0-alpha.30",
+  "version": "7.0.0-alpha.31",
   "description": "",
   "keywords": [
     "storybook"
@@ -31,11 +31,11 @@
   ],
   "scripts": {
     "check": "tsc --noEmit",
-    "prepare": "node ../../../scripts/prepare.js"
+    "prep": "node ../../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "7.0.0-alpha.30",
-    "@storybook/client-logger": "7.0.0-alpha.30",
+    "@storybook/channels": "7.0.0-alpha.31",
+    "@storybook/client-logger": "7.0.0-alpha.31",
     "global": "^4.4.0",
     "telejson": "^6.0.8"
   },
