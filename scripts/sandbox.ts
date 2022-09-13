@@ -13,7 +13,9 @@ import {
 import prompts from 'prompts';
 import type { AbortController } from 'node-abort-controller';
 import command from 'execa';
+import dedent from 'ts-dedent';
 
+import dedent from 'ts-dedent';
 import { createOptions, getOptionsOrPrompt, OptionValues } from './utils/options';
 import { executeCLIStep } from './utils/cli-step';
 import { installYarn2, configureYarn2ForVerdaccio, addPackageResolutions } from './utils/yarn';
@@ -23,19 +25,19 @@ import { ConfigFile, readConfig, writeConfig } from '../code/lib/csf-tools';
 import { babelParse } from '../code/lib/csf-tools/src/babelParse';
 import TEMPLATES from '../code/lib/cli/src/repro-templates';
 import { servePackages } from './utils/serve-packages';
-import dedent from 'ts-dedent';
 
 type Template = keyof typeof TEMPLATES;
 const templates: Template[] = Object.keys(TEMPLATES) as any;
 const addons = ['a11y', 'storysource'];
 const defaultAddons = [
+  'a11y',
   'actions',
   'backgrounds',
   'controls',
   'docs',
   'highlight',
-  'links',
   'interactions',
+  'links',
   'measure',
   'outline',
   'toolbars',
@@ -255,6 +257,11 @@ function forceViteRebuilds(mainConfig: ConfigFile) {
   );
 }
 
+function addPreviewAnnotations(mainConfig: ConfigFile, paths: string[]) {
+  const config = mainConfig.getFieldValue(['previewAnnotations']) as string[];
+  mainConfig.setFieldValue(['previewAnnotations'], [...(config || []), ...paths]);
+}
+
 // paths are of the form 'renderers/react', 'addons/actions'
 async function addStories(paths: string[], { mainConfig }: { mainConfig: ConfigFile }) {
   // Add `stories` entries of the form
@@ -289,11 +296,10 @@ async function addStories(paths: string[], { mainConfig }: { mainConfig: ConfigF
       )
   );
 
-  const config = mainConfig.getFieldValue(['config']) as string[];
   const extraConfig = extraPreviewAndExistence
     .filter(([, exists]) => exists)
     .map(([p]) => path.join('..', '..', 'code', p));
-  mainConfig.setFieldValue(['config'], [...(config || []), ...extraConfig]);
+  addPreviewAnnotations(mainConfig, extraConfig);
 }
 
 type Workspace = { name: string; location: string };
@@ -379,10 +385,7 @@ export async function sandbox(optionValues: OptionValues<typeof options>) {
       path.join(codeDir, rendererPath, 'template', 'components'),
       path.resolve(cwd, storiesPath, 'components')
     );
-    mainConfig.setFieldValue(
-      ['previewEntries'],
-      [`.${path.sep}${path.join(storiesPath, 'components')}`]
-    );
+    addPreviewAnnotations(mainConfig, [`.${path.sep}${path.join(storiesPath, 'components')}`]);
 
     // Link in the stories from the store, the renderer and the addons
     const storiesToAdd = [] as string[];
