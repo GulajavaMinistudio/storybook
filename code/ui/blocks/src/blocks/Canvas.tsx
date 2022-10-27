@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, ReactNode, ReactNodeArray, useContext } from 'react';
-import { AnyFramework } from '@storybook/csf';
+import type { AnyFramework } from '@storybook/types';
 import {
   Preview as PurePreview,
   PreviewProps as PurePreviewProps,
@@ -53,6 +53,7 @@ const getPreviewProps = (
   const storyIds = targetIds.map((targetId) => {
     return targetId;
   });
+
   const stories = useStories(storyIds, docsContext);
   isLoading = stories.some((s) => !s);
 

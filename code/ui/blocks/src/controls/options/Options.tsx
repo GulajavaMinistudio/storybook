@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
-import { dedent } from 'ts-dedent';
-import { deprecate } from '@storybook/client-logger';
 
+// eslint-disable-next-line import/no-cycle
 import { CheckboxControl } from './Checkbox';
+// eslint-disable-next-line import/no-cycle
 import { RadioControl } from './Radio';
+// eslint-disable-next-line import/no-cycle
 import { SelectControl } from './Select';
+// eslint-disable-next-line import/no-cycle
 import { ControlProps, OptionsSelection, OptionsConfig, Options } from '../types';
 
 /**
@@ -39,21 +41,13 @@ const Controls = {
 
 export type OptionsProps = ControlProps<OptionsSelection> & OptionsConfig;
 export const OptionsControl: FC<OptionsProps> = (props) => {
-  const { type = 'select', options, labels, argType } = props;
+  const { type = 'select', labels, argType } = props;
   const normalized = {
     ...props,
-    options: normalizeOptions(options || argType.options, labels),
+    options: argType ? normalizeOptions(argType.options, labels) : {},
     isInline: type.includes('inline'),
     isMulti: type.includes('multi'),
   };
-
-  if (options) {
-    deprecate(dedent`
-      'control.options' is deprecated and will be removed in Storybook 7.0. Define 'options' directly on the argType instead, and use 'control.labels' for custom labels.
-
-      More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-controloptions
-    `);
-  }
 
   const Control = Controls[type];
   if (Control) {

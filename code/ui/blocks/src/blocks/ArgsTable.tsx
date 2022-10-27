@@ -1,14 +1,14 @@
 import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
 import mapValues from 'lodash/mapValues';
-import { ArgTypesExtractor } from '@storybook/docs-tools';
-import { filterArgTypes, PropDescriptor } from '@storybook/store';
+import type { ArgTypesExtractor } from '@storybook/docs-tools';
+import { filterArgTypes } from '@storybook/store';
+import type { Store_PropDescriptor, StrictArgTypes, Args, Globals } from '@storybook/types';
 import {
   STORY_ARGS_UPDATED,
   UPDATE_STORY_ARGS,
   RESET_STORY_ARGS,
   GLOBALS_UPDATED,
 } from '@storybook/core-events';
-import { StrictArgTypes, Args, Globals } from '@storybook/csf';
 import {
   ArgsTable as PureArgsTable,
   ArgsTableProps as PureArgsTableProps,
@@ -23,8 +23,8 @@ import { getComponentName } from './utils';
 import { useStory } from './useStory';
 
 interface BaseProps {
-  include?: PropDescriptor;
-  exclude?: PropDescriptor;
+  include?: Store_PropDescriptor;
+  exclude?: Store_PropDescriptor;
   sort?: SortType;
 }
 
@@ -90,8 +90,8 @@ const useGlobals = (context: DocsContextProps): [Globals] => {
 export const extractComponentArgTypes = (
   component: Component,
   context: DocsContextProps,
-  include?: PropDescriptor,
-  exclude?: PropDescriptor
+  include?: Store_PropDescriptor,
+  exclude?: Store_PropDescriptor
 ): StrictArgTypes => {
   const { parameters } = context.storyById();
   const { extractArgTypes }: { extractArgTypes: ArgTypesExtractor } = parameters.docs || {};
@@ -125,8 +125,8 @@ const addComponentTabs = (
   tabs: Record<string, PureArgsTableProps>,
   components: Record<string, Component>,
   context: DocsContextProps,
-  include?: PropDescriptor,
-  exclude?: PropDescriptor,
+  include?: Store_PropDescriptor,
+  exclude?: Store_PropDescriptor,
   sort?: SortType
 ) => ({
   ...tabs,
@@ -165,6 +165,7 @@ export const StoryTable: FC<
     const story = useStory(storyId, context);
     // eslint-disable-next-line prefer-const
     let [args, updateArgs, resetArgs] = useArgs(storyId, context);
+
     const [globals] = useGlobals(context);
     if (!story) return <PureArgsTable isLoading updateArgs={updateArgs} resetArgs={resetArgs} />;
 

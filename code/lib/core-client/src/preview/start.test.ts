@@ -1,5 +1,5 @@
 /* global window */
-import Events, { STORY_UNCHANGED } from '@storybook/core-events';
+import { STORY_RENDERED, STORY_UNCHANGED, SET_INDEX } from '@storybook/core-events';
 
 import {
   waitForRender,
@@ -10,10 +10,11 @@ import {
 } from '@storybook/preview-web/dist/cjs/PreviewWeb.mockdata';
 // @ts-expect-error (Converted from ts-ignore)
 import { WebView } from '@storybook/preview-web/dist/cjs/WebView';
-import { ModuleExports, Path, setGlobalRender } from '@storybook/client-api';
+import type { Store_ModuleExports, Path, Loadable } from '@storybook/types';
+import { setGlobalRender } from '@storybook/client-api';
 import global from 'global';
 
-import { start } from './start';
+import { start as realStart } from './start';
 
 jest.mock('@storybook/preview-web/dist/cjs/WebView');
 jest.spyOn(WebView.prototype, 'prepareForDocs').mockReturnValue('docs-root');
@@ -45,7 +46,7 @@ jest.mock('@storybook/store', () => {
   const actualStore = jest.requireActual('@storybook/store');
   return {
     ...actualStore,
-    userOrAutoTitle: (importPath: string, specifier: any, userTitle?: string) =>
+    userOrAutoTitle: (importPath: Path, specifier: any, userTitle?: string) =>
       userTitle || 'auto-title',
   };
 });
@@ -56,12 +57,27 @@ beforeEach(() => {
   emitter.removeAllListeners();
 });
 
+const start: typeof realStart = (...args) => {
+  const result = realStart(...args);
+
+  const configure: typeof result['configure'] = (
+    framework: string,
+    loadable: Loadable,
+    m?: NodeModule,
+    disableBackwardCompatibility = false
+  ) => result.configure(framework, loadable, m, disableBackwardCompatibility);
+
+  return {
+    ...result,
+    configure,
+  };
+};
 afterEach(() => {
   // I'm not sure why this is required (it seems just afterEach is required really)
   mockChannel.emit.mockClear();
 });
 
-function makeRequireContext(importMap: Record<Path, ModuleExports>) {
+function makeRequireContext(importMap: Record<Path, Store_ModuleExports>) {
   const req = (path: Path) => importMap[path];
   req.keys = () => Object.keys(importMap);
   return req;
@@ -89,9 +105,8 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-a--story-one": Object {
@@ -151,10 +166,7 @@ describe('start', () => {
       `);
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-a--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--story-one');
 
       expect(renderToDOM).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -175,7 +187,7 @@ describe('start', () => {
 
       await waitForRender();
 
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
     });
 
     it('deals with stories with camel-cased names', async () => {
@@ -191,7 +203,7 @@ describe('start', () => {
 
       await waitForRender();
 
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--storyone');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--storyone');
     });
 
     it('deals with stories with spaces in the name', async () => {
@@ -207,10 +219,7 @@ describe('start', () => {
 
       await waitForRender();
 
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-a--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--story-one');
     });
 
     // https://github.com/storybookjs/storybook/issues/16303
@@ -225,7 +234,7 @@ describe('start', () => {
 
       await waitForRender();
 
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--story0');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--story0');
     });
 
     it('deals with storiesOf from the same file twice', async () => {
@@ -240,10 +249,10 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
 
       const storiesOfData = mockChannel.emit.mock.calls.find(
-        (call: [string, any]) => call[0] === Events.SET_INDEX
+        (call: [string, any]) => call[0] === SET_INDEX
       )[1];
       expect(Object.values(storiesOfData.entries).map((s: any) => s.parameters.fileName)).toEqual([
         'file1',
@@ -301,13 +310,13 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
 
       mockChannel.emit.mockClear();
       forceReRender();
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
     });
 
     it('supports HMR when a story file changes', async () => {
@@ -331,7 +340,7 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
       expect(firstImplementation).toHaveBeenCalled();
       expect(module.hot.accept).toHaveBeenCalled();
       expect(disposeCallback).toBeDefined();
@@ -342,7 +351,7 @@ describe('start', () => {
       clientApi.storiesOf('Component A', module as any).add('default', secondImplementation);
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(Events.STORY_RENDERED, 'component-a--default');
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--default');
       expect(secondImplementation).toHaveBeenCalled();
     });
 
@@ -374,10 +383,9 @@ describe('start', () => {
         .add('default', jest.fn())
         .add('new', jest.fn());
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-a--default": Object {
@@ -440,10 +448,9 @@ describe('start', () => {
         clientApi.storiesOf('Component B', moduleB as any).add('default', jest.fn());
       });
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-a--default": Object {
@@ -487,10 +494,9 @@ describe('start', () => {
       mockChannel.emit.mockClear();
       disposeCallback();
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-a--default": Object {
@@ -533,9 +539,8 @@ describe('start', () => {
       configure('test', () => [componentCExports]);
 
       await waitForRender();
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-c--story-one": Object {
@@ -576,10 +581,7 @@ describe('start', () => {
       `);
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-c--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-c--story-one');
 
       expect(renderToDOM).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -608,10 +610,7 @@ describe('start', () => {
       configure('test', () => [componentCExports], module as any);
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-c--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-c--story-one');
       expect(componentCExports.StoryOne).toHaveBeenCalled();
       expect(module.hot.accept).toHaveBeenCalled();
       expect(disposeCallback).toBeDefined();
@@ -626,10 +625,7 @@ describe('start', () => {
       );
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-c--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-c--story-one');
       expect(secondImplementation).toHaveBeenCalled();
     });
 
@@ -656,10 +652,9 @@ describe('start', () => {
       disposeCallback(module.hot.data);
       configure('test', () => [{ ...componentCExports, StoryThree: jest.fn() }], module as any);
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-c--story-one": Object {
@@ -737,10 +732,9 @@ describe('start', () => {
         module as any
       );
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-c--story-one": Object {
@@ -801,10 +795,9 @@ describe('start', () => {
       disposeCallback(module.hot.data);
       configure('test', () => [componentCExports], module as any);
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-c--story-one": Object {
@@ -868,10 +861,7 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-a--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--story-one');
 
       expect(frameworkRender).not.toHaveBeenCalled();
       expect(projectRender).toHaveBeenCalled();
@@ -898,10 +888,9 @@ describe('start', () => {
           })
         );
 
-        await waitForEvents([Events.SET_INDEX]);
-        expect(
-          mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-        ).toMatchInlineSnapshot(`
+        await waitForEvents([SET_INDEX]);
+        expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+          .toMatchInlineSnapshot(`
           Object {
             "entries": Object {
               "introduction": Object {
@@ -944,9 +933,8 @@ describe('start', () => {
       });
 
       await waitForRender();
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "component-a--story-one": Object {
@@ -1038,10 +1026,7 @@ describe('start', () => {
       `);
 
       await waitForRender();
-      expect(mockChannel.emit).toHaveBeenCalledWith(
-        Events.STORY_RENDERED,
-        'component-a--story-one'
-      );
+      expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-a--story-one');
 
       expect(renderToDOM).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -1073,10 +1058,9 @@ describe('start', () => {
       const { configure } = start(renderToDOM);
       configure('test', () => [componentDExports]);
 
-      await waitForEvents([Events.SET_INDEX]);
-      expect(
-        mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === Events.SET_INDEX)[1]
-      ).toMatchInlineSnapshot(`
+      await waitForEvents([SET_INDEX]);
+      expect(mockChannel.emit.mock.calls.find((call: [string, any]) => call[0] === SET_INDEX)[1])
+        .toMatchInlineSnapshot(`
         Object {
           "entries": Object {
             "auto-title--story-one": Object {

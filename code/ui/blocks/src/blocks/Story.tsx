@@ -8,8 +8,14 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { StoryId, StoryAnnotations, AnyFramework } from '@storybook/csf';
-import type { ModuleExport, ModuleExports, Story as StoryType } from '@storybook/store';
+import type {
+  AnyFramework,
+  Store_ModuleExport,
+  Store_ModuleExports,
+  Store_Story as StoryType,
+  StoryAnnotations,
+  StoryId,
+} from '@storybook/types';
 
 import { Story as PureStory, StorySkeleton } from '../components';
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -31,8 +37,8 @@ type StoryDefProps = {
 
 type StoryRefProps = {
   id?: string;
-  of?: ModuleExport;
-  meta?: ModuleExports;
+  of?: Store_ModuleExport;
+  meta?: Store_ModuleExports;
 };
 
 type StoryImportProps = {
