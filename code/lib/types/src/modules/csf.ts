@@ -55,6 +55,7 @@ import type {
   StrictArgTypes,
   StrictGlobalTypes,
   StrictInputType,
+  Tag,
   ViewMode as ViewModeBase,
 } from '@storybook/csf';
 import { Addon_OptionsParameter } from './addons';
@@ -113,9 +114,8 @@ export type {
   StrictArgTypes,
   StrictGlobalTypes,
   StrictInputType,
+  Tag,
 };
-
-export type CSF_Tag = string;
 
 export interface CSF_Meta {
   id?: string;
@@ -123,14 +123,14 @@ export interface CSF_Meta {
   component?: string;
   includeStories?: string[] | RegExp;
   excludeStories?: string[] | RegExp;
-  tags?: CSF_Tag[];
+  tags?: Tag[];
 }
 
 export interface CSF_Story {
   id: string;
   name: string;
   parameters: Parameters;
-  tags?: CSF_Tag[];
+  tags?: Tag[];
 }
 
 export type ViewMode = ViewModeBase | 'story' | 'info' | 'settings' | string | undefined;

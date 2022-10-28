@@ -13,6 +13,7 @@ import type {
   CoreCommon_StoryIndexer,
   DocsOptions,
   Path,
+  Tag,
   Store_StoryIndex,
   Store_V2CompatIndexEntry,
   StoryId,
@@ -214,16 +215,21 @@ export class StoryIndexGenerator {
       }
       const csf = await storyIndexer.indexer(absolutePath, { makeTitle });
 
-      csf.stories.forEach(({ id, name, parameters }) => {
+      const componentTags = csf.meta.tags || [];
+      csf.stories.forEach(({ id, name, tags: storyTags, parameters }) => {
         if (!parameters?.docsOnly) {
-          entries.push({ id, title: csf.meta.title, name, importPath, type: 'story' });
+          const tags = [...(storyTags || componentTags), 'story'];
+          entries.push({ id, title: csf.meta.title, name, importPath, tags, type: 'story' });
         }
       });
 
       if (this.options.docs.enabled && csf.stories.length) {
         // We always add a template for *.stories.mdx, but only if docs page is enabled for
         // regular CSF files
-        if (storyIndexer.addDocsTemplate || this.options.docs.docsPage) {
+        if (
+          storyIndexer.addDocsTemplate ||
+          (this.options.docs.docsPage && componentTags.includes('docsPage'))
+        ) {
           const name = this.options.docs.defaultName;
           const id = toId(csf.meta.title, name);
           entries.unshift({
@@ -232,6 +238,7 @@ export class StoryIndexGenerator {
             name,
             importPath,
             type: 'docs',
+            tags: [...componentTags, 'docs'],
             storiesImports: [],
             standalone: false,
           });
@@ -273,6 +280,7 @@ export class StoryIndexGenerator {
         name?: StoryName;
         isTemplate?: boolean;
         imports?: Path[];
+        tags?: Tag[];
       } = analyze(content);
 
       // Templates are not indexed
@@ -321,6 +329,7 @@ export class StoryIndexGenerator {
         importPath,
         storiesImports: dependencies.map((dep) => dep.entries[0].importPath),
         type: 'docs',
+        tags: [...(result.tags || []), 'docs'],
         standalone: true,
       };
       return docsEntry;
