@@ -1,3 +1,41 @@
+## 7.0.0-beta.3 (December 10, 2022)
+
+#### Bug Fixes
+
+-   CLI: Fix sb migrate codemods [#20191](https://github.com/storybooks/storybook/pull/20191)
+-   Measure: Fix measure not working on disabled elements [#19985](https://github.com/storybooks/storybook/pull/19985)
+
+#### Maintenance
+
+-   SvelteKit: Automigration [#20094](https://github.com/storybooks/storybook/pull/20094)
+-   Tech: change `package.json` engines fields, set to minimal node16 and up [#20170](https://github.com/storybooks/storybook/pull/20170)
+
+## 7.0.0-beta.2 (December 9, 2022)
+
+#### Bug Fixes
+
+-   Core: Catch and do nothing to avoid triggering unhandled exception problems [#20177](https://github.com/storybooks/storybook/pull/20177)
+-   Controls: Fix color control not resetting when initial value is defined [#20049](https://github.com/storybooks/storybook/pull/20049)
+-   Core: Fix typescript.checkOptions not a valid interface [#20166](https://github.com/storybooks/storybook/pull/20166)
+-   NextJS: Fixlogic around `next/future/image` [#20173](https://github.com/storybooks/storybook/pull/20173)
+
+#### Maintenance
+
+-   Revert "Revert "Telemetry: Add precedingUpgrade data to dev/build/error events"" [#20176](https://github.com/storybooks/storybook/pull/20176)
+-   Telemetry: Add `chromatic` to addons list [#20143](https://github.com/storybooks/storybook/pull/20143)
+-   Vite: Support vite 4 [#20139](https://github.com/storybooks/storybook/pull/20139)
+
+## 7.0.0-beta.1 (December 9, 2022)
+
+#### Bug Fixes
+
+-   Revert "Telemetry: Add precedingUpgrade data to dev/build/error events" [#20168](https://github.com/storybooks/storybook/pull/20168)
+-   Controls: Fix file controls not resetting [#19998](https://github.com/storybooks/storybook/pull/19998)
+
+#### Dependency Upgrades
+
+-   Upgrade express to fix security warning [#20152](https://github.com/storybooks/storybook/pull/20152)
+
 ## 7.0.0-beta.0 (December 8, 2022)
 
 We made it to beta, folks! 🎉
