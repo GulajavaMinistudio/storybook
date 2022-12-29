@@ -1,18 +1,18 @@
 {
-  "name": "@storybook/html-webpack5",
+  "name": "@storybook/preact-vite",
   "version": "7.0.0-beta.16",
-  "description": "Storybook for HTML: View HTML snippets in isolation with Hot Reloading.",
+  "description": "Storybook for Preact and Vite: Develop Preact components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
   ],
-  "homepage": "https://github.com/storybookjs/storybook/tree/main/frameworks/html-webpack5",
+  "homepage": "https://github.com/storybookjs/storybook/tree/main/frameworks/preact-vite",
   "bugs": {
     "url": "https://github.com/storybookjs/storybook/issues"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
-    "directory": "frameworks/html-webpack5"
+    "directory": "frameworks/preact-vite"
   },
   "funding": {
     "type": "opencollective",
@@ -21,7 +21,6 @@
   "license": "MIT",
   "exports": {
     ".": {
-      "node": "./dist/index.js",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
@@ -31,14 +30,18 @@
       "import": "./dist/preset.mjs",
       "types": "./dist/preset.d.ts"
     },
-    "./package.json": "./package.json"
+    "./package.json": {
+      "require": "./package.json",
+      "import": "./package.json",
+      "types": "./package.json"
+    }
   },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*",
-    "template/**/*",
+    "types/**/*",
     "README.md",
     "*.js",
     "*.d.ts"
@@ -48,23 +51,24 @@
     "prep": "../../../scripts/prepare/bundle.ts"
   },
   "dependencies": {
-    "@storybook/builder-webpack5": "7.0.0-beta.16",
-    "@storybook/core-common": "7.0.0-beta.16",
-    "@storybook/global": "^5.0.0",
-    "@storybook/html": "7.0.0-beta.16",
-    "@storybook/preset-html-webpack": "7.0.0-beta.16",
-    "@types/node": "^16.0.0"
+    "@preact/preset-vite": "^2.5.0",
+    "@rollup/pluginutils": "^4.2.0",
+    "@storybook/builder-vite": "7.0.0-beta.16",
+    "@storybook/preact": "7.0.0-beta.16",
+    "ast-types": "^0.14.2",
+    "magic-string": "^0.26.1"
   },
   "devDependencies": {
-    "typescript": "~4.9.3"
+    "@types/node": "^16.0.0",
+    "typescript": "~4.9.3",
+    "vite": "^4.0.0"
   },
   "peerDependencies": {
-    "@babel/core": "*",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "preact": ">=10",
+    "vite": "^3.0.0 || ^4.0.0"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": "^14.18 || >=16"
   },
   "publishConfig": {
     "access": "public"
