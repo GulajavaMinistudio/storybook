@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.20.2",
-    "@storybook/csf-tools": "7.0.0-beta.43",
     "@storybook/node-logger": "7.0.0-beta.43",
     "@storybook/types": "7.0.0-beta.43",
     "@types/babel__core": "^7.1.20",
@@ -59,7 +58,7 @@
     "find-up": "^5.0.0",
     "fs-extra": "^11.1.0",
     "glob": "^8.1.0",
-    "glob-promise": "^4.2.0",
+    "glob-promise": "^6.0.2",
     "handlebars": "^4.7.7",
     "lazy-universal-dotenv": "^4.0.0",
     "picomatch": "^2.3.0",
