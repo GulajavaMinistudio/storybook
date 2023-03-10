@@ -1,3 +1,49 @@
+## 7.0.0-rc.0 (March 10, 2023)
+
+#### Bug Fixes
+
+-   CLI: Upgrade non-core storybook packages better [#21508](https://github.com/storybooks/storybook/pull/21508)
+-   Svelte: Pass all arguments to configure through to fix StoryStoreV6 [#21491](https://github.com/storybooks/storybook/pull/21491)
+-   Core: Fix project root detection in yarn PnP without git [#21461](https://github.com/storybooks/storybook/pull/21461)
+-   Telemetry: Replace isomorphic-unfetch with node-fetch in telemetry [#21497](https://github.com/storybooks/storybook/pull/21497)
+-   Core: Fix builders/renderer PnP support [#21486](https://github.com/storybooks/storybook/pull/21486)
+-   CLI: Require main.js without cache in automigrations [#21498](https://github.com/storybooks/storybook/pull/21498)
+
+#### Maintenance
+
+-   CLI: Filter out internal static dir logging [#21137](https://github.com/storybooks/storybook/pull/21137)
+-   Docs: Error if you try to index an MDX file in ssv6 [#21495](https://github.com/storybooks/storybook/pull/21495)
+
+#### Build
+
+-   Build: add slash to fix windows test [#21518](https://github.com/storybooks/storybook/pull/21518)
+
+## 7.0.0-beta.64 (March 9, 2023)
+
+#### Bug Fixes
+
+-   Vite: Fix HMR of preview.js [#21485](https://github.com/storybooks/storybook/pull/21485)
+-   Vite: Make sure we update the vite import map when .mdx is added [#21490](https://github.com/storybooks/storybook/pull/21490)
+-   Docs: Don't allow passing `of={}` with undefined prop [#21452](https://github.com/storybooks/storybook/pull/21452)
+-   Composition: Restore support for v2 stories.json [#21354](https://github.com/storybooks/storybook/pull/21354)
+
+## 7.0.0-beta.63 (March 9, 2023)
+
+#### Bug Fixes
+
+-   Story Index: Fix storySort parsing for parameters variable [#21481](https://github.com/storybooks/storybook/pull/21481)
+-   React/Vite: Add some missing types [#21449](https://github.com/storybooks/storybook/pull/21449)
+-   Docs: Cleanup with Promise instead of setTimeout [#21476](https://github.com/storybooks/storybook/pull/21476)
+-   Docs: Re-render MDX files when you fix a thrown error [#21454](https://github.com/storybooks/storybook/pull/21454)
+-   CLI: Fix mdx-to-csf codemod blocks imports [#21448](https://github.com/storybooks/storybook/pull/21448)
+
+#### Maintenance
+
+-   CLI: Copy tweaks for automigrations [#21475](https://github.com/storybooks/storybook/pull/21475)
+-   CLI: Warn the user when stories glob does not match any file [#21392](https://github.com/storybooks/storybook/pull/21392)
+-   Docs: Use `Of` type in `useOf` argument [#21442](https://github.com/storybooks/storybook/pull/21442)
+-   Telemetry: Is interactive shell [#21436](https://github.com/storybooks/storybook/pull/21436)
+
 ## 7.0.0-beta.62 (March 6, 2023)
 
 #### Bug Fixes
