@@ -83,7 +83,6 @@
     - [Dropped addon-docs manual configuration](#dropped-addon-docs-manual-configuration)
     - [Autoplay in docs](#autoplay-in-docs)
     - [Removed STORYBOOK\_REACT\_CLASSES global](#removed-storybook_react_classes-global)
-    - [parameters.docs.source.excludeDecorators defaults to true](#parametersdocssourceexcludedecorators-defaults-to-true)
   - [7.0 Deprecations and default changes](#70-deprecations-and-default-changes)
     - [storyStoreV7 enabled by default](#storystorev7-enabled-by-default)
     - [`Story` type deprecated](#story-type-deprecated)
@@ -297,7 +296,7 @@
 
 ## From version 6.5.x to 7.0.0
 
-A number of these changes can be made automatically by the Storybook CLI. To take advantage of these "automigrations", run `npx storybook@latest upgrade --prerelease` or `pnpx storybook@latest upgrade --prerelease`.
+A number of these changes can be made automatically by the Storybook CLI. To take advantage of these "automigrations", run `npx storybook@latest upgrade --prerelease` or `pnpx dlx storybook@latest upgrade --prerelease`.
 
 ### 7.0 breaking changes
 
