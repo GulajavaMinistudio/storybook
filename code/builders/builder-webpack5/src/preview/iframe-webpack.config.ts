@@ -227,7 +227,7 @@ export default async (
     name: 'preview',
     mode: isProd ? 'production' : 'development',
     bail: isProd,
-    devtool: 'cheap-module-source-map',
+    devtool: options.test ? false : 'cheap-module-source-map',
     entry: entries,
     output: {
       path: resolve(process.cwd(), outputDir),
@@ -300,9 +300,12 @@ export default async (
       shouldCheckTs ? new ForkTsCheckerWebpackPlugin(tsCheckOptions) : null,
     ].filter(Boolean),
     module: {
+      // Disable warning for dynamic requires
+      unknownContextCritical: false,
       rules: [
         {
           test: /\.stories\.([tj])sx?$|(stories|story)\.mdx$/,
+          enforce: 'post',
           use: [
             {
               loader: require.resolve('@storybook/builder-webpack5/loaders/export-order-loader'),
@@ -320,7 +323,7 @@ export default async (
           },
         },
         builderOptions.useSWC
-          ? createSWCLoader(Object.keys(virtualModuleMapping))
+          ? await createSWCLoader(Object.keys(virtualModuleMapping), options)
           : createBabelLoader(babelOptions, typescriptOptions, Object.keys(virtualModuleMapping)),
         {
           test: /\.md$/,
