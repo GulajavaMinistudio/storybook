@@ -11,6 +11,7 @@ import { StorybookError } from './storybook-error';
  * to prevent manager and preview errors from having the same category and error code.
  */
 export enum Category {
+  DOCS_TOOLS = 'DOCS-TOOLS',
   PREVIEW_CLIENT_LOGGER = 'PREVIEW_CLIENT-LOGGER',
   PREVIEW_CHANNELS = 'PREVIEW_CHANNELS',
   PREVIEW_CORE_EVENTS = 'PREVIEW_CORE-EVENTS',
@@ -27,6 +28,7 @@ export enum Category {
   RENDERER_VUE = 'RENDERER_VUE',
   RENDERER_VUE3 = 'RENDERER_VUE3',
   RENDERER_WEB_COMPONENTS = 'RENDERER_WEB-COMPONENTS',
+  FRAMEWORK_NEXTJS = 'FRAMEWORK_NEXTJS',
 }
 
 export class MissingStoryAfterHmrError extends StorybookError {
@@ -233,5 +235,39 @@ export class StoryStoreAccessedBeforeInitializationError extends StorybookError 
 
     It is not recommended to use methods directly on the Story Store anyway, in Storybook 9 we will
     remove access to the store entirely`;
+  }
+}
+
+export class NextJsSharpError extends StorybookError {
+  readonly category = Category.FRAMEWORK_NEXTJS;
+
+  readonly code = 1;
+
+  readonly documentation = 'https://storybook.js.org/docs/get-started/nextjs#faq';
+
+  template() {
+    return dedent`
+    You are importing avif images, but you don't have sharp installed.
+
+    You have to install sharp in order to use image optimization features in Next.js.
+    `;
+  }
+}
+
+export class UnknownArgTypesError extends StorybookError {
+  readonly category = Category.DOCS_TOOLS;
+
+  readonly code = 1;
+
+  constructor(public data: { type: object; language: string }) {
+    super();
+  }
+
+  template() {
+    return `There was a failure when generating ArgTypes in ${
+      this.data.language
+    } for ${JSON.stringify(this.data.type)}
+    This type is either not supported or it is a bug in Storybook.
+    If you think this is a bug, please open an issue in Github.`;
   }
 }
