@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-measure",
-  "version": "8.2.0-alpha.5",
+  "version": "8.2.0-alpha.7",
   "description": "Inspect layouts by visualizing the box model",
   "keywords": [
     "storybook-addons",
@@ -97,7 +97,7 @@
       "./src/preview.tsx"
     ]
   },
-  "gitHead": "e6a7fd8a655c69780bc20b9749c2699e44beae17",
+  "gitHead": "e6a7fd8a655c69780bc20b9749c2699e44beae16",
   "storybook": {
     "displayName": "Measure",
     "unsupportedFrameworks": [

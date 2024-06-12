@@ -58,6 +58,12 @@ module.exports = {
       },
     },
     {
+      files: ['**/template/**/*'],
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
       // this package depends on a lot of peerDependencies we don't want to specify, because npm would install them
       files: ['**/addons/docs/**/*'],
       rules: {

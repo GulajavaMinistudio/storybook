@@ -3353,7 +3353,7 @@ describe('PreviewWeb', () => {
       return {
         ...projectAnnotations,
         args: { global: 'added' },
-        globals: { a: 'edited' },
+        initialGlobals: { a: 'edited' },
         decorators: [newGlobalDecorator],
       };
     };

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-webpack",
-  "version": "8.2.0-alpha.5",
+  "version": "8.2.0-alpha.7",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -64,5 +64,5 @@
     ],
     "platform": "node"
   },
-  "gitHead": "e6a7fd8a655c69780bc20b9749c2699e44beae17"
+  "gitHead": "e6a7fd8a655c69780bc20b9749c2699e44beae16"
 }
