@@ -1,6 +1,4 @@
-/**
- * @vitest-environment jsdom
- */
+// @vitest-environment happy-dom
 import { describe, beforeEach, afterEach, it, expect, vi } from 'vitest';
 
 import { global } from '@storybook/global';
