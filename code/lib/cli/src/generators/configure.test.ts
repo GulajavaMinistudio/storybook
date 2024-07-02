@@ -1,6 +1,6 @@
 import { describe, beforeAll, expect, vi, it } from 'vitest';
 import fse from 'fs-extra';
-import dedent from 'ts-dedent';
+import { dedent } from 'ts-dedent';
 import { SupportedLanguage } from '../project_types';
 import { configureMain, configurePreview } from './configure';
 
@@ -29,7 +29,7 @@ describe('configureMain', () => {
     expect(mainConfigContent).toMatchInlineSnapshot(`
       "/** @type { import('@storybook/react-vite').StorybookConfig } */
       const config = {
-        stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+        stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs)'],
         addons: [],
         framework: {
           name: '@storybook/react-vite',
@@ -95,7 +95,7 @@ describe('configureMain', () => {
 
       /** @type { import('@storybook/react-webpack5').StorybookConfig } */
       const config = {
-        stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+        stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|mjs)'],
         addons: [
           path.dirname(require.resolve(path.join('@storybook/addon-links', 'package.json'))),
           path.dirname(require.resolve(path.join('@storybook/addon-essentials', 'package.json'))),
