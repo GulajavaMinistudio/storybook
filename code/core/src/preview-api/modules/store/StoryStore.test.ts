@@ -311,13 +311,16 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentOne-new.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "story": "A",
             "subcomponents": undefined,
             "tags": [
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
         }
       `);
@@ -477,13 +480,16 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentOne.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "story": "A",
             "subcomponents": undefined,
             "tags": [
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
           "component-one--b": {
             "argTypes": {
@@ -516,13 +522,16 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentOne.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "story": "B",
             "subcomponents": undefined,
             "tags": [
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
           "component-two--c": {
             "argTypes": {
@@ -555,13 +564,16 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentTwo.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "story": "C",
             "subcomponents": undefined,
             "tags": [
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component Two",
+            "usesMount": false,
           },
         }
       `);
@@ -656,6 +668,7 @@ describe('StoryStore', () => {
                 "foo": "a",
               },
             },
+            "mount": [Function],
             "name": "A",
             "originalStoryFn": [MockFunction spy],
             "parameters": {
@@ -663,6 +676,7 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentOne.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "runStep": [Function],
             "story": "A",
             "storyFn": [Function],
@@ -671,9 +685,11 @@ describe('StoryStore', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
             "unboundStoryFn": [Function],
             "undecoratedStoryFn": [Function],
+            "usesMount": false,
           },
           {
             "applyBeforeEach": [Function],
@@ -704,6 +720,7 @@ describe('StoryStore', () => {
                 "foo": "b",
               },
             },
+            "mount": [Function],
             "name": "B",
             "originalStoryFn": [MockFunction spy],
             "parameters": {
@@ -711,6 +728,7 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentOne.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "runStep": [Function],
             "story": "B",
             "storyFn": [Function],
@@ -719,9 +737,11 @@ describe('StoryStore', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
             "unboundStoryFn": [Function],
             "undecoratedStoryFn": [Function],
+            "usesMount": false,
           },
           {
             "applyBeforeEach": [Function],
@@ -752,6 +772,7 @@ describe('StoryStore', () => {
                 "foo": "c",
               },
             },
+            "mount": [Function],
             "name": "C",
             "originalStoryFn": [MockFunction spy],
             "parameters": {
@@ -759,6 +780,7 @@ describe('StoryStore', () => {
               "fileName": "./src/ComponentTwo.stories.js",
             },
             "playFunction": undefined,
+            "renderToCanvas": undefined,
             "runStep": [Function],
             "story": "C",
             "storyFn": [Function],
@@ -767,9 +789,11 @@ describe('StoryStore', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component Two",
             "unboundStoryFn": [Function],
             "undecoratedStoryFn": [Function],
+            "usesMount": false,
           },
         ]
       `);
@@ -823,13 +847,16 @@ describe('StoryStore', () => {
                 "fileName": "./src/ComponentOne.stories.js",
               },
               "playFunction": undefined,
+              "renderToCanvas": undefined,
               "story": "A",
               "subcomponents": undefined,
               "tags": [
                 "dev",
                 "test",
               ],
+              "testingLibraryRender": undefined,
               "title": "Component One",
+              "usesMount": false,
             },
             "component-one--b": {
               "argTypes": {
@@ -862,13 +889,16 @@ describe('StoryStore', () => {
                 "fileName": "./src/ComponentOne.stories.js",
               },
               "playFunction": undefined,
+              "renderToCanvas": undefined,
               "story": "B",
               "subcomponents": undefined,
               "tags": [
                 "dev",
                 "test",
               ],
+              "testingLibraryRender": undefined,
               "title": "Component One",
+              "usesMount": false,
             },
             "component-two--c": {
               "argTypes": {
@@ -901,13 +931,16 @@ describe('StoryStore', () => {
                 "fileName": "./src/ComponentTwo.stories.js",
               },
               "playFunction": undefined,
+              "renderToCanvas": undefined,
               "story": "C",
               "subcomponents": undefined,
               "tags": [
                 "dev",
                 "test",
               ],
+              "testingLibraryRender": undefined,
               "title": "Component Two",
+              "usesMount": false,
             },
           },
           "v": 2,

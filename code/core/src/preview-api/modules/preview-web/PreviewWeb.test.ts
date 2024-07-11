@@ -518,7 +518,7 @@ describe('PreviewWeb', () => {
         expect(vi.mocked(preview.view.showErrorDisplay).mock.calls[0][0]).toMatchInlineSnapshot(`
           [SB_PREVIEW_API_0004 (MissingRenderToCanvasError): Expected your framework's preset to export a \`renderToCanvas\` field.
 
-          Perhaps it needs to be upgraded for Storybook 6.4?
+          Perhaps it needs to be upgraded for Storybook 7.0?
 
           More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#mainjs-framework-field
           ]
@@ -906,6 +906,41 @@ describe('PreviewWeb', () => {
       await waitForRender();
 
       expect(mockChannel.emit).toHaveBeenCalledWith(STORY_RENDERED, 'component-one--a');
+    });
+
+    describe('if play function destructures mount', () => {
+      it('passes forceRemount to renderToCanvas', async () => {
+        document.location.search = '?id=component-one--a';
+        const newImportFn = vi.fn(async (path) => {
+          if (path === './src/ComponentOne.stories.js') {
+            return {
+              ...componentOneExports,
+              a: { ...componentOneExports.a, play: ({ mount }: any) => mount() },
+            };
+          }
+          return importFn(path);
+        });
+        await createAndRenderPreview({ importFn: newImportFn });
+
+        mockChannel.emit.mockClear();
+        projectAnnotations.renderToCanvas.mockClear();
+        emitter.emit(UPDATE_STORY_ARGS, {
+          storyId: 'component-one--a',
+          updatedArgs: { new: 'arg' },
+        });
+        await waitForRender();
+
+        expect(projectAnnotations.renderToCanvas).toHaveBeenCalledWith(
+          expect.objectContaining({
+            forceRemount: true,
+            storyContext: expect.objectContaining({
+              initialArgs: { foo: 'a', one: 1 },
+              args: { foo: 'a', new: 'arg', one: 'mapped-1' },
+            }),
+          }),
+          'story-element'
+        );
+      });
     });
 
     describe('while story is still rendering', () => {
@@ -3521,6 +3556,7 @@ describe('PreviewWeb', () => {
         await (preview.storyStore as StoryStore<Renderer>)?.loadStory({
           storyId: 'component-one--b',
         }),
+        {} as any,
         {} as any
       );
       await waitForRenderPhase('playing');
@@ -3626,7 +3662,9 @@ describe('PreviewWeb', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
           "component-one--b": {
             "argTypes": {
@@ -3674,7 +3712,9 @@ describe('PreviewWeb', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
           "component-one--e": {
             "argTypes": {},
@@ -3700,7 +3740,9 @@ describe('PreviewWeb', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component One",
+            "usesMount": false,
           },
           "component-two--c": {
             "argTypes": {
@@ -3736,7 +3778,9 @@ describe('PreviewWeb', () => {
               "dev",
               "test",
             ],
+            "testingLibraryRender": undefined,
             "title": "Component Two",
+            "usesMount": false,
           },
         }
       `);

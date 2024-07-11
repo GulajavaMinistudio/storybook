@@ -10,7 +10,9 @@ import type {
   StoryAnnotationsOrFn,
   Store_CSFExports,
   StoriesWithPartialProps,
+  ComposedStoryFn,
 } from 'storybook/internal/types';
+import { TestingLibraryMustBeConfiguredError } from 'storybook/internal/preview-errors';
 import { h } from 'vue';
 
 import * as defaultProjectAnnotations from './entry-preview';
@@ -44,9 +46,19 @@ export function setProjectAnnotations(
   projectAnnotations:
     | NamedOrDefaultProjectAnnotations<VueRenderer>
     | NamedOrDefaultProjectAnnotations<VueRenderer>[]
-) {
-  originalSetProjectAnnotations<VueRenderer>(projectAnnotations);
+): ProjectAnnotations<VueRenderer> {
+  return originalSetProjectAnnotations<VueRenderer>(projectAnnotations);
 }
+
+// This will not be necessary once we have auto preset loading
+export const vueProjectAnnotations: ProjectAnnotations<VueRenderer> = {
+  ...defaultProjectAnnotations,
+  renderToCanvas: ({ storyFn, storyContext: { testingLibraryRender: render, canvasElement } }) => {
+    if (render == null) throw new TestingLibraryMustBeConfiguredError();
+    const { unmount } = render(storyFn(), { baseElement: canvasElement });
+    return unmount;
+  },
+};
 
 /**
  * Function that will receive a story along with meta (e.g. a default export from a .stories file)
@@ -80,12 +92,12 @@ export function composeStory<TArgs extends Args = Args>(
   componentAnnotations: Meta<TArgs | any>,
   projectAnnotations?: ProjectAnnotations<VueRenderer>,
   exportsName?: string
-) {
+): JSXAble<ComposedStoryFn<VueRenderer, Partial<TArgs>>> {
   const composedStory = originalComposeStory<VueRenderer, TArgs>(
     story as StoryAnnotationsOrFn<VueRenderer, Args>,
     componentAnnotations,
     projectAnnotations,
-    defaultProjectAnnotations,
+    vueProjectAnnotations,
     exportsName
   );
 
