@@ -360,13 +360,44 @@ async function linkPackageStories(
   );
 }
 
+const getVitestPluginInfo = (details: TemplateDetails) => {
+  let frameworkPluginImport = '';
+  let frameworkPluginCall = '';
+
+  const framework = details.template.expected.framework;
+  const isNextjs = framework.includes('nextjs');
+  const isSveltekit = framework.includes('sveltekit');
+
+  if (isNextjs) {
+    frameworkPluginImport = "import vitePluginNext from 'vite-plugin-storybook-nextjs'";
+    frameworkPluginCall = 'vitePluginNext()';
+  }
+
+  if (isSveltekit) {
+    frameworkPluginImport = "import { storybookSveltekitPlugin } from '@storybook/sveltekit/vite'";
+    frameworkPluginCall = 'storybookSveltekitPlugin()';
+  }
+
+  return { frameworkPluginImport, frameworkPluginCall };
+};
+
 export async function setupVitest(details: TemplateDetails, options: PassedOptionValues) {
   const { sandboxDir, template } = details;
 
   const isVue = template.expected.renderer === '@storybook/vue3';
   const isNextjs = template.expected.framework.includes('nextjs');
+  const { frameworkPluginCall, frameworkPluginImport } = getVitestPluginInfo(details);
   // const isAngular = template.expected.framework === '@storybook/angular';
-  const storybookPackage = isNextjs ? template.expected.framework : template.expected.renderer;
+
+  const portableStoriesFrameworks = [
+    '@storybook/nextjs',
+    '@storybook/experimental-nextjs-vite',
+    '@storybook/sveltekit',
+    // TODO: add angular once we enable their sandboxes
+  ];
+  const storybookPackage = portableStoriesFrameworks.includes(template.expected.framework)
+    ? template.expected.framework
+    : template.expected.renderer;
   const viteConfigPath = template.name.includes('JavaScript') ? 'vite.config.js' : 'vite.config.ts';
 
   await writeFile(
@@ -401,7 +432,7 @@ export async function setupVitest(details: TemplateDetails, options: PassedOptio
     dedent`
       import { defineWorkspace, defaultExclude } from "vitest/config";
       import { storybookTest } from "@storybook/experimental-addon-vitest/plugin";
-      ${isNextjs ? "import vitePluginNext from 'vite-plugin-storybook-nextjs'" : ''}
+      ${frameworkPluginImport}
 
       export default defineWorkspace([
         {
@@ -413,7 +444,7 @@ export async function setupVitest(details: TemplateDetails, options: PassedOptio
                 include: ["vitest"],
               },
             }),
-           ${isNextjs ? 'vitePluginNext(),' : ''}
+           ${frameworkPluginCall}
           ],
           ${
             isNextjs
@@ -444,14 +475,6 @@ export async function setupVitest(details: TemplateDetails, options: PassedOptio
               ...defaultExclude,
               // TODO: investigate TypeError: Cannot read properties of null (reading 'useContext')
               "**/*argtypes*",
-              // TODO (SVELTEKIT): Failures related to missing framework annotations
-              "**/frameworks/sveltekit_svelte-kit-skeleton-ts/navigation.stories*",
-              "**/frameworks/sveltekit_svelte-kit-skeleton-ts/hrefs.stories*",
-              // TODO (SVELTEKIT): Investigate Error: use:enhance can only be used on <form> fields with method="POST"
-              "**/frameworks/sveltekit_svelte-kit-skeleton-ts/forms.stories*",
-              // TODO (SVELTE|SVELTEKIT): Typescript preprocessor issue
-              "**/frameworks/svelte-vite_svelte-vite-default-ts/ts-docs.stories.*",
-              "**/frameworks/sveltekit_svelte-kit-skeleton-ts/ts-docs.stories.*",
             ],
             /**
              * TODO: Either fix or acknowledge limitation of:
@@ -480,7 +503,8 @@ export async function setupVitest(details: TemplateDetails, options: PassedOptio
 
   packageJson.scripts = {
     ...packageJson.scripts,
-    vitest: 'vitest --pass-with-no-tests --reporter=default --reporter=hanging-process',
+    vitest:
+      'vitest --pass-with-no-tests --reporter=default --reporter=hanging-process --test-timeout=5000',
   };
 
   // This workaround is needed because Vitest seems to have issues in link mode
@@ -508,14 +532,22 @@ export async function addExtraDependencies({
   extraDeps?: string[];
 }) {
   const extraDevDeps = ['@storybook/test-runner@next'];
-  if (debug) logger.log('🎁 Adding extra dev deps', extraDevDeps);
-  if (dryRun) return;
+
+  if (debug) {
+    logger.log('\uD83C\uDF81 Adding extra dev deps', extraDevDeps);
+  }
+
+  if (dryRun) {
+    return;
+  }
 
   const packageManager = JsPackageManagerFactory.getPackageManager({}, cwd);
   await packageManager.addDependencies({ installAsDevDependencies: true }, extraDevDeps);
 
   if (extraDeps) {
-    if (debug) logger.log('🎁 Adding extra deps', extraDeps);
+    if (debug) {
+      logger.log('\uD83C\uDF81 Adding extra deps', extraDeps);
+    }
     await packageManager.addDependencies({ installAsDevDependencies: true }, extraDeps);
   }
   await packageManager.installDependencies();
@@ -634,7 +666,10 @@ export const addStories: Task['run'] = async (
     (acc: string[], addon: any) => {
       const name = typeof addon === 'string' ? addon : addon.name;
       const match = /@storybook\/addon-(.*)/.exec(name);
-      if (!match) return acc;
+
+      if (!match) {
+        return acc;
+      }
       const suffix = match[1];
       if (suffix === 'essentials') {
         const essentials = disableDocs
@@ -745,7 +780,9 @@ export const extendMain: Task['run'] = async ({ template, sandboxDir, key }, { d
     mainConfig.setFieldValue(['stories'], updatedStories);
   }
 
-  if (template.expected.builder === '@storybook/builder-vite') setSandboxViteFinal(mainConfig);
+  if (template.expected.builder === '@storybook/builder-vite') {
+    setSandboxViteFinal(mainConfig);
+  }
   await writeConfig(mainConfig);
 };
 
@@ -767,16 +804,16 @@ async function prepareAngularSandbox(cwd: string, templateName: string) {
 
   Object.keys(angularJson.projects).forEach((projectName: string) => {
     /**
-     * Sets compodoc option in angular.json projects to false. We have to generate compodoc
-     * manually to avoid symlink issues related to the template-stories folder.
-     * In a second step a docs:json script is placed into the package.json to generate the
-     * Compodoc documentation.json, which respects symlinks
+     * Sets compodoc option in angular.json projects to false. We have to generate compodoc manually
+     * to avoid symlink issues related to the template-stories folder. In a second step a docs:json
+     * script is placed into the package.json to generate the Compodoc documentation.json, which
+     * respects symlinks
      */
     angularJson.projects[projectName].architect.storybook.options.compodoc = false;
     angularJson.projects[projectName].architect['build-storybook'].options.compodoc = false;
     /**
-     * Sets preserveSymlinks option in angular.json projects to true. This is necessary to
-     * respect symlinks so that Angular doesn't complain about wrong types in @storybook/* packages
+     * Sets preserveSymlinks option in angular.json projects to true. This is necessary to respect
+     * symlinks so that Angular doesn't complain about wrong types in @storybook/* packages
      */
     angularJson.projects[projectName].architect.storybook.options.preserveSymlinks = true;
     angularJson.projects[projectName].architect['build-storybook'].options.preserveSymlinks = true;
