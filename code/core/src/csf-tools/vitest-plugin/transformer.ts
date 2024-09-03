@@ -172,8 +172,10 @@ export async function vitestTransform({
       // Combine testPath and filepath using the ?? operator
       const nullishCoalescingExpression = t.logicalExpression(
         '??',
-        testPathProperty,
-        filePathProperty
+        // TODO: switch order of testPathProperty and filePathProperty when the bug is fixed
+        // https://github.com/vitest-dev/vitest/issues/6367 (or probably just use testPathProperty)
+        filePathProperty,
+        testPathProperty
       );
 
       // Create the final expression: import.meta.url.includes(...)
@@ -258,7 +260,7 @@ export async function vitestTransform({
       ),
       t.importDeclaration(
         [t.importSpecifier(testStoryId, t.identifier('testStory'))],
-        t.stringLiteral('@storybook/experimental-addon-vitest/internal/test-utils')
+        t.stringLiteral('@storybook/experimental-addon-test/internal/test-utils')
       ),
     ];
 
