@@ -1,3 +1,24 @@
+## 8.4.0-alpha.0
+
+
+## 8.3.0-beta.5
+
+- Portable Stories: Improve Handling of React Updates and Errors - [#29044](https://github.com/storybookjs/storybook/pull/29044), thanks @valentinpalkovic!
+- Vite: Fix missing source map warning - [#28984](https://github.com/storybookjs/storybook/pull/28984), thanks @valentinpalkovic!
+- Vue: Add missing prop controls when using `vue-component-meta` docgen plugin - [#28760](https://github.com/storybookjs/storybook/pull/28760), thanks @larsrickert!
+
+## 8.3.0-beta.4
+
+- Test: Rename vitest plugin entrypoint - [#29067](https://github.com/storybookjs/storybook/pull/29067), thanks @yannbf!
+- UI: Fix sidebar not wrapping - [#29055](https://github.com/storybookjs/storybook/pull/29055), thanks @JReinhold!
+
+## 8.3.0-beta.3
+
+- Addon Test: Improve messages and post install script handling - [#29036](https://github.com/storybookjs/storybook/pull/29036), thanks @yannbf!
+- Next.js-Vite: Fix vite plugin exports - [#29046](https://github.com/storybookjs/storybook/pull/29046), thanks @valentinpalkovic!
+- Next.js: Update dependencies - [#29052](https://github.com/storybookjs/storybook/pull/29052), thanks @valentinpalkovic!
+- UI: Fix conditional hooks usage in sidebar - [#28979](https://github.com/storybookjs/storybook/pull/28979), thanks @JReinhold!
+
 ## 8.3.0-beta.2
 
 - Addon Vitest: Fix indentation of 'vitePluginNext' in generated Vitest config file - [#29011](https://github.com/storybookjs/storybook/pull/29011), thanks @ghengeveld!
