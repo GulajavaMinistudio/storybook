@@ -1,1 +1,1 @@
-{"version":"8.4.0-beta.3","info":{"plain":"- Addon Test: Only register testing module in Vite projects - [#29472](https://github.com/storybookjs/storybook/pull/29472), thanks @yannbf!"}}
+{"version":"8.5.0-alpha.3","info":{"plain":"- Addon Test: Fix post-install logic for Next.js Vite framework support - [#29524](https://github.com/storybookjs/storybook/pull/29524), thanks @valentinpalkovic!\n- Core: Prevent clipping box shadow on file search modal - [#29523](https://github.com/storybookjs/storybook/pull/29523), thanks @ghengeveld!"}}
