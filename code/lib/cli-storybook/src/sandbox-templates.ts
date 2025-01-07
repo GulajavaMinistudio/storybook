@@ -150,7 +150,10 @@ const baseTemplates = {
     },
     modifications: {
       mainConfig: {
-        features: { experimentalRSC: true },
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
       },
       extraDependencies: ['server-only', 'prop-types'],
     },
@@ -167,12 +170,14 @@ const baseTemplates = {
     },
     modifications: {
       mainConfig: {
-        features: { experimentalRSC: true },
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
       },
       extraDependencies: ['server-only', 'prop-types'],
     },
     skipTasks: ['e2e-tests-dev', 'bench', 'vitest-integration'],
-    inDevelopment: true,
   },
   'nextjs/default-ts': {
     name: 'Next.js Latest (Webpack | TypeScript)',
@@ -185,7 +190,10 @@ const baseTemplates = {
     },
     modifications: {
       mainConfig: {
-        features: { experimentalRSC: true },
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
       },
       extraDependencies: ['server-only', 'prop-types'],
     },
@@ -201,14 +209,17 @@ const baseTemplates = {
       builder: '@storybook/builder-webpack5',
     },
     modifications: {
-      extraDependencies: ['server-only', 'prop-types'],
       mainConfig: {
-        features: { experimentalRSC: true },
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
       },
+      extraDependencies: ['server-only', 'prop-types'],
     },
     skipTasks: ['e2e-tests-dev', 'bench', 'vitest-integration'],
   },
-  'experimental-nextjs-vite/default-ts': {
+  'experimental-nextjs-vite/14-ts': {
     name: 'Next.js Latest (Vite | TypeScript)',
     script:
       'npx create-next-app@^14 {{beforeDir}} --eslint --tailwind --app --import-alias="@/*" --src-dir',
@@ -220,7 +231,36 @@ const baseTemplates = {
     modifications: {
       mainConfig: {
         framework: '@storybook/experimental-nextjs-vite',
-        features: { experimentalRSC: true },
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
+      },
+      extraDependencies: [
+        'server-only',
+        '@storybook/experimental-nextjs-vite',
+        'vite',
+        'prop-types',
+      ],
+    },
+    skipTasks: ['e2e-tests-dev', 'bench'],
+  },
+  'experimental-nextjs-vite/default-ts': {
+    name: 'Next.js Latest (Vite | TypeScript)',
+    script:
+      'npx create-next-app {{beforeDir}} --eslint --tailwind --app --import-alias="@/*" --src-dir',
+    expected: {
+      framework: '@storybook/experimental-nextjs-vite',
+      renderer: '@storybook/react',
+      builder: '@storybook/builder-vite',
+    },
+    modifications: {
+      mainConfig: {
+        framework: '@storybook/experimental-nextjs-vite',
+        features: {
+          experimentalRSC: true,
+          developmentModeForBuild: true,
+        },
       },
       extraDependencies: [
         'server-only',
@@ -241,6 +281,11 @@ const baseTemplates = {
     },
     modifications: {
       extraDependencies: ['prop-types'],
+      mainConfig: {
+        features: {
+          developmentModeForBuild: true,
+        },
+      },
     },
     skipTasks: ['e2e-tests-dev', 'bench'],
   },
@@ -254,6 +299,11 @@ const baseTemplates = {
     },
     modifications: {
       extraDependencies: ['prop-types'],
+      mainConfig: {
+        features: {
+          developmentModeForBuild: true,
+        },
+      },
     },
     skipTasks: ['bench'],
   },
@@ -280,6 +330,11 @@ const baseTemplates = {
     },
     modifications: {
       extraDependencies: ['prop-types'],
+      mainConfig: {
+        features: {
+          developmentModeForBuild: true,
+        },
+      },
     },
     skipTasks: ['e2e-tests-dev', 'bench'],
   },
@@ -377,6 +432,16 @@ const baseTemplates = {
       builder: '@storybook/builder-vite',
     },
     skipTasks: ['e2e-tests-dev', 'bench'],
+  },
+  'nuxt-vite/default-ts': {
+    name: 'Nuxt v3 (Vite | TypeScript)',
+    script: 'npx nuxi init --packageManager yarn --gitInit false {{beforeDir}}',
+    expected: {
+      framework: '@storybook-vue/nuxt',
+      renderer: '@storybook/vue3',
+      builder: '@storybook/builder-vite',
+    },
+    skipTasks: ['e2e-tests-dev', 'bench', 'vitest-integration'],
   },
   'html-webpack/default': {
     name: 'HTML Latest (Webpack | JavaScript)',
@@ -593,6 +658,43 @@ const baseTemplates = {
       builder: '@storybook/builder-webpack5',
     },
   },
+  'react-native-web-vite/expo-ts': {
+    // NOTE: create-expo-app installs React 18.2.0. But yarn portal
+    // expects 18.3.1 (dunno why). Therefore to run this in dev you
+    // must either:
+    //  - edit the sandbox package.json to depend on react 18.3.1, OR
+    //  - build/run the sandbox in --no-link mode, which is fine
+    //
+    // Users & CI won't see this limitation because they are not using
+    // yarn portals.
+    name: 'React Native Expo Latest (Vite | TypeScript)',
+    script: 'npx create-expo-app -y {{beforeDir}}',
+    expected: {
+      framework: '@storybook/react-native-web-vite',
+      renderer: '@storybook/react',
+      builder: '@storybook/builder-vite',
+    },
+    skipTasks: ['e2e-tests-dev', 'bench', 'vitest-integration'],
+  },
+  'react-native-web-vite/rn-cli-ts': {
+    // NOTE: create-expo-app installs React 18.2.0. But yarn portal
+    // expects 18.3.1 (dunno why). Therefore to run this in dev you
+    // must either:
+    //  - edit the sandbox package.json to depend on react 18.3.1, OR
+    //  - build/run the sandbox in --no-link mode, which is fine
+    //
+    // Users & CI won't see this limitation because they are not using
+    // yarn portals.
+    name: 'React Native CLI Latest (Vite | TypeScript)',
+    script:
+      'npx @react-native-community/cli@latest init --install-pods=false --directory={{beforeDir}} rnapp',
+    expected: {
+      framework: '@storybook/react-native-web-vite',
+      renderer: '@storybook/react',
+      builder: '@storybook/builder-vite',
+    },
+    skipTasks: ['e2e-tests-dev', 'bench', 'vitest-integration'],
+  },
 } satisfies Record<string, BaseTemplates>;
 
 /**
@@ -745,10 +847,12 @@ export const allTemplates: Record<TemplateKey, Template> = {
 };
 
 export const normal: TemplateKey[] = [
-  'cra/default-ts',
+  // TODO: Add this back once we resolve the React 19 issues
+  // 'cra/default-ts',
   'react-vite/default-ts',
   'angular-cli/default-ts',
   'vue3-vite/default-ts',
+  'nuxt-vite/default-ts',
   'lit-vite/default-ts',
   'svelte-vite/default-ts',
   'svelte-kit/skeleton-ts',
@@ -775,7 +879,8 @@ export const merged: TemplateKey[] = [
 export const daily: TemplateKey[] = [
   ...merged,
   'angular-cli/prerelease',
-  'cra/default-js',
+  // TODO: Add this back once we resolve the React 19 issues
+  // 'cra/default-js',
   'react-vite/default-js',
   'react-vite/prerelease-ts',
   'react-webpack/prerelease-ts',
@@ -792,6 +897,8 @@ export const daily: TemplateKey[] = [
   'html-vite/default-js',
   'internal/react16-webpack',
   'internal/react18-webpack-babel',
+  'react-native-web-vite/expo-ts',
+  // 'react-native-web-vite/rn-cli-ts',
 ];
 
 export const templatesByCadence = { normal, merged, daily };

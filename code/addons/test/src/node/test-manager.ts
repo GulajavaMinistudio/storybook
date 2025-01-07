@@ -1,24 +1,28 @@
 import type { Channel } from 'storybook/internal/channels';
 import {
   TESTING_MODULE_CANCEL_TEST_RUN_REQUEST,
+  TESTING_MODULE_CONFIG_CHANGE,
   TESTING_MODULE_PROGRESS_REPORT,
-  TESTING_MODULE_RUN_ALL_REQUEST,
   TESTING_MODULE_RUN_REQUEST,
   TESTING_MODULE_WATCH_MODE_REQUEST,
   type TestingModuleCancelTestRunRequestPayload,
+  type TestingModuleConfigChangePayload,
   type TestingModuleProgressReportPayload,
-  type TestingModuleRunAllRequestPayload,
   type TestingModuleRunRequestPayload,
   type TestingModuleWatchModeRequestPayload,
 } from 'storybook/internal/core-events';
 
-import { TEST_PROVIDER_ID } from '../constants';
+import { type Config, TEST_PROVIDER_ID } from '../constants';
 import { VitestManager } from './vitest-manager';
 
 export class TestManager {
-  private vitestManager: VitestManager;
+  vitestManager: VitestManager;
 
-  watchMode = false;
+  config = {
+    watchMode: false,
+    coverage: false,
+    a11y: false,
+  };
 
   constructor(
     private channel: Channel,
@@ -27,64 +31,110 @@ export class TestManager {
       onReady?: () => void;
     } = {}
   ) {
-    this.vitestManager = new VitestManager(channel, this);
+    this.vitestManager = new VitestManager(this);
 
     this.channel.on(TESTING_MODULE_RUN_REQUEST, this.handleRunRequest.bind(this));
-    this.channel.on(TESTING_MODULE_RUN_ALL_REQUEST, this.handleRunAllRequest.bind(this));
+    this.channel.on(TESTING_MODULE_CONFIG_CHANGE, this.handleConfigChange.bind(this));
     this.channel.on(TESTING_MODULE_WATCH_MODE_REQUEST, this.handleWatchModeRequest.bind(this));
     this.channel.on(TESTING_MODULE_CANCEL_TEST_RUN_REQUEST, this.handleCancelRequest.bind(this));
 
     this.vitestManager.startVitest().then(() => options.onReady?.());
   }
 
-  async restartVitest(watchMode = false) {
-    await this.vitestManager.vitest?.runningPromise;
-    await this.vitestManager.closeVitest();
-    await this.vitestManager.startVitest(watchMode);
-  }
+  async handleConfigChange(payload: TestingModuleConfigChangePayload<Config>) {
+    if (payload.providerId !== TEST_PROVIDER_ID) {
+      return;
+    }
 
-  async handleWatchModeRequest(request: TestingModuleWatchModeRequestPayload) {
-    try {
-      if (request.providerId !== TEST_PROVIDER_ID) {
-        return;
-      }
+    const previousConfig = this.config;
 
-      if (this.watchMode !== request.watchMode) {
-        this.watchMode = request.watchMode;
-        await this.restartVitest(this.watchMode);
+    this.config = {
+      ...this.config,
+      ...payload.config,
+    } satisfies Config;
+
+    process.env.VITEST_STORYBOOK_CONFIG = JSON.stringify(payload.config);
+
+    if (previousConfig.coverage !== payload.config.coverage) {
+      try {
+        await this.vitestManager.restartVitest({
+          coverage: this.config.coverage,
+        });
+      } catch (e) {
+        this.reportFatalError('Failed to change coverage configuration', e);
       }
-    } catch (e) {
-      this.reportFatalError('Failed to change watch mode', e);
     }
   }
 
-  async handleRunRequest(request: TestingModuleRunRequestPayload) {
+  async handleWatchModeRequest(payload: TestingModuleWatchModeRequestPayload<Config>) {
+    if (payload.providerId !== TEST_PROVIDER_ID) {
+      return;
+    }
+    this.config.watchMode = payload.watchMode;
+
+    if (payload.config) {
+      this.handleConfigChange({
+        providerId: payload.providerId,
+        config: payload.config,
+      });
+    }
+
+    if (this.config.coverage) {
+      try {
+        if (payload.watchMode) {
+          // if watch mode is toggled on and coverage is already enabled, restart vitest without coverage to automatically disable it
+          await this.vitestManager.restartVitest({ coverage: false });
+        } else {
+          // if watch mode is toggled off and coverage is already enabled, restart vitest with coverage to automatically re-enable it
+          await this.vitestManager.restartVitest({ coverage: this.config.coverage });
+        }
+      } catch (e) {
+        this.reportFatalError('Failed to change watch mode while coverage was enabled', e);
+      }
+    }
+  }
+
+  async handleRunRequest(payload: TestingModuleRunRequestPayload<Config>) {
     try {
-      if (request.providerId !== TEST_PROVIDER_ID) {
+      if (payload.providerId !== TEST_PROVIDER_ID) {
         return;
       }
 
-      await this.vitestManager.runTests(request.payload);
+      if (payload.config) {
+        this.handleConfigChange({
+          providerId: payload.providerId,
+          config: payload.config,
+        });
+      }
+
+      /*
+        If we're only running a subset of stories, we have to temporarily disable coverage,
+        as a coverage report for a subset of stories is not useful.
+      */
+      const temporarilyDisableCoverage =
+        this.config.coverage && !this.config.watchMode && (payload.storyIds ?? []).length > 0;
+      if (temporarilyDisableCoverage) {
+        await this.vitestManager.restartVitest({
+          coverage: false,
+        });
+      } else {
+        await this.vitestManager.vitestRestartPromise;
+      }
+
+      await this.vitestManager.runTests(payload);
+
+      if (temporarilyDisableCoverage) {
+        // Re-enable coverage if it was temporarily disabled because of a subset of stories was run
+        await this.vitestManager.restartVitest({ coverage: this.config.coverage });
+      }
     } catch (e) {
       this.reportFatalError('Failed to run tests', e);
     }
   }
 
-  async handleRunAllRequest(request: TestingModuleRunAllRequestPayload) {
+  async handleCancelRequest(payload: TestingModuleCancelTestRunRequestPayload) {
     try {
-      if (request.providerId !== TEST_PROVIDER_ID) {
-        return;
-      }
-
-      await this.vitestManager.runAllTests();
-    } catch (e) {
-      this.reportFatalError('Failed to run all tests', e);
-    }
-  }
-
-  async handleCancelRequest(request: TestingModuleCancelTestRunRequestPayload) {
-    try {
-      if (request.providerId !== TEST_PROVIDER_ID) {
+      if (payload.providerId !== TEST_PROVIDER_ID) {
         return;
       }
 

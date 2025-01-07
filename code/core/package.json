@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "8.5.0-alpha.5",
+  "version": "8.5.0-beta.7",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -36,6 +36,16 @@
       "types": "./dist/client-logger/index.d.ts",
       "import": "./dist/client-logger/index.js",
       "require": "./dist/client-logger/index.cjs"
+    },
+    "./theming": {
+      "types": "./dist/theming/index.d.ts",
+      "import": "./dist/theming/index.js",
+      "require": "./dist/theming/index.cjs"
+    },
+    "./theming/create": {
+      "types": "./dist/theming/create.d.ts",
+      "import": "./dist/theming/create.js",
+      "require": "./dist/theming/create.cjs"
     },
     "./core-server": {
       "types": "./dist/core-server/index.d.ts",
@@ -122,16 +132,6 @@
       "import": "./dist/components/index.js",
       "require": "./dist/components/index.cjs"
     },
-    "./theming": {
-      "types": "./dist/theming/index.d.ts",
-      "import": "./dist/theming/index.js",
-      "require": "./dist/theming/index.cjs"
-    },
-    "./theming/create": {
-      "types": "./dist/theming/create.d.ts",
-      "import": "./dist/theming/create.js",
-      "require": "./dist/theming/create.cjs"
-    },
     "./docs-tools": {
       "types": "./dist/docs-tools/index.d.ts",
       "import": "./dist/docs-tools/index.js",
@@ -167,6 +167,12 @@
       "import": "./dist/cli/bin/index.js",
       "require": "./dist/cli/bin/index.cjs"
     },
+    "./preview/runtime": {
+      "import": "./dist/preview/runtime.js"
+    },
+    "./manager/globals-runtime": {
+      "import": "./dist/manager/globals-runtime.js"
+    },
     "./package.json": "./package.json"
   },
   "main": "dist/index.cjs",
@@ -183,17 +189,14 @@
       "client-logger": [
         "./dist/client-logger/index.d.ts"
       ],
+      "theming": [
+        "./dist/theming/index.d.ts"
+      ],
+      "theming/create": [
+        "./dist/theming/create.d.ts"
+      ],
       "core-server": [
         "./dist/core-server/index.d.ts"
-      ],
-      "core-server/presets/common-preset": [
-        "./dist/core-server/presets/common-preset.d.ts"
-      ],
-      "core-server/presets/common-manager": [
-        "./dist/core-server/presets/common-manager.d.ts"
-      ],
-      "core-server/presets/common-override-preset": [
-        "./dist/core-server/presets/common-override-preset.d.ts"
       ],
       "core-events": [
         "./dist/core-events/index.d.ts"
@@ -237,12 +240,6 @@
       "components": [
         "./dist/components/index.d.ts"
       ],
-      "theming": [
-        "./dist/theming/index.d.ts"
-      ],
-      "theming/create": [
-        "./dist/theming/create.d.ts"
-      ],
       "docs-tools": [
         "./dist/docs-tools/index.d.ts"
       ],
@@ -277,7 +274,7 @@
     "prep": "jiti ./scripts/prep.ts"
   },
   "dependencies": {
-    "@storybook/csf": "^0.1.11",
+    "@storybook/csf": "0.1.12",
     "better-opn": "^3.0.2",
     "browser-assert": "^1.2.1",
     "esbuild": "^0.18.0 || ^0.19.0 || ^0.20.0 || ^0.21.0 || ^0.22.0 || ^0.23.0 || ^0.24.0",

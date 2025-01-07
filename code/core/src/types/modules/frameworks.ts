@@ -8,6 +8,7 @@ export type SupportedFrameworks =
   | 'nextjs'
   | 'preact-vite'
   | 'preact-webpack5'
+  | 'react-native-web-vite'
   | 'react-vite'
   | 'react-webpack5'
   | 'server-webpack5'
@@ -20,5 +21,6 @@ export type SupportedFrameworks =
   | 'web-components-webpack5'
   | 'qwik'
   | 'solid'
+  | 'nuxt'
   | 'react-rsbuild'
   | 'vue3-rsbuild';
