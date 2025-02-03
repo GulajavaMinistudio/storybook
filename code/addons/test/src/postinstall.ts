@@ -6,6 +6,7 @@ import { traverse } from 'storybook/internal/babel';
 import {
   JsPackageManagerFactory,
   extractProperFrameworkName,
+  formatFileContent,
   loadAllPresets,
   loadMainConfig,
   serverResolve,
@@ -237,8 +238,6 @@ export default async function postInstall(options: PostinstallOptions) {
     }
   }
 
-  const vitestInfo = getVitestPluginInfo(info.frameworkPackageName);
-
   if (info.frameworkPackageName === '@storybook/nextjs') {
     printInfo(
       '🍿 Just so you know...',
@@ -327,19 +326,12 @@ export default async function postInstall(options: PostinstallOptions) {
     existsSync
   );
 
-  const a11yAddon = info.addons.find((addon) => addon.includes(addonA11yName));
-
   const imports = [
     `import { beforeAll } from 'vitest';`,
     `import { setProjectAnnotations } from '${annotationsImport}';`,
   ];
 
   const projectAnnotations = [];
-
-  if (a11yAddon) {
-    imports.push(`import * as a11yAddonAnnotations from '@storybook/addon-a11y/preview';`);
-    projectAnnotations.push('a11yAddonAnnotations');
-  }
 
   if (previewExists) {
     imports.push(`import * as projectAnnotations from './preview';`);
@@ -358,6 +350,27 @@ export default async function postInstall(options: PostinstallOptions) {
       beforeAll(project.beforeAll);
     `
   );
+
+  const a11yAddon = info.addons.find((addon) => addon.includes(addonA11yName));
+
+  if (a11yAddon) {
+    try {
+      logger.plain(`${step} Setting up ${addonA11yName} for @storybook/experimental-addon-test:`);
+      await $({
+        stdio: 'inherit',
+      })`storybook automigrate addonA11yAddonTest ${options.yes ? '--yes' : ''}`;
+    } catch (e) {
+      printError(
+        '🚨 Oh no!',
+        dedent`
+        We have detected that you have ${addonA11yName} installed but could not automatically set it up for @storybook/experimental-addon-test.
+
+        Please refer to the documentation to complete the setup manually:
+        ${picocolors.cyan(`https://storybook.js.org/docs/writing-tests/accessibility-testing#test-addon-integration`)}
+      `
+      );
+    }
+  }
 
   // Check for existing Vitest workspace. We can't extend it so manual setup is required.
   const vitestWorkspaceFile = await findFile('vitest.workspace');
@@ -403,12 +416,42 @@ export default async function postInstall(options: PostinstallOptions) {
   }
 
   const vitestConfigFile = await findFile('vitest.config');
+  const vitestShimFile = await findFile('vitest.shims.d');
   const rootConfig = vitestConfigFile || viteConfigFile;
+
+  const isVitest3OrLater = !!(coercedVitestVersion && satisfies(coercedVitestVersion, '>=3.0.0'));
+
+  const browserConfig = isVitest3OrLater
+    ? `{
+        enabled: true,
+        headless: true,
+        provider: 'playwright',
+        instances: [
+          {
+            browser: 'chromium',
+          }
+        ]
+      }`
+    : `{
+        enabled: true,
+        headless: true,
+        name: 'chromium',
+        provider: 'playwright'
+      }`;
+
+  if (isVitest3OrLater && fileExtension === 'ts' && !vitestShimFile) {
+    await writeFile(
+      'vitest.shims.d.ts',
+      '/// <reference types="@vitest/browser/providers/playwright" />'
+    );
+  }
 
   if (rootConfig) {
     // If there's an existing config, we create a workspace file so we can run Storybook tests alongside.
     const extension = extname(rootConfig);
     const browserWorkspaceFile = resolve(dirname(rootConfig), `vitest.workspace${extension}`);
+    // to be set in vitest config
+    const vitestSetupFilePath = relative(dirname(browserWorkspaceFile), vitestSetupFile);
 
     logger.line(1);
     logger.plain(`${step} Creating a Vitest project workspace file:`);
@@ -416,9 +459,17 @@ export default async function postInstall(options: PostinstallOptions) {
 
     await writeFile(
       browserWorkspaceFile,
-      dedent`
+      await formatFileContent(
+        browserWorkspaceFile,
+        dedent`
         import { defineWorkspace } from 'vitest/config';
-        import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';${vitestInfo.frameworkPluginImport}
+        import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';
+        import path from 'node:path';
+        import { fileURLToPath } from 'node:url';
+
+        const dirname = typeof __dirname !== 'undefined'
+          ? __dirname
+          : path.dirname(fileURLToPath(import.meta.url));
 
         // More info at: https://storybook.js.org/docs/writing-tests/test-addon
         export default defineWorkspace([
@@ -428,21 +479,17 @@ export default async function postInstall(options: PostinstallOptions) {
             plugins: [
               // The plugin will run tests for the stories defined in your Storybook config
               // See options at: https://storybook.js.org/docs/writing-tests/test-addon#storybooktest
-              storybookTest({ configDir: '${options.configDir}' }),${vitestInfo.frameworkPluginDocs + vitestInfo.frameworkPluginCall}
+              storybookTest({ configDir: path.join(dirname, '${options.configDir}') })
             ],
             test: {
               name: 'storybook',
-              browser: {
-                enabled: true,
-                headless: true,
-                name: 'chromium',
-                provider: 'playwright',
-              },
-              setupFiles: ['./.storybook/vitest.setup.ts'],
+              browser: ${browserConfig},
+              setupFiles: ['${vitestSetupFilePath}'],
             },
           },
         ]);
       `.replace(/\s+extends: '',/, '')
+      )
     );
   } else {
     // If there's no existing Vitest/Vite config, we create a new Vitest config file.
@@ -458,23 +505,24 @@ export default async function postInstall(options: PostinstallOptions) {
       newVitestConfigFile,
       dedent`
         import { defineConfig } from 'vitest/config';
-        import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';${vitestInfo.frameworkPluginImport}
+        import { storybookTest } from '@storybook/experimental-addon-test/vitest-plugin';
+        import path from 'node:path';
+        import { fileURLToPath } from 'node:url';
+
+        const dirname = typeof __dirname !== 'undefined'
+          ? __dirname
+          : path.dirname(fileURLToPath(import.meta.url));
 
         // More info at: https://storybook.js.org/docs/writing-tests/test-addon
         export default defineConfig({
           plugins: [
             // The plugin will run tests for the stories defined in your Storybook config
             // See options at: https://storybook.js.org/docs/writing-tests/test-addon#storybooktest
-            storybookTest({ configDir: '${options.configDir}' }),${vitestInfo.frameworkPluginDocs + vitestInfo.frameworkPluginCall}
+            storybookTest({ configDir: path.join(dirname, '${options.configDir}') })
           ],
           test: {
             name: 'storybook',
-            browser: {
-              enabled: true,
-              headless: true,
-              name: 'chromium',
-              provider: 'playwright',
-            },
+            browser: ${browserConfig},
             setupFiles: ['${vitestSetupFilePath}'],
           },
         });
@@ -499,45 +547,6 @@ export default async function postInstall(options: PostinstallOptions) {
   );
   logger.line(1);
 }
-
-const getVitestPluginInfo = (framework: string) => {
-  let frameworkPluginImport = '';
-  let frameworkPluginCall = '';
-  let frameworkPluginDocs = '';
-
-  if (framework === '@storybook/nextjs' || framework === '@storybook/experimental-nextjs-vite') {
-    frameworkPluginImport =
-      "import { storybookNextJsPlugin } from '@storybook/experimental-nextjs-vite/vite-plugin';";
-    frameworkPluginDocs =
-      '// More info at: https://github.com/storybookjs/vite-plugin-storybook-nextjs';
-    frameworkPluginCall = 'storybookNextJsPlugin()';
-  }
-
-  if (framework === '@storybook/sveltekit') {
-    frameworkPluginImport =
-      "import { storybookSveltekitPlugin } from '@storybook/sveltekit/vite-plugin';";
-    frameworkPluginCall = 'storybookSveltekitPlugin()';
-  }
-
-  if (framework === '@storybook/vue3-vite') {
-    frameworkPluginImport =
-      "import { storybookVuePlugin } from '@storybook/vue3-vite/vite-plugin';";
-    frameworkPluginCall = 'storybookVuePlugin()';
-  }
-
-  if (framework === '@storybook/react-native-web-vite') {
-    frameworkPluginImport =
-      "import { storybookReactNativeWeb } from '@storybook/react-native-web-vite/vite-plugin';";
-    frameworkPluginCall = 'storybookReactNativeWeb()';
-  }
-
-  // spaces for file indentation
-  frameworkPluginImport = `\n${frameworkPluginImport}`;
-  frameworkPluginDocs = frameworkPluginDocs ? `\n    ${frameworkPluginDocs}` : '';
-  frameworkPluginCall = frameworkPluginCall ? `\n    ${frameworkPluginCall},` : '';
-
-  return { frameworkPluginImport, frameworkPluginCall, frameworkPluginDocs };
-};
 
 async function getStorybookInfo({ configDir, packageManager: pkgMgr }: PostinstallOptions) {
   const packageManager = JsPackageManagerFactory.getPackageManager({ force: pkgMgr });

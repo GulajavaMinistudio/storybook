@@ -1,5 +1,5 @@
 import type { ChannelHandler } from '@storybook/core/channels';
-import { Channel } from '@storybook/core/channels';
+import { Channel, HEARTBEAT_INTERVAL } from '@storybook/core/channels';
 
 import { isJSON, parse, stringify } from 'telejson';
 import WebSocket, { WebSocketServer } from 'ws';
@@ -36,6 +36,23 @@ export class ServerChannelTransport {
             : data;
         this.handler?.(event);
       });
+    });
+
+    const interval = setInterval(() => {
+      this.send({ type: 'ping' });
+    }, HEARTBEAT_INTERVAL);
+
+    this.socket.on('close', function close() {
+      clearInterval(interval);
+    });
+
+    process.on('SIGTERM', () => {
+      this.socket.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.close(1001, 'Server is shutting down');
+        }
+      });
+      this.socket.close(() => process.exit(0));
     });
   }
 
