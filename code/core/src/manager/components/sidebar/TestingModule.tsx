@@ -1,8 +1,7 @@
 import React, { type SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { once } from 'storybook/internal/client-logger';
-import { Button, IconButton, TooltipNote } from 'storybook/internal/components';
-import { WithTooltip } from 'storybook/internal/components';
+import { Button, ToggleButton } from 'storybook/internal/components';
 import type {
   Addon_Collection,
   Addon_TestProviderType,
@@ -13,6 +12,8 @@ import { ChevronSmallUpIcon, PlayAllHollowIcon, SweepIcon } from '@storybook/ico
 
 import { internal_fullTestProviderStore } from '#manager-stores';
 import { keyframes, styled } from 'storybook/theming';
+
+import { useDynamicFavicon } from './useDynamicFavicon';
 
 const DEFAULT_HEIGHT = 500;
 
@@ -38,8 +39,7 @@ const Outline = styled.div<{
   padding: 1,
   overflow: 'hidden',
   backgroundColor: `var(--sb-sidebar-bottom-card-background, ${theme.background.content})`,
-  borderRadius:
-    `var(--sb-sidebar-bottom-card-border-radius, ${theme.appBorderRadius + 1}px)` as any,
+  borderRadius: `var(--sb-sidebar-bottom-card-border-radius, ${theme.appBorderRadius + 1}px)`,
   boxShadow: `inset 0 0 0 1px ${crashed && !running ? theme.color.negative : updated ? theme.color.positive : theme.appBorderColor}, var(--sb-sidebar-bottom-card-box-shadow, 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0px -5px 20px 10px ${theme.background.app})`,
   transition: 'box-shadow 1s',
 
@@ -68,6 +68,8 @@ const Card = styled.div(({ theme }) => ({
   zIndex: 1,
   borderRadius: theme.appBorderRadius,
   backgroundColor: theme.background.content,
+  display: 'flex',
+  flexDirection: 'column-reverse',
 
   '&:hover #testing-module-collapse-toggle': {
     opacity: 1,
@@ -76,7 +78,6 @@ const Card = styled.div(({ theme }) => ({
 
 const Collapsible = styled.div(({ theme }) => ({
   overflow: 'hidden',
-
   willChange: 'auto',
   boxShadow: `inset 0 -1px 0 ${theme.appBorderColor}`,
 }));
@@ -128,10 +129,10 @@ const RunButton = styled(Button)({
   },
 });
 
-const StatusButton = styled(Button)<{ status: 'negative' | 'warning' }>(
+const StatusButton = styled(ToggleButton)<{ pressed: boolean; status: 'negative' | 'warning' }>(
   { minWidth: 28 },
-  ({ active, status, theme }) =>
-    !active &&
+  ({ pressed, status, theme }) =>
+    !pressed &&
     (theme.base === 'light'
       ? {
           background: {
@@ -175,6 +176,7 @@ interface TestingModuleProps {
   warningCount: number;
   warningsActive: boolean;
   setWarningsActive: (active: boolean) => void;
+  successCount: number;
 }
 
 export const TestingModule = ({
@@ -189,6 +191,7 @@ export const TestingModule = ({
   warningCount,
   warningsActive,
   setWarningsActive,
+  successCount,
 }: TestingModuleProps) => {
   const timeoutRef = useRef<null | ReturnType<typeof setTimeout>>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -256,7 +259,21 @@ export const TestingModule = ({
     }
   }, [isCrashed, isCollapsed, toggleCollapsed]);
 
-  if (!hasTestProviders && (!errorCount || !warningCount)) {
+  useDynamicFavicon(
+    isCrashed
+      ? 'critical'
+      : errorCount > 0
+        ? 'negative'
+        : warningCount > 0
+          ? 'warning'
+          : isRunning
+            ? 'active'
+            : successCount > 0
+              ? 'positive'
+              : undefined
+  );
+
+  if (!hasTestProviders && !errorCount && !warningCount) {
     return null;
   }
 
@@ -267,11 +284,118 @@ export const TestingModule = ({
       crashed={isCrashed}
       failed={errorCount > 0}
       updated={isUpdated}
+      data-updated={isUpdated}
     >
       <Card>
+        <Bar {...(hasTestProviders ? { onClick: (e) => toggleCollapsed(e) } : {})}>
+          <Action>
+            {hasTestProviders && (
+              <RunButton
+                size="medium"
+                variant="ghost"
+                padding="small"
+                ariaLabel={false}
+                tooltip={isRunning ? 'Running tests...' : 'Start all tests'}
+                onClick={(e: SyntheticEvent) => {
+                  e.stopPropagation();
+                  onRunAll();
+                }}
+                disabled={isRunning}
+              >
+                <PlayAllHollowIcon />
+                <span>{isRunning ? 'Running...' : 'Run tests'}</span>
+              </RunButton>
+            )}
+          </Action>
+          <Filters>
+            {hasTestProviders && (
+              <CollapseToggle
+                size="medium"
+                variant="ghost"
+                padding="small"
+                onClick={(e) => toggleCollapsed(e)}
+                id="testing-module-collapse-toggle"
+                ariaLabel={isCollapsed ? 'Expand testing module' : 'Collapse testing module'}
+              >
+                <ChevronSmallUpIcon
+                  style={{
+                    transform: isCollapsed ? 'none' : 'rotate(180deg)',
+                    transition: 'transform 250ms',
+                    willChange: 'auto',
+                  }}
+                />
+              </CollapseToggle>
+            )}
+
+            {errorCount > 0 && (
+              <StatusButton
+                id="errors-found-filter"
+                size="medium"
+                variant="ghost"
+                padding={errorCount < 10 ? 'medium' : 'small'}
+                status="negative"
+                pressed={errorsActive}
+                onClick={(e: SyntheticEvent) => {
+                  e.stopPropagation();
+                  setErrorsActive(!errorsActive);
+                }}
+                ariaLabel={`Filter main navigation to show ${errorCount} tests with errors`}
+                tooltip={
+                  errorsActive
+                    ? 'Clear test error filter'
+                    : `Filter sidebar to show ${errorCount} tests with errors`
+                }
+              >
+                {errorCount < 1000 ? errorCount : '999+'}
+              </StatusButton>
+            )}
+            {warningCount > 0 && (
+              <StatusButton
+                id="warnings-found-filter"
+                size="medium"
+                variant="ghost"
+                padding={warningCount < 10 ? 'medium' : 'small'}
+                status="warning"
+                pressed={warningsActive}
+                onClick={(e: SyntheticEvent) => {
+                  e.stopPropagation();
+                  setWarningsActive(!warningsActive);
+                }}
+                ariaLabel={`Filter main navigation to show ${warningCount} tests with warnings`}
+                tooltip={
+                  warningsActive
+                    ? 'Clear test warning filter'
+                    : `Filter sidebar to show ${warningCount} tests with warnings`
+                }
+              >
+                {warningCount < 1000 ? warningCount : '999+'}
+              </StatusButton>
+            )}
+            {hasStatuses && (
+              <Button
+                id="clear-statuses"
+                padding="small"
+                variant="ghost"
+                size="medium"
+                onClick={(e: SyntheticEvent) => {
+                  e.stopPropagation();
+                  clearStatuses();
+                }}
+                disabled={isRunning}
+                ariaLabel={
+                  isRunning ? "Can't clear statuses while tests are running" : 'Clear all statuses'
+                }
+              >
+                <SweepIcon />
+              </Button>
+            )}
+          </Filters>
+        </Bar>
+
         {hasTestProviders && (
           <Collapsible
             data-testid="collapse"
+            {...(isCollapsed && { inert: '' })}
             style={{
               transition: isChangingCollapse ? 'max-height 250ms' : 'max-height 0ms',
               display: hasTestProviders ? 'block' : 'none',
@@ -296,141 +420,6 @@ export const TestingModule = ({
             </Content>
           </Collapsible>
         )}
-
-        <Bar {...(hasTestProviders ? { onClick: (e) => toggleCollapsed(e) } : {})}>
-          <Action>
-            {hasTestProviders && (
-              <WithTooltip
-                hasChrome={false}
-                tooltip={<TooltipNote note={isRunning ? 'Running tests...' : 'Start all tests'} />}
-                trigger="hover"
-              >
-                <RunButton
-                  size="medium"
-                  variant="ghost"
-                  padding="small"
-                  onClick={(e: SyntheticEvent) => {
-                    e.stopPropagation();
-                    onRunAll();
-                  }}
-                  disabled={isRunning}
-                >
-                  <PlayAllHollowIcon />
-                  <span>{isRunning ? 'Running...' : 'Run tests'}</span>
-                </RunButton>
-              </WithTooltip>
-            )}
-          </Action>
-          <Filters>
-            {hasTestProviders && (
-              <WithTooltip
-                hasChrome={false}
-                tooltip={
-                  <TooltipNote
-                    note={isCollapsed ? 'Expand testing module' : 'Collapse testing module'}
-                  />
-                }
-                trigger="hover"
-              >
-                <CollapseToggle
-                  size="medium"
-                  variant="ghost"
-                  padding="small"
-                  onClick={(e) => toggleCollapsed(e)}
-                  id="testing-module-collapse-toggle"
-                  aria-label={isCollapsed ? 'Expand testing module' : 'Collapse testing module'}
-                >
-                  <ChevronSmallUpIcon
-                    style={{
-                      transform: isCollapsed ? 'none' : 'rotate(180deg)',
-                      transition: 'transform 250ms',
-                      willChange: 'auto',
-                    }}
-                  />
-                </CollapseToggle>
-              </WithTooltip>
-            )}
-
-            {errorCount > 0 && (
-              <WithTooltip
-                hasChrome={false}
-                tooltip={<TooltipNote note="Toggle errors" />}
-                trigger="hover"
-              >
-                <StatusButton
-                  id="errors-found-filter"
-                  size="medium"
-                  variant="ghost"
-                  padding={errorCount < 10 ? 'medium' : 'small'}
-                  status="negative"
-                  active={errorsActive}
-                  onClick={(e: SyntheticEvent) => {
-                    e.stopPropagation();
-                    setErrorsActive(!errorsActive);
-                  }}
-                  aria-label="Toggle errors"
-                >
-                  {errorCount < 1000 ? errorCount : '999+'}
-                </StatusButton>
-              </WithTooltip>
-            )}
-            {warningCount > 0 && (
-              <WithTooltip
-                hasChrome={false}
-                tooltip={<TooltipNote note="Toggle warnings" />}
-                trigger="hover"
-              >
-                <StatusButton
-                  id="warnings-found-filter"
-                  size="medium"
-                  variant="ghost"
-                  padding={warningCount < 10 ? 'medium' : 'small'}
-                  status="warning"
-                  active={warningsActive}
-                  onClick={(e: SyntheticEvent) => {
-                    e.stopPropagation();
-                    setWarningsActive(!warningsActive);
-                  }}
-                  aria-label="Toggle warnings"
-                >
-                  {warningCount < 1000 ? warningCount : '999+'}
-                </StatusButton>
-              </WithTooltip>
-            )}
-            {hasStatuses && (
-              <WithTooltip
-                hasChrome={false}
-                tooltip={
-                  <TooltipNote
-                    note={
-                      isRunning
-                        ? "Can't clear statuses while tests are running"
-                        : 'Clear all statuses'
-                    }
-                  />
-                }
-                trigger="hover"
-              >
-                <IconButton
-                  id="clear-statuses"
-                  size="medium"
-                  onClick={(e: SyntheticEvent) => {
-                    e.stopPropagation();
-                    clearStatuses();
-                  }}
-                  disabled={isRunning}
-                  aria-label={
-                    isRunning
-                      ? "Can't clear statuses while tests are running"
-                      : 'Clear all statuses'
-                  }
-                >
-                  <SweepIcon />
-                </IconButton>
-              </WithTooltip>
-            )}
-          </Filters>
-        </Bar>
       </Card>
     </Outline>
   );

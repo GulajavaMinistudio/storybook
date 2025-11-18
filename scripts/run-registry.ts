@@ -1,20 +1,18 @@
 import { exec } from 'node:child_process';
-import { mkdir, rm } from 'node:fs/promises';
+import { access, mkdir, readFile, rm } from 'node:fs/promises';
 import http from 'node:http';
 import type { Server } from 'node:http';
 import { join, resolve as resolvePath } from 'node:path';
 
 import { program } from 'commander';
-// eslint-disable-next-line depend/ban-dependencies
-import { execa } from 'execa';
-// eslint-disable-next-line depend/ban-dependencies
-import { pathExists, readJSON, remove } from 'fs-extra';
 import pLimit from 'p-limit';
 import picocolors from 'picocolors';
 import { parseConfigFile, runServer } from 'verdaccio';
 
+import { npmAuth } from './npm-auth';
 import { maxConcurrentTasks } from './utils/concurrency';
 import { PACKS_DIRECTORY } from './utils/constants';
+import { killProcessOnPort } from './utils/kill-process-on-port';
 import { getWorkspaces } from './utils/workspace';
 
 program
@@ -29,7 +27,20 @@ const root = resolvePath(__dirname, '..');
 
 const opts = program.opts();
 
+const pathExists = async (p: string) => {
+  try {
+    await access(p);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 const startVerdaccio = async () => {
+  // Kill Verdaccio related processes if they are already running
+  await killProcessOnPort(6001);
+  await killProcessOnPort(6002);
+
   const ready = {
     proxy: false,
     verdaccio: false,
@@ -99,7 +110,8 @@ const startVerdaccio = async () => {
 };
 
 const currentVersion = async () => {
-  const { version } = await readJSON(join(__dirname, '..', 'code', 'package.json'));
+  const content = await readFile(join(__dirname, '..', 'code', 'package.json'), 'utf-8');
+  const { version } = JSON.parse(content);
   return version;
 };
 
@@ -129,23 +141,21 @@ const publish = async (packages: { name: string; location: string }[], url: stri
     packages.map(({ name, location }) =>
       limit(
         () =>
-          new Promise((res, rej) => {
-            logger.log(
-              `🛫 publishing ${name} (${location.replace(resolvePath(join(__dirname, '..')), '.')})`
-            );
+          new Promise((resolve, reject) => {
+            const loggedLocation = location.replace(resolvePath(join(__dirname, '..')), '.');
+            const resolvedLocation = resolvePath('../code', location);
+
+            logger.log(`🛫 publishing ${name} (${loggedLocation})`);
 
             const tarballFilename = `${name.replace('@', '').replace('/', '-')}.tgz`;
-            const command = `cd ${resolvePath(
-              '../code',
-              location
-            )} && yarn pack --out=${PACKS_DIRECTORY}/${tarballFilename} && cd ${PACKS_DIRECTORY} && npm publish ./${tarballFilename} --registry ${url} --force --tag="xyz" --ignore-scripts`;
+            const command = `cd "${resolvedLocation}" && yarn pack --out="${PACKS_DIRECTORY}/${tarballFilename}" && cd "${PACKS_DIRECTORY}" && npm publish "./${tarballFilename}" --registry ${url} --force --tag="xyz" --ignore-scripts`;
             exec(command, (e) => {
               if (e) {
-                rej(e);
+                reject(e);
               } else {
                 i += 1;
                 logger.log(`${i}/${packages.length} 🛬 successful publish of ${name}!`);
-                res(undefined);
+                resolve(undefined);
               }
             });
           })
@@ -165,7 +175,7 @@ const run = async () => {
     const verdaccioCache = resolvePath(__dirname, '..', '.verdaccio-cache');
     if (await pathExists(verdaccioCache)) {
       logger.log(`🗑 cleaning up cache`);
-      await remove(verdaccioCache);
+      await rm(verdaccioCache, { force: true, recursive: true });
     }
   }
 
@@ -180,24 +190,15 @@ const run = async () => {
   logger.log(`🌿 verdaccio running on ${verdaccioUrl}`);
 
   logger.log(`👤 add temp user to verdaccio`);
-  await execa(
-    'npx',
-    // creates a .npmrc file in the root directory of the project
-    [
-      'npm-auth-to-token',
-      '-u',
-      'foo',
-      '-p',
-      's3cret',
-      '-e',
-      'test@test.com',
-      '-r',
-      'http://localhost:6002',
-    ],
-    {
-      cwd: root,
-    }
-  );
+  // Use npmAuth helper to authenticate to the local Verdaccio registry
+  // This will create a .npmrc file in the root directory
+  await npmAuth({
+    username: 'foo',
+    password: 's3cret',
+    email: 'test@test.com',
+    registry: 'http://localhost:6002',
+    outputDir: root,
+  });
 
   logger.log(
     `📦 found ${packages.length} storybook packages at version ${picocolors.blue(version)}`

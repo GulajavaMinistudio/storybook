@@ -1,7 +1,7 @@
 import type { FC, MouseEventHandler, PropsWithChildren, ReactNode } from 'react';
 import React, { useCallback, useEffect } from 'react';
 
-import { Button, IconButton } from 'storybook/internal/components';
+import { Button } from 'storybook/internal/components';
 import { PRELOAD_ENTRIES } from 'storybook/internal/core-events';
 
 import { global } from '@storybook/global';
@@ -15,6 +15,7 @@ import { styled } from 'storybook/theming';
 import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 import { statusMapping } from '../../utils/status';
 import { UseSymbol } from './IconSymbols';
+import { NoResults } from './NoResults';
 import { StatusLabel } from './StatusButton';
 import { TypeIcon } from './TreeNode';
 import type { DownshiftItem, Match, SearchResult } from './types';
@@ -62,18 +63,6 @@ const ResultRowContent = styled.div({
   display: 'flex',
   flexDirection: 'column',
 });
-
-const NoResults = styled.div(({ theme }) => ({
-  marginTop: 20,
-  textAlign: 'center',
-  fontSize: `${theme.typography.size.s2}px`,
-  lineHeight: `18px`,
-  color: theme.color.defaultText,
-  small: {
-    color: theme.textMutedColor,
-    fontSize: `${theme.typography.size.s1}px`,
-  },
-}));
 
 const Mark = styled.mark(({ theme }) => ({
   background: 'transparent',
@@ -130,7 +119,7 @@ const Highlight: FC<PropsWithChildren<{ match?: Match }>> = React.memo(function 
   return <span>{result}</span>;
 });
 
-const Title = styled.div(({ theme }) => ({
+const Title = styled.div({
   display: 'grid',
   justifyContent: 'start',
   gridAutoColumns: 'auto',
@@ -142,7 +131,7 @@ const Title = styled.div(({ theme }) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-}));
+});
 
 const Path = styled.div(({ theme }) => ({
   display: 'grid',
@@ -199,8 +188,8 @@ const Result: FC<
           </TypeIcon>
         )}
         {item.type === 'story' && (
-          <TypeIcon viewBox="0 0 14 14" width="14" height="14" type="story">
-            <UseSymbol type="story" />
+          <TypeIcon viewBox="0 0 14 14" width="14" height="14" type={item.subtype}>
+            <UseSymbol type={item.subtype} />
           </TypeIcon>
         )}
         {!(item.type === 'component' || item.type === 'story') && (
@@ -300,19 +289,21 @@ export const SearchResults: FC<{
       {results.length > 0 && !query && (
         <RecentlyOpenedTitle className="search-result-recentlyOpened">
           Recently opened
-          <IconButton
+          <Button
+            padding="small"
+            variant="ghost"
             className="search-result-recentlyOpened-clear"
             onClick={handleClearLastViewed}
+            ariaLabel="Clear recently opened items"
           >
             <TrashIcon />
-          </IconButton>
+          </Button>
         </RecentlyOpenedTitle>
       )}
       {results.length === 0 && query && (
         <li>
           <NoResults>
             <strong>No components found</strong>
-            <br />
             <small>Find components by name or path.</small>
           </NoResults>
         </li>

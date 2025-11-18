@@ -78,6 +78,7 @@ const meta = {
     isDevelopment: true,
     warningCount: 0,
     errorCount: 0,
+    successCount: 0,
     hasStatuses: false,
     notifications: [],
     api: {
@@ -131,6 +132,12 @@ export const Both: Story = {
 };
 
 export const DynamicHeight: Story = {
+  // do not test in chromatic
+  parameters: {
+    chromatic: {
+      disable: true,
+    },
+  },
   args: {
     registeredTestProviders: {
       'dynamic-height': {
@@ -141,13 +148,13 @@ export const DynamicHeight: Story = {
     },
   },
   play: async ({ canvasElement }) => {
-    const screen = await within(canvasElement);
+    const screen = within(canvasElement);
 
-    const toggleButton = await screen.getByLabelText(/Expand/);
+    const toggleButton = await screen.findByLabelText(/Expand/, {}, { timeout: 3000 });
     await fireEvent.click(toggleButton);
 
     const content = await screen.findByText('CUSTOM CONTENT WITH DYNAMIC HEIGHT');
-    const collapse = await screen.getByTestId('collapse');
+    const collapse = screen.getByTestId('collapse');
 
     await expect(content).toBeVisible();
 

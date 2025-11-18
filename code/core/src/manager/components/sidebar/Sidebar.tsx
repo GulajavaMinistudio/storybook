@@ -1,13 +1,7 @@
 import React, { useMemo, useState } from 'react';
 
-import {
-  IconButton,
-  ScrollArea,
-  Spaced,
-  TooltipNote,
-  WithTooltip,
-} from 'storybook/internal/components';
-import type { API_LoadedRefData, StoryIndex } from 'storybook/internal/types';
+import { Button, ScrollArea, Spaced } from 'storybook/internal/components';
+import type { API_LoadedRefData, StoryIndex, TagsOptions } from 'storybook/internal/types';
 import type { StatusesByStoryIdAndTypeId } from 'storybook/internal/types';
 
 import { global } from '@storybook/global';
@@ -57,12 +51,8 @@ const Top = styled(Spaced)({
   flex: 1,
 });
 
-const TooltipNoteWrapper = styled(TooltipNote)({
-  margin: 0,
-});
-
-const CreateNewStoryButton = styled(IconButton)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
-  color: theme.color.mediumdark,
+const CreateNewStoryButton = styled(Button)<{ isMobile: boolean }>(({ theme, isMobile }) => ({
+  color: theme.textMutedColor,
   width: isMobile ? 36 : 32,
   height: isMobile ? 36 : 32,
   borderRadius: theme.appBorderRadius + 2,
@@ -148,13 +138,24 @@ export const Sidebar = React.memo(function Sidebar({
   const selected: Selection = useMemo(() => storyId && { storyId, refId }, [storyId, refId]);
   const dataset = useCombination(index, indexError, previewInitialized, allStatuses, refs);
   const isLoading = !index && !indexError;
+  const hasEntries = Object.keys(indexJson?.entries ?? {}).length > 0;
   const lastViewedProps = useLastViewed(selected);
   const { isMobile } = useLayout();
   const api = useStorybookApi();
 
+  const tagPresets = useMemo(
+    () =>
+      Object.entries(global.TAGS_OPTIONS ?? {}).reduce((acc, entry) => {
+        const [tag, option] = entry;
+        acc[tag] = option;
+        return acc;
+      }, {} as TagsOptions),
+    []
+  );
+
   return (
     <Container className="container sidebar-container" aria-label="Global">
-      <ScrollArea vertical offset={3} scrollbarSize={6}>
+      <ScrollArea vertical offset={3} scrollbarSize={6} scrollPadding="4rem">
         <Top row={1.6}>
           <Heading
             className="sidebar-header"
@@ -170,21 +171,17 @@ export const Sidebar = React.memo(function Sidebar({
             searchBarContent={
               showCreateStoryButton && (
                 <>
-                  <WithTooltip
-                    trigger="hover"
-                    hasChrome={false}
-                    tooltip={<TooltipNoteWrapper note="Create a new story" />}
+                  <CreateNewStoryButton
+                    isMobile={isMobile}
+                    onClick={() => {
+                      setIsFileSearchModalOpen(true);
+                    }}
+                    ariaLabel="Create a new story"
+                    variant="outline"
+                    padding="small"
                   >
-                    <CreateNewStoryButton
-                      isMobile={isMobile}
-                      onClick={() => {
-                        setIsFileSearchModalOpen(true);
-                      }}
-                      variant="outline"
-                    >
-                      <PlusIcon />
-                    </CreateNewStoryButton>
-                  </WithTooltip>
+                    <PlusIcon />
+                  </CreateNewStoryButton>
                   <CreateNewStoryFileModal
                     open={isFileSearchModalOpen}
                     onOpenChange={setIsFileSearchModalOpen}
@@ -194,7 +191,12 @@ export const Sidebar = React.memo(function Sidebar({
             }
             searchFieldContent={
               indexJson && (
-                <TagsFilter api={api} indexJson={indexJson} isDevelopment={isDevelopment} />
+                <TagsFilter
+                  api={api}
+                  indexJson={indexJson}
+                  isDevelopment={isDevelopment}
+                  tagPresets={tagPresets}
+                />
               )
             }
             {...lastViewedProps}
@@ -214,6 +216,7 @@ export const Sidebar = React.memo(function Sidebar({
                   selected={selected}
                   isLoading={isLoading}
                   isBrowsing={isBrowsing}
+                  hasEntries={hasEntries}
                 />
                 <SearchResults
                   query={query}

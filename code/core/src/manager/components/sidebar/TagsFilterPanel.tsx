@@ -1,91 +1,261 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
-import { TooltipLinkList } from 'storybook/internal/components';
-import type { Tag } from 'storybook/internal/types';
+import {
+  Button,
+  Form,
+  ListItem,
+  TooltipLinkList,
+  TooltipNote,
+  TooltipProvider,
+} from 'storybook/internal/components';
+import type { API_PreparedIndexEntry } from 'storybook/internal/types';
 
-import { ShareAltIcon } from '@storybook/icons';
+import {
+  BatchAcceptIcon,
+  DeleteIcon,
+  DocumentIcon,
+  ShareAltIcon,
+  SweepIcon,
+  UndoIcon,
+} from '@storybook/icons';
 
 import type { API } from 'storybook/manager-api';
-import { styled, useTheme } from 'storybook/theming';
+import { styled } from 'storybook/theming';
 
 import type { Link } from '../../../components/components/tooltip/TooltipLinkList';
 
-const BUILT_IN_TAGS_SHOW = new Set(['play-fn']);
+export const groupByType = (filters: Filter[]) =>
+  filters.reduce(
+    (acc, filter) => {
+      acc[filter.type] = acc[filter.type] || [];
+      acc[filter.type].push(filter);
+      return acc;
+    },
+    {} as Record<string, Filter[]>
+  );
 
 const Wrapper = styled.div({
-  minWidth: 180,
-  maxWidth: 220,
+  minWidth: 240,
+  maxWidth: 300,
 });
+
+const Actions = styled.div(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  gap: 4,
+  padding: 4,
+  borderBottom: `1px solid ${theme.appBorderColor}`,
+}));
+
+const TagRow = styled.div({
+  display: 'flex',
+
+  '& button:last-of-type': {
+    width: 64,
+    maxWidth: 64,
+    marginLeft: 4,
+    paddingLeft: 0,
+    paddingRight: 0,
+    fontWeight: 'normal',
+    transition: 'max-width 150ms',
+  },
+  '&:not(:hover):not(:focus-within)': {
+    '& button:last-of-type': {
+      marginLeft: 0,
+      maxWidth: 0,
+      opacity: 0,
+    },
+    '& svg + input': {
+      display: 'none',
+    },
+  },
+});
+
+const Label = styled.div({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
+const MutedText = styled.span(({ theme }) => ({
+  color: theme.textMutedColor,
+}));
+
+export type FilterFunction = (entry: API_PreparedIndexEntry, excluded?: boolean) => boolean;
+export type Filter = {
+  id: string;
+  type: string;
+  title: string;
+  count: number;
+  filterFn: FilterFunction;
+};
 
 interface TagsFilterPanelProps {
   api: API;
-  allTags: Tag[];
-  selectedTags: Tag[];
-  toggleTag: (tag: Tag) => void;
+  filtersById: { [id: string]: Filter };
+  includedFilters: Set<string>;
+  excludedFilters: Set<string>;
+  toggleFilter: (key: string, selected: boolean, excluded?: boolean) => void;
+  setAllFilters: (selected: boolean) => void;
+  resetFilters: () => void;
   isDevelopment: boolean;
+  isDefaultSelection: boolean;
+  hasDefaultSelection: boolean;
 }
 
 export const TagsFilterPanel = ({
   api,
-  allTags,
-  selectedTags,
-  toggleTag,
+  filtersById,
+  includedFilters,
+  excludedFilters,
+  toggleFilter,
+  setAllFilters,
+  resetFilters,
   isDevelopment,
+  isDefaultSelection,
+  hasDefaultSelection,
 }: TagsFilterPanelProps) => {
-  const userTags = allTags.filter((tag) => !BUILT_IN_TAGS_SHOW.has(tag));
-  const docsUrl = api.getDocsUrl({ subpath: 'writing-stories/tags#filtering-by-custom-tags' });
+  const ref = useRef<HTMLDivElement>(null);
 
-  const groups = [
-    allTags.map((tag) => {
-      const checked = selectedTags.includes(tag);
-      const id = `tag-${tag}`;
-      return {
-        id,
-        title: tag,
-        right: (
-          <input
-            type="checkbox"
-            id={id}
-            name={id}
-            value={tag}
-            checked={checked}
-            onChange={() => {
-              // The onClick handler higher up the tree will handle the toggle
-              // For controlled inputs, a onClick handler is needed, though
-              // Accessibility-wise this isn't optimal, but I guess that's a limitation
-              // of the current design of TooltipLinkList
-            }}
-          />
-        ),
-        onClick: () => toggleTag(tag),
-      };
-    }),
-  ] as Link[][];
+  const renderLink = ({
+    id,
+    type,
+    title,
+    icon,
+    count,
+  }: {
+    id: string;
+    type: string;
+    title: string;
+    icon?: React.ReactNode;
+    count: number;
+  }): Link | undefined => {
+    const onToggle = (selected: boolean, excluded?: boolean) =>
+      toggleFilter(id, selected, excluded);
+    const isIncluded = includedFilters.has(id);
+    const isExcluded = excludedFilters.has(id);
+    const isChecked = isIncluded || isExcluded;
+    const toggleTagLabel = `${isChecked ? 'Remove' : 'Add'} ${type} filter: ${title}`;
+    const invertButtonLabel = `${isExcluded ? 'Include' : 'Exclude'} ${type}: ${title}`;
 
-  if (allTags.length === 0) {
-    groups.push([
-      {
-        id: 'no-tags',
-        title: 'There are no tags. Use tags to organize and filter your Storybook.',
-        isIndented: false,
-      },
-    ]);
-  }
+    // for built-in filters (docs, play, test), don't show if there are no matches
+    if (count === 0 && type === 'built-in') {
+      return undefined;
+    }
 
-  if (userTags.length === 0 && isDevelopment) {
-    groups.push([
+    return {
+      id: `filter-${type}-${id}`,
+      content: (
+        <TagRow>
+          <TooltipProvider delayShow={1000} tooltip={<TooltipNote note={toggleTagLabel} />}>
+            <ListItem
+              style={{ minWidth: 0, flex: 1 }}
+              onClick={() => onToggle(!isChecked)}
+              icon={
+                <>
+                  {isExcluded ? <DeleteIcon /> : isIncluded ? null : icon}
+                  <Form.Checkbox
+                    checked={isChecked}
+                    onChange={() => onToggle(!isChecked)}
+                    data-tag={title}
+                    aria-hidden={true}
+                    tabIndex={-1}
+                  />
+                </>
+              }
+              aria-label={toggleTagLabel}
+              title={
+                <Label>
+                  {title}
+                  {isExcluded && <MutedText> (excluded)</MutedText>}
+                </Label>
+              }
+              right={isExcluded ? <s>{count}</s> : <span>{count}</span>}
+            />
+          </TooltipProvider>
+          <Button
+            variant="ghost"
+            size="medium"
+            onClick={() => onToggle(true, !isExcluded)}
+            ariaLabel={invertButtonLabel}
+          >
+            {isExcluded ? 'Include' : 'Exclude'}
+          </Button>
+        </TagRow>
+      ),
+    };
+  };
+
+  const groups = groupByType(Object.values(filtersById));
+  const links: Link[][] = Object.values(groups).map(
+    (group) =>
+      group
+        .sort((a, b) => a.id.localeCompare(b.id))
+        .map((filter) => renderLink(filter))
+        .filter(Boolean) as Link[]
+  );
+
+  if (!groups.tag?.length && isDevelopment) {
+    links.push([
       {
         id: 'tags-docs',
         title: 'Learn how to add tags',
-        icon: <ShareAltIcon />,
-        href: docsUrl,
+        icon: <DocumentIcon />,
+        right: <ShareAltIcon />,
+        href: api.getDocsUrl({ subpath: 'writing-stories/tags#custom-tags' }),
       },
     ]);
   }
 
+  const isNothingSelectedYet = includedFilters.size === 0 && excludedFilters.size === 0;
+  const filtersLabel = isNothingSelectedYet ? 'Select all' : 'Clear filters';
+
   return (
-    <Wrapper>
-      <TooltipLinkList links={groups} />
+    <Wrapper ref={ref}>
+      {Object.keys(filtersById).length > 0 && (
+        <Actions>
+          {isNothingSelectedYet ? (
+            <Button
+              ariaLabel={false}
+              variant="ghost"
+              padding="small"
+              id="select-all"
+              key="select-all"
+              onClick={() => setAllFilters(true)}
+            >
+              <BatchAcceptIcon />
+              {filtersLabel}
+            </Button>
+          ) : (
+            <Button
+              ariaLabel={false}
+              variant="ghost"
+              padding="small"
+              id="deselect-all"
+              key="deselect-all"
+              onClick={() => setAllFilters(false)}
+            >
+              <SweepIcon />
+              {filtersLabel}
+            </Button>
+          )}
+          {hasDefaultSelection && (
+            <Button
+              id="reset-filters"
+              key="reset-filters"
+              onClick={resetFilters}
+              ariaLabel="Reset filters"
+              variant="ghost"
+              padding="small"
+              tooltip="Reset to default selection"
+              disabled={isDefaultSelection}
+            >
+              <UndoIcon />
+            </Button>
+          )}
+        </Actions>
+      )}
+      <TooltipLinkList links={links} />
     </Wrapper>
   );
 };
